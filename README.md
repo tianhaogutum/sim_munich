@@ -1,25 +1,28 @@
-# LMU Munich Anime Game
+# LMU Munich Anime Sightseeing Game
 
-浏览器运行的 LMU 慕尼黑校园动漫风格观光游戏原型。
+A browser based third person sightseeing game prototype set around LMU Munich, with an anime inspired visual style.
 
-## 运行
+![Game screenshot](project/assets/lmu-game-concept-v1.png)
 
-直接打开 `index_anime.html`，或在项目目录启动静态服务器：
+## Run locally
+
+From the repository root:
 
 ```bash
+cd project
 python3 -m http.server 8000
 ```
 
-然后访问 <http://localhost:8000/index_anime.html>。
+Open <http://localhost:8000/> in your browser.
 
-## 操作
+## Controls
 
-- `WASD`：移动
-- `Shift`：奔跑
-- 鼠标拖动：旋转镜头
-- 鼠标滚轮：缩放
-- `E`：调查附近景点
-- `P`：摄影模式
-- `Space`：保存截图
+- **WASD**: move
+- **Shift**: run
+- **Mouse drag**: orbit the camera
+- **Mouse wheel**: zoom
+- **E**: inspect a nearby sightseeing point
+- **P**: photography mode
+- **Space**: save a screenshot
 
-Three.js 通过 CDN 加载。
+Three.js is loaded from the jsDelivr CDN.
