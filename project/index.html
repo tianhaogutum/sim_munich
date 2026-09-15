@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我们的 LMU · 动漫世界</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&family=Klee+One&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0A0818}
+canvas{display:block;width:100%;height:100%}
+
+/* ── HUD ── */
+#hud{
+  position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  transition:opacity .6s ease;
+}
+#hud.hidden{opacity:0}
+
+/* Top-left status */
+#status-panel{
+  position:fixed;top:18px;left:20px;
+  padding:10px 16px;
+  background:rgba(8,6,20,.72);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(220,185,90,.25);
+  border-radius:14px;
+  color:#F0E8C8;
+  font-family:'Nunito',sans-serif;
+  font-size:13px;line-height:1.7;
+  pointer-events:none;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);
+}
+#status-panel .title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:600;
+  color:#F5D878;letter-spacing:.05em;
+  margin-bottom:2px;
+}
+#status-panel kbd{
+  display:inline-block;padding:1px 6px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:5px;font-size:11px;
+}
+
+/* Days counter (top-center) */
+#days-counter{
+  position:fixed;top:18px;left:50%;transform:translateX(-50%);
+  padding:8px 24px;
+  background:rgba(8,6,20,.72);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(220,185,90,.3);
+  border-radius:20px;
+  color:#F5D878;
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-style:italic;
+  pointer-events:none;
+  box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 30px rgba(240,200,80,.05);
+  white-space:nowrap;
+  transition:all .4s ease;
+}
+#days-counter.pulse{box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 40px rgba(240,200,80,.3)}
+
+/* Compass (top-right) */
+#compass-wrap{
+  position:fixed;top:18px;right:20px;
+  width:58px;height:58px;
+  pointer-events:none;
+}
+#compass-wrap svg{width:100%;height:100%;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+
+/* Interaction prompt (bottom-center floating) */
+#prompt{
+  position:fixed;bottom:22%;left:50%;transform:translateX(-50%);
+  display:none;
+  padding:9px 22px;
+  background:rgba(8,6,20,.8);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(220,185,90,.35);
+  border-radius:24px;
+  color:#F0E8C8;
+  font-family:'Nunito',sans-serif;font-size:14px;
+  pointer-events:none;
+  animation:promptPop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes promptPop{from{opacity:0;transform:translateX(-50%) scale(.8)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+#prompt kbd{
+  margin:0 4px;padding:2px 8px;
+  background:rgba(245,215,120,.18);
+  border:1px solid rgba(245,215,120,.35);
+  border-radius:6px;font-size:12px;color:#F5D878;
+}
+
+/* Info panel (slide up from bottom) */
+#panel{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
+  width:min(560px,88vw);
+  background:rgba(12,9,28,.9);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(220,185,90,.25);
+  border-radius:20px 20px 0 0;
+  padding:28px 30px 32px;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  z-index:10;pointer-events:none;
+}
+#panel.open{transform:translateX(-50%) translateY(0);pointer-events:all}
+#panel-icon{font-size:28px;margin-bottom:10px}
+#panel-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:600;
+  color:#F5D878;margin-bottom:8px;
+}
+#panel-text{
+  font-family:'Klee One',cursive;
+  font-size:15px;line-height:1.8;
+  color:#E8DFC0;margin-bottom:12px;
+}
+#panel-source{
+  font-family:'Nunito',sans-serif;
+  font-size:11px;color:rgba(200,185,140,.55);
+  border-top:1px solid rgba(200,185,140,.12);
+  padding-top:10px;margin-top:4px;
+}
+#panel-close{
+  position:absolute;top:16px;right:18px;
+  background:none;border:none;
+  color:rgba(220,185,90,.6);font-size:22px;
+  cursor:pointer;transition:color .2s;
+}
+#panel-close:hover{color:#F5D878}
+
+/* Days plaque popup */
+#days-popup{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);
+  opacity:0;pointer-events:none;
+  padding:30px 40px;text-align:center;
+  background:rgba(12,9,28,.95);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(220,185,90,.4);
+  border-radius:20px;
+  transition:all .5s cubic-bezier(.22,1,.36,1);
+  z-index:20;
+}
+#days-popup.visible{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:all}
+#days-popup .big{
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;font-weight:600;
+  color:#F5D878;line-height:1;
+  text-shadow:0 0 40px rgba(245,215,120,.4);
+}
+#days-popup .sub{
+  font-family:'Klee One',cursive;
+  font-size:18px;color:#E8DFC0;
+  margin-top:6px;letter-spacing:.08em;
+}
+#days-popup-close{
+  margin-top:20px;padding:8px 28px;
+  background:rgba(245,215,120,.15);
+  border:1px solid rgba(245,215,120,.35);
+  border-radius:20px;color:#F5D878;
+  font-family:'Nunito',sans-serif;font-size:14px;
+  cursor:pointer;transition:background .2s;
+}
+#days-popup-close:hover{background:rgba(245,215,120,.25)}
+
+/* Photo mode overlay */
+#photo-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;opacity:0;
+  transition:opacity .4s;
+}
+#photo-overlay.active{opacity:1;pointer-events:all}
+.letterbox-top,.letterbox-bot{
+  position:absolute;left:0;right:0;height:10%;
+  background:#000;transition:height .4s;
+}
+.letterbox-top{top:0}
+.letterbox-bot{bottom:0}
+#photo-overlay.active .letterbox-top,
+#photo-overlay.active .letterbox-bot{height:10%}
+#photo-hint{
+  position:absolute;bottom:13%;left:50%;transform:translateX(-50%);
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:15px;color:rgba(245,215,120,.7);
+  letter-spacing:.1em;
+}
+#photo-btn{
+  position:fixed;bottom:14%;right:22px;
+  display:none;
+  padding:10px 20px;
+  background:rgba(245,215,120,.2);
+  border:1px solid rgba(245,215,120,.45);
+  border-radius:20px;color:#F5D878;
+  font-family:'Nunito',sans-serif;font-size:13px;
+  cursor:pointer;pointer-events:all;
+  transition:background .2s;
+}
+#photo-btn:hover{background:rgba(245,215,120,.35)}
+#photo-btn.visible{display:block}
+
+/* Sakura counter (decorative) */
+#sakura-info{
+  position:fixed;bottom:18px;right:20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;color:rgba(255,176,192,.55);
+  pointer-events:none;
+  font-style:italic;
+}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<!-- HUD -->
+<div id="hud">
+  <div id="status-panel">
+    <div class="title">我们的 LMU</div>
+    <span><kbd>WASD</kbd> 移动 &nbsp;<kbd>Shift</kbd> 奔跑</span><br>
+    <span><kbd>鼠标拖拽</kbd> 旋转 &nbsp;<kbd>滚轮</kbd> 缩放</span><br>
+    <span><kbd>E</kbd> 互动 &nbsp;<kbd>P</kbd> 拍照</span>
+  </div>
+
+  <div id="days-counter">✦ 在一起第 <span id="days-num">0</span> 天 ✦</div>
+
+  <!-- Compass SVG -->
+  <div id="compass-wrap">
+    <svg viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="29" cy="29" r="27" fill="rgba(8,6,20,.72)" stroke="rgba(220,185,90,.3)" stroke-width="1"/>
+      <g id="compass-needle" style="transform-origin:29px 29px">
+        <polygon points="29,7 32,29 29,33 26,29" fill="#E85050" opacity=".9"/>
+        <polygon points="29,33 32,29 29,51 26,29" fill="rgba(220,185,140,.6)"/>
+      </g>
+      <text x="29" y="6" text-anchor="middle" font-size="7" fill="rgba(220,185,90,.8)" font-family="Nunito,sans-serif">N</text>
+    </svg>
+  </div>
+
+  <div id="prompt"></div>
+  <div id="sakura-info">✿ 樱花飘落中</div>
+</div>
+
+<!-- Info Panel -->
+<div id="panel">
+  <button id="panel-close">✕</button>
+  <div id="panel-icon">⛩</div>
+  <div id="panel-title"></div>
+  <div id="panel-text"></div>
+  <div id="panel-source"></div>
+</div>
+
+<!-- Days Popup -->
+<div id="days-popup">
+  <div class="big" id="popup-num">0</div>
+  <div class="sub">在一起第 <span id="popup-days"></span> 天</div>
+  <button id="days-popup-close">关闭 ♡</button>
+</div>
+
+<!-- Photo mode -->
+<div id="photo-overlay">
+  <div class="letterbox-top"></div>
+  <div class="letterbox-bot"></div>
+  <div id="photo-hint">按 Space 保存这一刻</div>
+</div>
+<button id="photo-btn">📷 保存</button>
+
+<script type="importmap">
+{
+  "imports": {
+    "three":          "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="./src/anime_main.js"></script>
+</body>
+</html>

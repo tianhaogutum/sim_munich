@@ -1,0 +1,26 @@
+{
+  "source": "https://polyhaven.com/a/forest_floor",
+  "author": "eye-candy.xyz",
+  "license": "CC0",
+  "license_url": "https://polyhaven.com/license",
+  "files": [
+    {
+      "file": "Diffuse.jpg",
+      "size": 1329853,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_diff_1k.jpg",
+      "md5": "d67f308e4b8be6a65989e8dc76ec40fe"
+    },
+    {
+      "file": "nor_gl.jpg",
+      "size": 1380104,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_nor_gl_1k.jpg",
+      "md5": "7cb480d082527766acdf3b6c8cba50f4"
+    },
+    {
+      "file": "Rough.jpg",
+      "size": 736353,
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/forest_floor/forest_floor_rough_1k.jpg",
+      "md5": "446092b42424c7bcf15994d651949546"
+    }
+  ]
+}
