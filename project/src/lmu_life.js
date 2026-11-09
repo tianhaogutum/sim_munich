@@ -12,6 +12,8 @@ export function createLife(engine, story) {
   const matrix = new T.Matrix4(), local = new T.Matrix4(), world = new T.Matrix4();
   const pos = new T.Vector3(), scale = new T.Vector3(), quat = new T.Quaternion(), euler = new T.Euler();
   const color = new T.Color();
+  const hip = new T.Vector3(), foot = new T.Vector3(), knee = new T.Vector3();
+  const direction = new T.Vector3(), up = new T.Vector3(0, 1, 0);
   const sphere = (r = 1) => new T.SphereGeometry(r, 8, 6);
   const box = () => new T.BoxGeometry(1, 1, 1);
   const capsule = (r, length) => new T.CapsuleGeometry(r, length, 3, 7);
@@ -201,7 +203,7 @@ export function createLife(engine, story) {
       if(!flying && !blocked(x+wanderX,z+wanderZ)) { x+=wanderX; z+=wanderZ; }
       // If the companion moves into an individual bird's footprint, lift it
       // immediately; group takeoff follows on the next simulation step.
-      const personalLift=!flying && companion && distance({x,z},companion)<3 ? 3.3 : 0;
+      const personalLift=!flying && companion && Math.hypot(x-companion.x,z-companion.z)<3 ? 3.3 : 0;
       const yaw=flying?Math.atan2(flock.to.x-flock.from.x,flock.to.z-flock.from.z)+Math.sin(flock.time)*.25:o.yaw+Math.sin(elapsed*.38+o.phase)*.5;
       const y=.38+flock.y+personalLift+(flying?Math.sin(o.phase+flock.time*2)*.25:0);
       const peck=!flying && Math.sin(elapsed*1.8+o.phase)>.65?.42:0;
@@ -236,13 +238,15 @@ export function createLife(engine, story) {
       put(riders,i,0,1.39,-.04,.30); put(helmets,i,0,1.95,.16,.12);
       for(let s=0;s<2;s++) {
         const a=elapsed*7+s*Math.PI+i;
-        const hip=new T.Vector3((s?1:-1)*.15,1.08,-.17);
-        const foot=new T.Vector3((s?1:-1)*.15,.43+Math.sin(a)*.16,.04+Math.cos(a)*.16);
-        const knee=new T.Vector3(hip.x,(hip.y+foot.y)*.5+.04,(hip.z+foot.z)*.5+.20);
-        for(const [j,a,b] of [[0,hip,knee],[1,knee,foot]]) {
-          const direction=b.clone().sub(a), length=direction.length();
-          pos.copy(a.clone().add(b).multiplyScalar(.5));
-          quat.setFromUnitVectors(new T.Vector3(0,1,0),direction.normalize()); scale.set(1,length/.43,1);
+        hip.set((s?1:-1)*.15,1.08,-.17);
+        foot.set((s?1:-1)*.15,.43+Math.sin(a)*.16,.04+Math.cos(a)*.16);
+        knee.set(hip.x,(hip.y+foot.y)*.5+.04,(hip.z+foot.z)*.5+.20);
+        for(let j=0;j<2;j++) {
+          const a=j===0?hip:knee, b=j===0?knee:foot;
+          direction.subVectors(b,a);
+          const length=direction.length();
+          pos.addVectors(a,b).multiplyScalar(.5);
+          quat.setFromUnitVectors(up,direction.normalize()); scale.set(1,length/.43,1);
           local.compose(pos,quat,scale); matrix.multiplyMatrices(world,local);
           // Leg geometry runs downward from the joint. Centre it on the bone.
           local.makeTranslation(0,.15,0); matrix.multiply(local); pedals.setMatrixAt(i*4+s*2+j,matrix);

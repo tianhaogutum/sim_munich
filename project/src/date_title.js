@@ -64,6 +64,8 @@ export function createTitle(engine, story) {
   let appliedAudio = null;
   let lastState = null;
   const settings = readSettings();
+  // M and the audio button persist through the audio module, not this menu.
+  settings.muted = engine.audio?.isMuted?.() ?? settings.muted;
   const bloomStrengths = new WeakMap();
 
   function saveSettings() {
@@ -145,6 +147,7 @@ export function createTitle(engine, story) {
         '<p class="dt-keyhint"><kbd>Esc</kbd> 回到你身边</p>');
       renderProgress();
     } else if (screen === 'settings') {
+      settings.muted = engine.audio?.isMuted?.() ?? settings.muted;
       const segments = (key, choices) => `<div class="dt-segments" role="group" aria-label="${key === 'quality' ? '画质' : '字幕速度'}">` +
         choices.map(([value, label]) => `<button type="button" class="dt-segment" data-dt-setting="${key}" data-dt-value="${value}" aria-pressed="${settings[key] === value}">${label}</button>`).join('') + '</div>';
       surface.innerHTML = card(heading('MAKE YOURSELF AT HOME', '偏爱，随你', '调成你最舒服的样子。设置会自动保存。') +

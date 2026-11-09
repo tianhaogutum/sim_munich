@@ -19,16 +19,23 @@ export function ease(t, kind = 'smooth') {
   return easeInOut(t);
 }
 
-export function catmullRom(p0, p1, p2, p3, t) {
+export function catmullRom(p0, p1, p2, p3, t, out = [0, 0, 0]) {
   t = clamp01(t);
-  return p1.map((v, i) => 0.5 * ((2 * v) + (-p0[i] + p2[i]) * t
-    + (2 * p0[i] - 5 * v + 4 * p2[i] - p3[i]) * t * t
-    + (-p0[i] + 3 * v - 3 * p2[i] + p3[i]) * t * t * t));
+  for (let i = 0; i < 3; i++) {
+    const v = p1[i];
+    out[i] = 0.5 * ((2 * v) + (-p0[i] + p2[i]) * t
+      + (2 * p0[i] - 5 * v + 4 * p2[i] - p3[i]) * t * t
+      + (-p0[i] + 3 * v - 3 * p2[i] + p3[i]) * t * t * t);
+  }
+  return out;
 }
 
-export function sampleSpline(points, segment, t) {
-  const at = index => points[Math.max(0, Math.min(points.length - 1, index))];
-  return catmullRom(at(segment - 1), at(segment), at(segment + 1), at(segment + 2), t);
+export function sampleSpline(points, segment, t, out) {
+  const last = points.length - 1;
+  return catmullRom(points[Math.max(0, Math.min(last, segment - 1))],
+    points[Math.max(0, Math.min(last, segment))],
+    points[Math.max(0, Math.min(last, segment + 1))],
+    points[Math.max(0, Math.min(last, segment + 2))], t, out);
 }
 
 export function buildArcLengthTable(points, segment, samples = 160) {
@@ -77,7 +84,7 @@ export function compilePath(frames) {
   };
 }
 
-export function samplePath(path, time, fallbackFov = 52) {
+export function samplePath(path, time, fallbackFov = 52, out = { position: [0, 0, 0], target: [0, 0, 0], fov: fallbackFov }) {
   const { frames } = path;
   time = Math.max(frames[0].time, Math.min(path.duration, time));
   let i = 0;
@@ -85,11 +92,10 @@ export function samplePath(path, time, fallbackFov = 52) {
   const a = frames[i], b = frames[i + 1];
   const progress = ease((time - a.time) / (b.time - a.time), a.ease ?? 'linear');
   const u = arcParameter(path.arcs[i], progress);
-  return {
-    position: sampleSpline(path.positions, i, u),
-    target: sampleSpline(path.targets, i, u),
-    fov: lerp(a.fov ?? fallbackFov, b.fov ?? fallbackFov, progress),
-  };
+  sampleSpline(path.positions, i, u, out.position);
+  sampleSpline(path.targets, i, u, out.target);
+  out.fov = lerp(a.fov ?? fallbackFov, b.fov ?? fallbackFov, progress);
+  return out;
 }
 
 export function defaultCameraPose(position = [SPAWN.x, 0, SPAWN.z], yaw = SPAWN.yaw, target) {

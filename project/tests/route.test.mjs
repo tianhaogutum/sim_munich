@@ -16,8 +16,15 @@ const solids = [
 ];
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
-  if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
-  return solids.some(s => Math.abs(x - s.cx) < s.hw && Math.abs(z - s.cz) < s.hd);
+  for (let i = 0; i < FOUNTAINS.length; i++) {
+    const f = FOUNTAINS[i], dx = x - f.x, dz = z - f.z;
+    if (dx * dx + dz * dz < f.r * f.r) return true;
+  }
+  for (let i = 0; i < solids.length; i++) {
+    const s = solids[i];
+    if (Math.abs(x - s.cx) < s.hw && Math.abs(z - s.cz) < s.hd) return true;
+  }
+  return false;
 }
 const syncMessage = 'Engine collision rule changed: review anime_main.js and RE-SYNC the independent copy in tests/route.test.mjs; do not just suppress this guard.';
 
