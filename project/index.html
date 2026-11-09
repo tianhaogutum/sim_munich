@@ -209,6 +209,18 @@ canvas{display:block;width:100%;height:100%}
   pointer-events:none;
   font-style:italic;
 }
+
+/* ── Narrow screens / touch layout ── */
+@media (max-width:700px){
+  #status-panel{top:auto;bottom:auto;top:64px;left:12px;font-size:11px;line-height:1.5;padding:6px 10px}
+  #status-panel .title{font-size:14px}
+  #days-counter{top:12px;font-size:13px;padding:6px 16px}
+  #compass-wrap{top:10px;right:12px;width:44px;height:44px}
+  #date-story-root{top:168px!important;left:12px!important;max-width:60vw!important}
+  #sakura-info{display:none}
+  #date-audio-root{right:auto!important;left:12px!important;bottom:auto!important;top:10px!important}
+  #photo-hint{bottom:auto;top:12%}
+}
 </style>
 </head>
 <body>
