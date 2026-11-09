@@ -17,6 +17,7 @@ import { createAudio }   from './date_audio.js';
 import { createInput }   from './date_input.js';
 import { createMap }     from './date_map.js';
 import { createTitle }   from './date_title.js';
+import { createBanter }  from './date_banter.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -681,7 +682,8 @@ const storyUI = createStoryUI(engine, story);
 const input   = createInput(engine, story);
 const map     = createMap(engine, story);
 const title   = createTitle(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title };   // debug handle for the console / headless checks
+const banter  = createBanter(engine, story);
+window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
@@ -847,6 +849,7 @@ function loop() {
   storyUI.update(dt, et);
   map.update(dt, et);
   title.update(dt, et);
+  banter.update(dt, et);                              // after the camera: projects heads to screen
   sceneHooks.update(dt, et);
 
   // ── Render ──
