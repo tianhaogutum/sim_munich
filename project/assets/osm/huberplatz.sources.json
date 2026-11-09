@@ -1,0 +1,57 @@
+{
+  "query": "[out:json][timeout:20];(way[\"building\"](48.15020738,11.58193555,48.15210657,11.58438106);way[\"highway\"](48.15020738,11.58193555,48.15210657,11.58438106);way[\"landuse\"=\"grass\"](48.15020738,11.58193555,48.15210657,11.58438106);nwr[\"amenity\"=\"fountain\"](48.15020738,11.58193555,48.15210657,11.58438106);node[\"natural\"=\"tree\"](48.15020738,11.58193555,48.15210657,11.58438106);node[\"railway\"=\"subway_entrance\"](48.15020738,11.58193555,48.15210657,11.58438106);nwr[\"amenity\"=\"bicycle_parking\"](48.15020738,11.58193555,48.15210657,11.58438106););out tags geom;",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "method": "GET",
+  "retrievedAt": "2026-11-09T10:02:10Z",
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "osmBaseTimestamp": "2026-11-09T10:01:06Z",
+  "priorAttempts": [
+    "POST primary: HTTP 502",
+    "POST kumi: timeout",
+    "POST primary: timeout"
+  ],
+  "trimmedTo": "Rendered building ways, street/footway ways, grass islands, trees, cycle parking and courtyard fountain; geometries and tags unchanged.",
+  "supplementaryBoundaryCheck": {
+    "url": "https://www.openstreetmap.org/api/0.6/map?bbox=11.5809,48.1497,11.5844,48.1519",
+    "retrievedAt": "2026-11-09T10:02:10Z",
+    "reason": "Locate the actual Gärtner fountain and east U-Bahn entrance, excluded from the sector by the protected core. Only these nodes retained in huberplatz_landmarks.json."
+  },
+  "referencePhotos": [
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Georgianum_M%C3%BCnchen_Professor-Huber-Platz_(1).jpg",
+      "author": "Ricardalovesmonuments",
+      "license": "CC BY 4.0",
+      "usage": "Viewed only; no image copied into repo. Ochre masonry, paired round windows, small circular attic lights, red-brown roofs."
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Georgianum_M%C3%BCnchen_Professor-Huber-Platz_(2).jpg",
+      "author": "Ricardalovesmonuments",
+      "license": "CC BY 4.0",
+      "usage": "Viewed only; no image copied into repo."
+    },
+    {
+      "url": "https://www.lmu.de/de/die-lmu/die-lmu-auf-einen-blick/geschichte/1494/",
+      "usage": "Georgianum history and official reference photo; viewed only."
+    },
+    {
+      "url": "https://www.lmu.de/de/newsroom/newsuebersicht/news/brunnen-sprudeln-wieder-41554b32.html",
+      "usage": "Fountain history and reference photo; viewed only."
+    },
+    {
+      "url": "https://www.jura.lmu.de/en/faculty/arrival-and-location-map/",
+      "usage": "Faculty addresses and U3/U6 Universität verification."
+    },
+    {
+      "url": "https://efa.mvv-muenchen.de/sta2/universitaet.pdf",
+      "usage": "Official station plan corroborates exit B at Professor-Huber-Platz; no image copied."
+    }
+  ],
+  "imagesCopied": [],
+  "notes": [
+    "Overpass GET succeeded after three initial POST failures; no hand-measured fallback used.",
+    "The requested sector starts at z=118; the actual east fountain is z=97.8875 and U-Bahn exit B is z=115.3706, so both remain unrendered to protect the core.",
+    "Ludwigstraße odd numbers 29–31 are on the western side and not in this east-side sector.",
+    "No park polygon occurs inside this sector; the Englischer Garten is further east."
+  ]
+}
