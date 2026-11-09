@@ -86,6 +86,7 @@ export default {
     "credits": "制作名单",
     "chapter2": "第二章 · 英国公园散步",
     "chapter3": "第三章 · 主楼室内",
+    "city": "慕尼黑 · 全市探索",
     "settings": "设置",
     "choose": "选择",
     "go": "出发",
@@ -470,7 +471,7 @@ export default {
     "postcard": "我们的明信片",
     "export": "保存明信片",
     "saved": "照片已保存",
-    "facade": "主楼与廊柱",
+    "facade": "主楼与拱廊",
     "fountain": "喷泉",
     "couple": "我们的合影",
     "moveCloser": "再靠近一点",
@@ -504,7 +505,7 @@ export default {
     "sights": {
       "entrance": {
         "name": "LMU 主入口 · Haupteingang",
-        "text": "这座入口建于 1835–1840 年，由建筑师 Friedrich von Gärtner 设计，融合了罗马式圆拱风格（Rundbogenstil）。\n中央入口前的 8 根廊柱高约 9.2 米，是整个立面最具辨识度的标志。",
+        "text": "这座主楼由 Friedrich von Gärtner 设计，1835 年奠基，1840 年启用。入口拱廊、成对的圆拱窗与两侧回翼，是这座 Rundbogenstil 建筑的主要特征。",
         "source": "来源：LMU 官方导览 · lmu.de"
       },
       "white_rose": {

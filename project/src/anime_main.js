@@ -21,6 +21,10 @@ import { createBanter }  from './date_banter.js';
 import { createCollect } from './date_collect.js';
 import { createCinematic } from './date_cinematic.js';
 import { createLife }    from './lmu_life.js';
+import { createCoreScene } from './lmu_core_scene.js';
+import { coreBlocked } from './lmu_core_data.mjs';
+import { createWorld } from './lmu_world.js';
+import { cameraBoomFraction } from './date_camera.mjs';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -29,19 +33,7 @@ document.getElementById('days-num').textContent = DAYS_TOGETHER;
 document.getElementById('popup-num').textContent = DAYS_TOGETHER;
 document.getElementById('popup-days').textContent = DAYS_TOGETHER;
 
-// ── BUILDING DIMENSIONS (from lmu_dimensions_estimate.json) ─────────────────
-const D = {
-  bW:160, bH:23, bDepth:22,          // building overall [E=estimate]
-  cW:36,  cH:27, cProj:2.8,          // central risalit
-  eW:12,  eProj:1.2,                  // end pavilions
-  wW:62,                              // each wing width = (160-36)/2
-  colN:8, colH:9.2, colR:0.48,       // entrance columns [E]
-  winW:1.55, winH:2.75, winHgf:3.8,  // upper / ground floor windows [E]
-  winBay:4.1, gfH:5.0, ufH:6.0,      // bay spacing, floor heights [E]
-  fnH:8.20, fnR:5.0, fnX:35, fnY:48, // fountain [C=confirmed]; in front of the facade (+Z)
-  plW:200, plD:80,                    // plaza [E from OSM]; spans z ∈ [0, 80] in front of the facade
-  roadX:112, roadW:33,               // Ludwigstraße [C]
-};
+// Core dimensions now come from retained OSM footprints in lmu_core_data.mjs.
 
 // ── RENDERER ────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('c');
@@ -52,10 +44,10 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace   = THREE.SRGBColorSpace;
 renderer.toneMapping        = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.2;
+renderer.toneMappingExposure = .92;
 
 const scene  = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, 0.5, 900);
+const camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, 0.35, 2200);
 
 // ── POST-PROCESSING ──────────────────────────────────────────────────────────
 const composer = new EffectComposer(renderer);
@@ -163,7 +155,7 @@ function archGeo(w, h, segs=10) {
 // ── SKY DOME ─────────────────────────────────────────────────────────────────
 // Custom anime gradient sky: deep azure at zenith → warm peach at horizon
 const skySphere = new THREE.Mesh(
-  new THREE.SphereGeometry(700, 32, 16),
+  new THREE.SphereGeometry(1800, 32, 16),
   new THREE.ShaderMaterial({
     side: THREE.BackSide,
     uniforms: {
@@ -191,278 +183,9 @@ const skySphere = new THREE.Mesh(
 );
 scene.add(skySphere);
 
-// ── GROUND + ROADS ───────────────────────────────────────────────────────────
-// Base ground
-box([0,-0.15,0],[600,0.3,600], mat.plaza, true, false);
-
-// Plaza cobblestone (in front of the facade, toward +Z)
-box([0,0,D.plD*.5], [D.plW, 0.06, D.plD], mat.plaza, true, false);
-
-// Sidewalk strips
-box([0,0.04,D.plD+4], [D.plW+40, 0.08, 8], mat.sidewalk, false, false);
-
-// Ludwigstraße — runs N-S east of building
-const roadCx = D.roadX + D.roadW*.5;
-box([roadCx, 0.05, 0], [D.roadW, 0.1, 300], mat.road, false, false);
-// Lane markings
-for (let z=-140; z<140; z+=10)
-  box([roadCx, 0.11, z], [.18, .02, 4], mat.roadMk, false, false);
-// Cycle lane stripe
-box([roadCx - D.roadW*.5+2.5, .065, 0], [2.2, .03, 300], mat.sidewalk, false, false);
-box([roadCx + D.roadW*.5-2.5, .065, 0], [2.2, .03, 300], mat.sidewalk, false, false);
-
-// ── LMU MAIN BUILDING ────────────────────────────────────────────────────────
-// Coordinate convention:
-//   +X = East,  +Y = North (into building), +Z = Up
-//   Main facade is at Y=0, facing -Y (south, toward plaza)
-//   Plaza is south of building (negative Z in viewer space = -Y in world)
-//   NB: Three.js default camera looks toward -Z; we orient plaza along -Y here.
-//
-// Actually: standard Three.js setup — let's use X/Z for ground plane, Y for up.
-// Buildings face -Z (south), plaza is toward -Z, player starts at Z > 0.
-// Let me restate:
-//   +X = East, +Z = South (toward plaza = toward viewer), +Y = Up
-//   Facade face at Z=0, building extends north (Z < 0).
-//   Player starts around Z = 80 (south of building).
-
-function buildingBox(pos, sz, m) { return box(pos, sz, m, true, true); }
-
-// Wings
-const WOFF = D.cW*.5 + D.wW*.5;   // = 18 + 31 = 49
-buildingBox([-WOFF, D.bH*.5, -(D.bDepth*.5)],  [D.wW, D.bH, D.bDepth], mat.facade);   // left
-buildingBox([ WOFF, D.bH*.5, -(D.bDepth*.5)],  [D.wW, D.bH, D.bDepth], mat.facade);   // right
-
-// End pavilions (project slightly forward)
-const EX = D.bW*.5 - D.eW*.5;
-buildingBox([-EX, D.bH*.5, -(D.bDepth*.5 - D.eProj*.5)], [D.eW, D.bH, D.bDepth+D.eProj], mat.facade);
-buildingBox([ EX, D.bH*.5, -(D.bDepth*.5 - D.eProj*.5)], [D.eW, D.bH, D.bDepth+D.eProj], mat.facade);
-
-// Central risalit (taller, projects furthest forward)
-buildingBox([0, D.cH*.5, -(D.bDepth*.5 - D.cProj*.5)], [D.cW, D.cH, D.bDepth+D.cProj], mat.facade2);
-
-// Belt cornice (separates ground floor from upper)
-const bcZ = -(D.bDepth*.5 - D.cProj*.5);
-box([0, D.gfH+0.28, bcZ], [D.bW, 0.56, D.bDepth+D.cProj+0.1], mat.parapet, false, false);
-
-// Cornice + parapet on wings
-box([0, D.bH+0.38, -(D.bDepth*.5)], [D.bW+2, 0.76, D.bDepth+.4], mat.parapet, false, false);
-box([0, D.bH+0.76+0.8, -(D.bDepth*.5)], [D.bW+2, 1.6, D.bDepth*.55], mat.parapet, false, false);
-
-// Central pediment
-box([0, D.cH+0.38, -(D.bDepth*.5-D.cProj*.5)], [D.cW+2, 0.76, D.bDepth*.4+D.cProj], mat.parapet, false, false);
-box([0, D.cH+3.5,  .3], [D.cW*.78, 5.5, 1.0], mat.facade2, true, true);  // pediment triangle (approx)
-
-// Roof planes
-box([0, D.bH+2.7, -(D.bDepth*.65)], [D.bW, 0.28, D.bDepth*.4], mat.roof, false, false);
-box([0, D.cH+2.0, -(D.bDepth*.4)],  [D.cW, 0.28, D.bDepth*.5], mat.roof, false, false);
-
-// ── COLUMNS (entrance colonnade) ─────────────────────────────────────────────
-const colSpan  = D.cW * 0.74;
-const colStart = -colSpan * .5;
-const colSpc   = colSpan / (D.colN - 1);
-const colFaceZ = D.cProj + 0.55;       // in front of central face
-
-for (let i = 0; i < D.colN; i++) {
-  const cx = colStart + i * colSpc;
-  // Shaft
-  cyl([cx, D.colH*.5, colFaceZ], D.colR, D.colH, 14, mat.column);
-  // Capital
-  box([cx, D.colH+0.38, colFaceZ], [D.colR*3.2, 0.76, D.colR*2.8], mat.column, false, false);
-  // Base
-  box([cx, 0.24, colFaceZ], [D.colR*3.2, 0.48, D.colR*2.8], mat.column, false, false);
-}
-// Entablature
-box([0, D.colH+0.76+0.65, colFaceZ], [colSpan+D.colR*4, 1.3, 1.0], mat.column, false, false);
-
-// ── ENTRANCE ─────────────────────────────────────────────────────────────────
-const entZ = D.cProj + 0.1;
-// Door arch (using ShapeGeometry flat panel on facade)
-const entGeo = archGeo(7.0, 10.0, 12);
-const entMesh = new THREE.Mesh(entGeo, mat.door);
-entMesh.rotation.x = -Math.PI*.5;   // lay in XZ plane, normal = -Z (faces south)
-entMesh.rotation.z =  Math.PI;      // flip so arch opens upward
-entMesh.position.set(0, 0, entZ + 0.1);
-scene.add(entMesh); ol(entMesh, 0.04);
-
-// Entrance steps (4 steps)
-for (let s = 0; s < 5; s++) {
-  const sw = 16 + s*3;
-  box([0, s*.32+.16, entZ + s*1.1 + 0.6], [sw, .32, 1.1], mat.steps);
-}
-
-// ── WINDOWS (InstancedMesh) ──────────────────────────────────────────────────
-const wGeo = archGeo(D.winW, D.winH, 8);
-const wGeoGF = archGeo(D.winW*1.35, D.winHgf, 8);
+// Real mapped core: angled U-shaped frontage, nine masonry arcade bays, mapped trees and roads.
+const coreScene = createCoreScene({ THREE, scene, toon: (color,steps=4) => T(color,steps===3?G3:G4) });
 const dummy = new THREE.Object3D();
-
-// Rotation to place arch window on south-facing facade (Z plane)
-// ShapeGeo is in XY plane (normal = +Z).
-// We want normal = -Z (south-facing). Rotate Y by PI.
-const WIN_ROT_X = 0;
-const WIN_ROT_Y = Math.PI;   // flip to face -Z
-const WIN_ROT_Z = 0;
-
-// Collect all window positions
-const winPositions = [];  // {x, z_sill, isCentral}
-const gfPositions  = [];
-
-// Left and right wing windows
-const wingSegs = [
-  { xFrom: -(D.bW*.5), xTo: -(D.cW*.5), dir: 1 },
-  { xFrom:  (D.cW*.5), xTo:  (D.bW*.5), dir: 1 },
-];
-for (const seg of wingSegs) {
-  let x = seg.xFrom + D.winBay*.5 + (seg.dir === 1 ? D.eW + 2 : 0);
-  const xEnd = seg.xTo - D.eW - 2;
-  while (x < xEnd - .5) {
-    // Upper floors: 3 rows
-    for (let row = 0; row < 3; row++) {
-      const zSill = D.gfH + 0.6 + row * D.ufH;
-      winPositions.push({ x, zSill });
-    }
-    // Ground floor: every other bay
-    if (Math.round(x / D.winBay) % 2 === 0) {
-      gfPositions.push({ x, zSill: 0.9 });
-    }
-    x += D.winBay;
-  }
-}
-// Central section: flanking entrance (skip entrance zone)
-for (const sx of [-1, 1]) {
-  for (let bay = 0; bay < 2; bay++) {
-    const wx = sx * (D.winBay * (bay + 1.5));
-    for (let row = 0; row < 3; row++) {
-      const zSill = D.gfH + 0.6 + row * D.ufH;
-      winPositions.push({ x: wx, zSill, ctr: true });
-    }
-  }
-}
-
-// Build upper window InstancedMesh
-const winCount = winPositions.length;
-const winMeshFrame = new THREE.InstancedMesh(wGeo, mat.winFrame, winCount);
-const winMeshGlass = new THREE.InstancedMesh(wGeo, mat.winGlass, winCount);
-winMeshFrame.castShadow = false;
-winMeshGlass.castShadow = false;
-
-winPositions.forEach(({ x, zSill, ctr }, i) => {
-  const facadeZ = ctr ? D.cProj + 0.06 : 0.08;
-  dummy.position.set(x, zSill, facadeZ);
-  dummy.rotation.set(WIN_ROT_X, WIN_ROT_Y, WIN_ROT_Z);
-  dummy.scale.set(1, 1, 0.14);
-  dummy.updateMatrix();
-  winMeshFrame.setMatrixAt(i, dummy.matrix);
-
-  dummy.position.set(x, zSill, facadeZ + 0.08);
-  dummy.scale.set(0.88, 0.88, 0.08);
-  dummy.updateMatrix();
-  winMeshGlass.setMatrixAt(i, dummy.matrix);
-});
-winMeshFrame.instanceMatrix.needsUpdate = true;
-winMeshGlass.instanceMatrix.needsUpdate = true;
-scene.add(winMeshFrame, winMeshGlass);
-
-// Ground floor arch windows
-const gfCount = gfPositions.length;
-if (gfCount > 0) {
-  const gfFrame = new THREE.InstancedMesh(wGeoGF, mat.winFrame, gfCount);
-  const gfGlass = new THREE.InstancedMesh(wGeoGF, mat.winGlass, gfCount);
-  gfPositions.forEach(({ x, zSill }, i) => {
-    dummy.position.set(x, zSill, 0.08);
-    dummy.rotation.set(0, Math.PI, 0);
-    dummy.scale.set(1, 1, 0.18);
-    dummy.updateMatrix();
-    gfFrame.setMatrixAt(i, dummy.matrix);
-    dummy.position.set(x, zSill, 0.15);
-    dummy.scale.set(0.86, 0.86, 0.1);
-    dummy.updateMatrix();
-    gfGlass.setMatrixAt(i, dummy.matrix);
-  });
-  gfFrame.instanceMatrix.needsUpdate = true;
-  gfGlass.instanceMatrix.needsUpdate = true;
-  scene.add(gfFrame, gfGlass);
-}
-
-// ── ADJACENT BUILDINGS ────────────────────────────────────────────────────────
-for (const sx of [-1,1]) {
-  const ax = sx * (D.bW*.5 + 32);
-  buildingBox([ax, 16, -(D.bDepth*.5+4)], [48, 32, 40], mat.adjacent);
-  buildingBox([ax+sx*52, 12, -(D.bDepth*.5+6)], [36, 24, 44], mat.adjacent);
-}
-
-// ── FOUNTAINS ────────────────────────────────────────────────────────────────
-for (const sx of [-1, 1]) {
-  const fx = sx * D.fnX, fz = D.fnY;
-  cyl([fx, .45, fz], D.fnR,   .9,  28, mat.fountain);   // basin
-  cyl([fx, .9,  fz], D.fnR-.4, .05, 28, mat.water);      // water surface
-  cyl([fx, D.fnH*.5, fz], .38, D.fnH, 16, mat.fountain); // shaft [C: 8.20m]
-  cyl([fx, D.fnH+.45, fz], 1.8, .9,  20, mat.fountain);  // top bowl
-  cyl([fx, D.fnH+.95, fz], .2,  .5,  12, mat.fountain);  // finial
-}
-
-// ── TREES ────────────────────────────────────────────────────────────────────
-// Plaza is in front of the facade (+Z). Trees keep clear of the entrance axis, fountains and POIs.
-const treePts = [
-  // Rows flanking plaza axis
-  ...[-54,-36,36,54].map(x => [x, 16]),
-  ...[-54,-18,18,54].map(x => [x, 58]),
-  ...[-44,-22,22,44].map(x => [x, 72]),
-  // Lateral edges
-  ...[...Array(3)].map((_,i) => [-90, 20+i*22]),
-  ...[...Array(3)].map((_,i) => [ 90, 20+i*22]),
-];
-
-// InstancedMesh for trunks and crowns
-const trunkGeo  = new THREE.CylinderGeometry(.38,.48,5.5,8);
-const crownGeoA = new THREE.SphereGeometry(4.2,10,7);
-const crownGeoB = new THREE.SphereGeometry(3.0,10,7);
-
-const trunkInst  = new THREE.InstancedMesh(trunkGeo,  mat.trunk,   treePts.length);
-const crownInstA = new THREE.InstancedMesh(crownGeoA, mat.foliageA, treePts.length);
-const crownInstB = new THREE.InstancedMesh(crownGeoB, mat.foliageB, treePts.length);
-[trunkInst,crownInstA,crownInstB].forEach(m => { m.castShadow=true; scene.add(m); });
-
-const crownOffsets = treePts.map((_,i) => ({
-  ox:(Math.random()-.5)*1.2, oz:(Math.random()-.5)*1.2,
-  h:4.5+(i%4)*.5, r:4.0+(i%3)*.4,
-}));
-
-treePts.forEach(([tx,tz], i) => {
-  const { ox, oz, h } = crownOffsets[i];
-  dummy.position.set(tx, 2.75, tz);
-  dummy.rotation.set(0, Math.random()*Math.PI*2, 0);
-  dummy.scale.setScalar(1);
-  dummy.updateMatrix();
-  trunkInst.setMatrixAt(i, dummy.matrix);
-
-  dummy.position.set(tx+ox, h, tz+oz);
-  dummy.scale.setScalar(1);
-  dummy.updateMatrix();
-  crownInstA.setMatrixAt(i, dummy.matrix);
-
-  dummy.position.set(tx-ox*.6, h-1.2, tz-oz*.6);
-  dummy.scale.setScalar(1);
-  dummy.updateMatrix();
-  crownInstB.setMatrixAt(i, dummy.matrix);
-});
-[trunkInst,crownInstA,crownInstB].forEach(m=>m.instanceMatrix.needsUpdate=true);
-
-// ── STREET FURNITURE ─────────────────────────────────────────────────────────
-const benchXs = [-50,-30,-10,10,30,50];
-for (const bx of benchXs) {
-  box([bx, .42, 22], [2.2,.45,.6], mat.bench);
-  box([bx, .82, 22.2], [2.2,.45,.12], mat.bench, false, false);
-}
-// Lamps
-const lampXs = [-70,-50,-30,30,50,70];
-for (const lx of lampXs) {
-  cyl([lx, 3.5, 20], .09, 7, 8, mat.lamp);
-  cyl([lx, 7.2, 20], .28, .45, 8, mat.lampGlow);
-  // Point light per lamp (subtle)
-  const pl = new THREE.PointLight(0xFFD070, 8, 22, 2);
-  pl.position.set(lx, 7.2, 20);
-  scene.add(pl);
-}
 
 // ── SAKURA PARTICLE SYSTEM ───────────────────────────────────────────────────
 const PETAL_COUNT = 680;
@@ -496,7 +219,7 @@ const poiPos = id => new THREE.Vector3(POIS[id].x, 1, POIS[id].z);
 const sights = [
   { id:'entrance', pos: poiPos('entrance'),
     icon:'🏛', name:'LMU 主入口 · Haupteingang',
-    text:'这座入口建于 1835–1840 年，由建筑师 Friedrich von Gärtner 设计，融合了罗马式圆拱风格（Rundbogenstil）。\n中央入口前的 8 根廊柱高约 9.2 米，是整个立面最具辨识度的标志。',
+    text:'这座入口建于 1835–1840 年，由建筑师 Friedrich von Gärtner 设计，融合了罗马式圆拱风格（Rundbogenstil）。\n主立面的九个砖石拱廊、成对圆拱窗和两侧回翼，构成这里最熟悉的轮廓。场景依照地图轮廓与照片重建，细部为近似表达。',
     src:'来源：LMU 官方导览 · lmu.de' },
   { id:'white_rose', pos: poiPos('white_rose'),
     icon:'✉', name:'白玫瑰纪念地 · Weiße Rose',
@@ -534,12 +257,12 @@ const plaqueMesh = new THREE.Mesh(
   new THREE.BoxGeometry(2.5, 1.2, .15),
   new THREE.MeshToonMaterial({ color:0xE8D0A0, gradientMap:G4, emissive:0xF0C060, emissiveIntensity:.25 })
 );
-plaqueMesh.position.set(10, .8, 5.5);
+plaqueMesh.position.set(POIS.entrance.x+6, .8, POIS.entrance.z+3);
 scene.add(plaqueMesh);
 
 // ── LIGHTING ─────────────────────────────────────────────────────────────────
 // Anime-style: warm directional + cool sky fill + ambient
-const sun = new THREE.DirectionalLight(0xFFF4E0, 3.8);
+const sun = new THREE.DirectionalLight(0xFFF4E0, 2.1);
 sun.position.set(-60, 80, 60);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -551,10 +274,10 @@ sun.shadow.camera.far    =  350;
 sun.shadow.bias          = -0.0005;
 scene.add(sun);
 
-const skyLight = new THREE.HemisphereLight(0x8AB8F0, 0xC8B890, 1.2);
+const skyLight = new THREE.HemisphereLight(0x8AB8F0, 0xC8B890, 1.0);
 scene.add(skyLight);
 
-const ambLight = new THREE.AmbientLight(0xF0E8D8, 0.5);
+const ambLight = new THREE.AmbientLight(0xF0E8D8, 0.35);
 scene.add(ambLight);
 
 // ═════════ END REGION: SCENE ═════════
@@ -562,15 +285,8 @@ scene.add(ambLight);
 // ── PLAYER ───────────────────────────────────────────────────────────────────
 const player = { pos: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), yaw: SPAWN.yaw };
 const keys   = {};
-const solids = [
-  // Building main mass (rough AABB)
-  { cx:0,   cz:-(D.bDepth*.5), hw:D.bW*.5+1, hd:D.bDepth*.5+2 },
-  // Left adjacent
-  { cx:-(D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
-  // Right adjacent
-  { cx: (D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
-];
-const extraBlockers = [];                            // (x, z) => boolean, registered by world blocks
+const solids = []; // district modules may register small additional axis-aligned obstacles
+const extraBlockers = [coreBlocked]; // exact same mapped polygons as the rendered core
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
   for (let i = 0; i < FOUNTAINS.length; i++) {
@@ -605,8 +321,8 @@ addEventListener('mouseup',   () => drag = false);
 addEventListener('mouseleave', () => drag = false);
 addEventListener('mousemove', e => {
   if (!drag) return;
-  player.yaw -= (e.clientX - lastMX) * .004;
-  pitch = Math.max(.08, Math.min(1.15, pitch + (e.clientY - lastMY) * .004));
+  player.yaw -= (e.clientX - lastMX) * .004 * (engine.preferences?.sensitivity ?? 1);
+  pitch = Math.max(.08, Math.min(1.15, pitch + (e.clientY - lastMY) * .004 * (engine.preferences?.sensitivity ?? 1)));
   lastMX = e.clientX; lastMY = e.clientY;
 });
 addEventListener('wheel', e => camDist = Math.max(5, Math.min(22, camDist + e.deltaY*.012)));
@@ -625,8 +341,8 @@ canvas.addEventListener('touchmove', e => {
     const t = e.touches[0];
     const prev = touches[t.identifier];
     if (prev) {
-      player.yaw -= (t.clientX - prev.x) * .004;
-      pitch = Math.max(.08, Math.min(1.15, pitch + (t.clientY - prev.y) * .004));
+      player.yaw -= (t.clientX - prev.x) * .004 * (engine.preferences?.sensitivity ?? 1);
+      pitch = Math.max(.08, Math.min(1.15, pitch + (t.clientY - prev.y) * .004 * (engine.preferences?.sensitivity ?? 1)));
     }
     touches[t.identifier] = { x:t.clientX, y:t.clientY };
   }
@@ -713,14 +429,24 @@ const engine = {
       player.pos.z + Math.cos(player.yaw) * camDist * Math.cos(pitch)],
     target: [camTgt.x, camTgt.y, camTgt.z],
   }),
+  snapCamera() {
+    camTgt.set(player.pos.x, player.pos.y + 1.6, player.pos.z);
+    const end = {x: player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch), z: player.pos.z + Math.cos(player.yaw)*camDist*Math.cos(pitch)};
+    const f = cameraBoomFraction(player.pos, end, blocked);
+    camPos.set(player.pos.x + (end.x-player.pos.x)*f, player.pos.y + 1.2 + Math.sin(pitch)*camDist*f, player.pos.z + (end.z-player.pos.z)*f);
+    camera.position.copy(camPos); camera.lookAt(camTgt);
+  },
   getCameraTarget: () => camTgt,                      // the point the default camera looks at (player head)
 };
 
 const story   = createStory();
+const world   = createWorld(engine, story);
+engine.world = world;
 const audio   = createAudio(engine, story);
 engine.audio = audio;
 const cast    = createCast(engine, story);
 engine.companion = cast.companion;
+engine.playerAvatar = cast.player;
 const life    = createLife(engine, story);
 const photo   = createPhoto(engine, story);
 photoModule = photo;
@@ -731,11 +457,11 @@ const title   = createTitle(engine, story);
 const banter  = createBanter(engine, story);
 const collect = createCollect(engine, story);
 const cinematic = createCinematic(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter, collect, cinematic, life };   // debug handle for the console / headless checks
+window.__lmu = { engine, world, story, cast, photo, storyUI, audio, input, map, title, banter, collect, cinematic, life };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
-  update(dt, et) {},
+  update(dt, et) { coreScene.update(dt, et); },
 };
 // ═════════ END REGION: SCENE HOOKS ═════════
 
@@ -753,12 +479,14 @@ function openSight(i) {
 addEventListener('keydown', e => {
   if (editingKey(e)) return;                                        // text fields / IME never reach the game
   const k = e.key.toLowerCase();
+  if (world.isOpen()) { if (world.handleKey(k, e)) e.preventDefault(); return; }
+  if (photo.isModalOpen?.()) { if (photo.handleKey(k, e)) e.preventDefault(); return; }
   if (title.handleKey(k, e)) { e.preventDefault(); return; }       // title / pause menu owns everything while open
   if (e.repeat && !['q','r','pageup','pagedown','+','=','-'].includes(k)) {   // ignore auto-repeat (camera keys excepted)
     if ([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
     return;
   }
-  if (cinematic.handleKey(k, e) || collect.handleKey(k, e) || storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e)) { e.preventDefault(); return; }
+  if (cinematic.handleKey(k, e) || collect.handleKey(k, e) || storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e) || world.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e' && !engine.isLocked() && !engine.isPhotoMode() && !storyUI.isModalOpen()) {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
@@ -857,13 +585,20 @@ function loop() {
   hud.classList.toggle('cine-hidden', cinematic.isPlaying());
 
   // ── Spring-arm camera ──
-  const idealX = player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch);
-  const idealY = player.pos.y + Math.sin(pitch)*camDist + 1.2;
-  const idealZ = player.pos.z + Math.cos(player.yaw)*camDist*Math.cos(pitch);
+  const boomEnd = {x: player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch), z: player.pos.z + Math.cos(player.yaw)*camDist*Math.cos(pitch)};
+  const boom = cameraBoomFraction(player.pos, boomEnd, blocked);
+  const idealX = player.pos.x + (boomEnd.x-player.pos.x)*boom;
+  const idealY = player.pos.y + Math.sin(pitch)*camDist*boom + 1.2;
+  const idealZ = player.pos.z + (boomEnd.z-player.pos.z)*boom;
   const k = 1 - Math.exp(-7 * dt);
   camPos.x += (idealX - camPos.x)*k;
   camPos.y += (idealY - camPos.y)*k;
   camPos.z += (idealZ - camPos.z)*k;
+  // Contract immediately when orbiting into a wall; ease only the outward movement.
+  if (!engine.cameraOverride) {
+    const f = cameraBoomFraction(player.pos, camPos, blocked);
+    if (f < 1) { camPos.x = player.pos.x + (camPos.x-player.pos.x)*f; camPos.z = player.pos.z + (camPos.z-player.pos.z)*f; }
+  }
   camTgt.x += (player.pos.x - camTgt.x) * .85;
   camTgt.y += (player.pos.y + 1.6 - camTgt.y) * .85;
   camTgt.z += (player.pos.z - camTgt.z) * .85;
@@ -912,6 +647,7 @@ function loop() {
   title.update(dt, et);
   banter.update(dt, et);                              // after the camera: projects heads to screen
   sceneHooks.update(dt, et);
+  world.update(dt, et);
 
   // ── Render ──
   composer.render();

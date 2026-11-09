@@ -103,6 +103,25 @@ export function tramAtTime(time, offset = 4) {
   return { visible, z: -158 + phase / TRAM_TRAVEL * 316, phase, cycle: Math.floor((time + offset) / TRAM_PERIOD) };
 }
 
+/** Constant-speed travel along one continuous surveyed lane. Hidden pause at ends
+ * avoids connecting separate source ways or jumping across the protected core. */
+export function compileLane(points) {
+  if (!Array.isArray(points) || points.length < 2) return null;
+  const lengths = [0];
+  for (let i=1;i<points.length;i++) lengths.push(lengths[i-1]+distance(points[i-1],points[i]));
+  return lengths.at(-1)>1 ? {points:points.map(p=>({...p})), lengths, length:lengths.at(-1)} : null;
+}
+export function laneAtTime(lane,time,speed=6,offset=0,pause=7) {
+  if (!lane || !Number.isFinite(time) || !Number.isFinite(speed) || speed<=0) return {visible:false,x:0,z:0,yaw:0};
+  const period=lane.length/speed+pause, phase=((time+offset)%period+period)%period;
+  const travel=phase*speed, visible=travel<lane.length;
+  const d=Math.min(lane.length,travel);
+  let i=1;while(i<lane.lengths.length-1 && lane.lengths[i]<d)i++;
+  const a=lane.points[i-1], b=lane.points[i], span=lane.lengths[i]-lane.lengths[i-1];
+  const t=span ? (d-lane.lengths[i-1])/span : 0;
+  return {visible,x:mix(a.x,b.x,t),z:mix(a.z,b.z,t),yaw:Math.atan2(b.x-a.x,b.z-a.z),distance:d,cycle:Math.floor((time+offset)/period)};
+}
+
 export function takeOff(flock, blocked, random = Math.random, focus = null) {
   if (flock.state === 'flight') return;
   flock.state = 'flight'; flock.time = 0; flock.duration = 6 + random() * 4;
@@ -138,10 +157,10 @@ const LOOPS = [
   [[-62,35], [-30,21.7], [0,34], [22,65], [60,76], [-60,76]],
   [[60,60], [30,21.7], [60,34], [65,76], [-23,76], [0,60]],
 ];
-export function createLifeSimulation({ blocked = () => false, random = seededRandom() } = {}) {
-  const flocks = [[-12,77], [17,61], [-49,35], [54,54]].map(([x,z], i) => ({ x,z,y:0,state:'ground',time:0,duration:8,id:i }));
+export function createLifeSimulation({ blocked = () => false, random = seededRandom(), routes = LOOPS, flockStarts = [[-12,77], [17,61], [-49,35], [54,54]] } = {}) {
+  const flocks = flockStarts.map(([x,z], i) => ({ x,z,y:0,state:'ground',time:0,duration:8,id:i }));
   const pedestrians = Array.from({ length: 10 }, (_, i) => {
-    const route = LOOPS[i % LOOPS.length].map(([x,z]) => ({ x,z }));
+    const route = routes[i % routes.length].map(p => Array.isArray(p) ? {x:p[0],z:p[1]} : {...p});
     const start = route[i % route.length];
     return { ...start, yaw: Math.PI / 2, speed: .85 + random() * .45, side: i % 2 ? 1 : -1,
       route, goal: (i + 1) % route.length, waypoints: [], idle: 0, seated: false, moving: true, phase: random() * TAU };

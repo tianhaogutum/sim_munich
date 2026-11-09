@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "id": "session04",
+  "district": "Schwabing-West",
+  "places": [
+    {
+      "id": "session04-elisabethmarkt",
+      "name": "伊丽莎白市场周边 · Elisabethmarkt",
+      "lon": 11.5744,
+      "lat": 48.157,
+      "description": "在伊丽莎白广场的市场外围感受社区日常；市场位于 Elisabethstraße、Arcisstraße 与 Nordendstraße 之间。这里作为室外步行起点，不将旧照片中的摊亭布局当作现状。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/elisabethmarkt",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-kurfuerstenplatz",
+      "name": "选帝侯广场 · Kurfürstenplatz",
+      "lon": 11.575,
+      "lat": 48.16,
+      "description": "在 Hohenzollernstraße 与 Belgradstraße、Nordendstraße 相接的街角观察电车与连续街墙，是从市场走向施瓦宾西区广场体系的节点。",
+      "source": "https://commons.wikimedia.org/wiki/Category:Kurfürstenplatz_(München)",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-hohenzollernplatz",
+      "name": "霍亨索伦广场 · Hohenzollernplatz",
+      "lon": 11.5683,
+      "lat": 48.1615,
+      "description": "施瓦宾西区的重要公共广场；可从街边步道观察广场和周围住宅，再向西走到 Nordbad。导航点位于地面广场范围，不代表地下车站入口。",
+      "source": "https://www.muenchen.de/stadtteile/schwabing-west-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-nordbad",
+      "name": "北部游泳馆外广场 · Nordbad",
+      "lon": 11.5642,
+      "lat": 48.1603,
+      "description": "在 Schleißheimer Straße 一侧观察泳馆门廊及街对面的市档案馆；两侧的眼睛主题雕塑构成相互呼应的公共艺术组景。参观路线只使用建筑外的公共街道。",
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-st-sebastian",
+      "name": "圣塞巴斯蒂安教堂外 · St. Sebastian",
+      "lon": 11.5659,
+      "lat": 48.1676,
+      "description": "从 Schleißheimer Straße 一侧观察红褐色砖砌教堂与侧置钟塔。市文化路径记录了其新客观主义建筑群背景；无需进入教堂即可辨识外部体量。",
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-bamberger-haus",
+      "name": "班贝格之家外 · Bamberger Haus",
+      "lon": 11.5681,
+      "lat": 48.1707,
+      "description": "在路易特波尔德公园西侧的园路上观察餐厅建筑；立面采用来自班贝格 Böttingerhaus 的历史装饰，精细窗饰与公园树木形成鲜明对比。",
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session04-luitpoldhuegel",
+      "name": "路易特波尔德山丘 · Luitpoldhügel",
+      "lon": 11.5709,
+      "lat": 48.1724,
+      "description": "沿公园步道上行至山顶十字架附近，天气晴朗时可远眺慕尼黑。山丘由战后城市瓦砾堆成，十字架纪念空袭遇难者；冬季路径可能受滑雪橇活动影响。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/luitpoldpark",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "Nordbad · 北部游泳馆",
+      "lon": 11.5642,
+      "lat": 48.1603,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:MUC_Schwabing_Nordbad.jpg",
+      "author": "Bbb (User: Bbb at wikivoyage shared)",
+      "license": "CC BY-SA 3.0 Unported; https://creativecommons.org/licenses/by-sa/3.0/ (selected from the file’s offered licenses)",
+      "features": [
+        "以两层、三翼体量组织外形，不推定未测量的长宽高度。",
+        "入口门廊以四根多立克柱作为主要识别特征；细节依据市文化路径文字校核。",
+        "保留公共街道与门廊之间的前场关系；眼睛主题雕塑与对面档案馆一起理解。"
+      ],
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf"
+    },
+    {
+      "name": "St. Sebastian · 圣塞巴斯蒂安教堂",
+      "lon": 11.5659,
+      "lat": 48.1676,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:St.-Sebastian-München.jpg",
+      "author": "CineAmigo",
+      "license": "CC BY-SA 3.0 Unported; https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "红褐色裸露砖墙、简洁山墙与侧置方形钟塔形成主体轮廓。",
+        "照片可见塔顶十字架、钟面与两侧水平百叶开口；这些特征应优先于泛化的教堂装饰。",
+        "入口为较低的水平雨棚；模型按照片区分前部体量与高塔，不将原建年代的图像直接视为战后现状。"
+      ],
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf"
+    },
+    {
+      "name": "Bamberger Haus · 班贝格之家",
+      "lon": 11.5681,
+      "lat": 48.1707,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Bamberger_Haus_Muenchen.jpg",
+      "author": "Oliver Raupach",
+      "license": "CC BY-SA 2.5 Generic; https://creativecommons.org/licenses/by-sa/2.5/",
+      "features": [
+        "照片可见浅色两层立面与红褐色四坡屋顶，屋顶有老虎窗及烟囱。",
+        "竖向高窗配深色窗框，窗楣、壁柱和中央装饰应作为立面层次单独处理。",
+        "前部露台有浅色栏杆；阳伞和餐桌属于拍摄时的可变陈设，不作为固定建筑几何。"
+      ],
+      "source": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session04-squares-to-park",
+      "name": "从社区广场到公园山丘",
+      "stops": [
+        "session04-hohenzollernplatz",
+        "session04-nordbad",
+        "session04-st-sebastian",
+        "session04-bamberger-haus",
+        "session04-luitpoldhuegel"
+      ],
+      "description": "自拟短途发现路线：从霍亨索伦广场向西到 Nordbad，沿 Schleißheimer Straße 向北观察圣塞巴斯蒂安教堂，再走公共街道与公园园路到 Bamberger Haus，最后登路易特波尔德山丘。串联社区广场、公共浴场、砖砌教堂与绿地；按实际路口和园路行走，停靠点之间不是直线通行指令。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/schwabing-west-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑官方城市门户：Schwabing-West 城区、广场与范围"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr:b58f688b-b1e7-4bad-b1ce-8e5cd7ea6ad3/KulturGeschichtsPfad-4-Schwabing-West.pdf",
+      "title": "慕尼黑市文化路径：Schwabing-West（印刷页 73–79：Nordbad、St. Sebastian；页 80：Bamberger Haus）"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/luitpoldpark",
+      "title": "慕尼黑官方城市门户：Luitpoldpark、山丘与纪念十字架"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/elisabethmarkt",
+      "title": "慕尼黑官方城市门户：Elisabethmarkt 所在街区"
+    },
+    {
+      "url": "https://www.swm.de/baeder/nordbad",
+      "title": "市政公用事业 SWM：Nordbad 地址及建筑风格"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Elisabethmarkt",
+      "title": "Wikimedia Commons：Elisabethmarkt 位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Kurfürstenplatz_(München)",
+      "title": "Wikimedia Commons：Kurfürstenplatz 街道关系与位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Hohenzollernplatz_(München)",
+      "title": "Wikimedia Commons：Hohenzollernplatz 位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Nordbad_(München)",
+      "title": "Wikimedia Commons：Nordbad 建筑位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St._Sebastian_(Munich)",
+      "title": "Wikimedia Commons：St. Sebastian 位置与区属"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Bamberger_Haus_(München)",
+      "title": "Wikimedia Commons：Bamberger Haus 位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Gipfelkreuz_Luitpoldhuegel_Muenchen.jpg",
+      "title": "Wikimedia Commons：Luitpoldhügel 顶部十字架位置；对应 OSM node 5046900823"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:MUC_Schwabing_Nordbad.jpg",
+      "title": "建筑照片、作者及许可：Nordbad · 北部游泳馆"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:St.-Sebastian-München.jpg",
+      "title": "建筑照片、作者及许可：St. Sebastian · 圣塞巴斯蒂安教堂"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Bamberger_Haus_Muenchen.jpg",
+      "title": "建筑照片、作者及许可：Bamberger Haus · 班贝格之家"
+    }
+  ],
+  "limitations": [
+    "核对日期为 2026-11-09；这是地点与建筑参考包，不是实时开放时间或无障碍路线资料。",
+    "所有坐标均将 Commons 页面所列对象位置取近似值并保留四位小数；不是测量结果、精确门址或已检验的安全落点。建筑位置可能落在建筑轮廓内，运行时应吸附至邻近公共步道。",
+    "地点坐标来源按同名 Commons 分类页对应；山丘使用山顶十字架照片的对象坐标。未获取或验证法定行政边界多边形。",
+    "建筑照片年代早于本次整理，照片许可已核对；Nordbad 照片缩略图抓取被限流，其建模特征依据市文化路径文字。另两张缩略图已目视核对。未下载或嵌入原始照片。",
+    "Elisabethmarkt 官方页面完整抓取返回 405；仅使用搜索索引中可核对的地点街道关系，并以 Commons 核对位置，不描述当前摊位数量或布局。",
+    "建筑特征为参考照片及市文化路径支持的建模提示，没有推定精确尺寸；复用照片仍须署名、链接许可并遵守相同方式共享条件。",
+    "路线为本包编排，并非市政府发布的指定步行路线；未核实即时施工、过街信号及冬季园路状况。"
+  ]
+}

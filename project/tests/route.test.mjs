@@ -3,18 +3,25 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { BOUNDS, CORE_BOUNDS, FOUNTAINS, POIS, SPAWN, COMPANION, PHOTO_TARGETS, STAGES } from '../src/date_route.mjs';
 import { createStory, objectiveFor } from '../src/date_story.mjs';
+import { CORE_BUILDINGS } from '../src/lmu_core_data.mjs';
 
 const source = readFileSync(new URL('../src/anime_main.js', import.meta.url), 'utf8');
 const storySource = readFileSync(new URL('../src/date_story.mjs', import.meta.url), 'utf8');
 const compact = text => text.replace(/\/\/[^\n]*/g, '').replace(/\s+/g, '');
 
-// Independent copy, not an eval of production code: changes MUST be reviewed and re-synced.
-const solids = [
-  { cx: 0, cz: -11, hw: 81, hd: 13 },
-  { cx: -112, cz: -26, hw: 52, hd: 52 },
-  { cx: 112, cz: -26, hw: 52, hd: 52 },
-];
-const extraBlockers = [];   // world blocks register precise footprints at runtime; none in this static copy
+// Independent ray-crossing implementation against the rendered OSM rings. No production collision call.
+const solids = [];
+const coreBounds = CORE_BUILDINGS.map(b=>({ring:b.ring,minX:Math.min(...b.ring.map(p=>p.x)),maxX:Math.max(...b.ring.map(p=>p.x)),minZ:Math.min(...b.ring.map(p=>p.z)),maxZ:Math.max(...b.ring.map(p=>p.z))}));
+function independentCore(x,z) {
+  for(const b of coreBounds){
+    if(x<b.minX||x>b.maxX||z<b.minZ||z>b.maxZ)continue;
+    let hits=0;
+    for(let i=0;i<b.ring.length;i++){const a=b.ring[i],c=b.ring[(i+1)%b.ring.length];if((a.z>z)!==(c.z>z)&&x<(c.x-a.x)*(z-a.z)/(c.z-a.z)+a.x)hits++;}
+    if(hits%2)return true;
+  }
+  return false;
+}
+const extraBlockers = [independentCore];
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
   for (let i = 0; i < FOUNTAINS.length; i++) {
@@ -29,19 +36,16 @@ function blocked(x, z) {
   return false;
 }
 // The flood fill below stays inside the original plaza so the 1 m grid remains small.
-const inCore = (x, z) => x >= CORE_BOUNDS.minX && x <= CORE_BOUNDS.maxX && z >= CORE_BOUNDS.minZ && z <= CORE_BOUNDS.maxZ;
+const inCore = (x, z) => x >= -90 && x <= 85 && z >= -25 && z <= 115;
 const syncMessage = 'Engine collision rule changed: review anime_main.js and RE-SYNC the independent copy in tests/route.test.mjs; do not just suppress this guard.';
 
-test('collision copy is in sync with engine dimensions, solids and blocked()', () => {
-  assert.match(source, /\bbW\s*:\s*160\s*[,}]/, syncMessage);
-  assert.match(source, /\bbDepth\s*:\s*22\s*[,}]/, syncMessage);
-  const expectedSolids = `const solids = [
-    { cx:0, cz:-(D.bDepth*.5), hw:D.bW*.5+1, hd:D.bDepth*.5+2 },
-    { cx:-(D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
-    { cx: (D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
-  ];`;
-  const actualSolids = source.match(/const solids\s*=\s*\[[\s\S]*?\];/)?.[0];
-  assert.equal(compact(actualSolids ?? ''), compact(expectedSolids), syncMessage);
+test('engine uses mapped core polygons and no retired placeholder collision boxes', () => {
+  assert.match(source, /import \{ coreBlocked \} from '.\/lmu_core_data.mjs'/);
+  assert.match(source,/const solids = \[\]/);
+  assert.match(source,/const extraBlockers = \[coreBlocked\]/);
+  assert.ok(CORE_BUILDINGS.length>=8,'mapped university core bodies retained');
+  assert.ok(CORE_BUILDINGS.some(b=>b.name==='A'),'main entrance block exists');
+  assert.ok(!source.includes('colN:8'),'imaginary freestanding colonnade removed');
   const actualBlocked = source.match(/function blocked\(x,\s*z\)\s*\{[\s\S]*?\n\}/)?.[0];
   assert.equal(compact(actualBlocked ?? ''), compact(blocked.toString()), syncMessage);
 });

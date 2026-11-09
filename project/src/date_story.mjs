@@ -16,7 +16,7 @@ export const FOUNTAIN_OPTIONS = Object.freeze([
 // Dialogue and postcard copy are kept together, independent of UI.
 export const DIALOGUE = {
   meet: { lines: [
-    line('companion', '你来啦。我刚刚还在想，你会不会从那排廊柱后面突然出现。'),
+    line('companion', '你来啦。我刚刚还在想，你会不会从那排拱廊后面突然出现。'),
     line('player', '让你等很久了吗？'),
     line('companion', '没有。今天没有课表，也没有赶时间这回事。'),
     line('companion', '先陪我去喷泉边坐一会儿吧。今天的慕尼黑，留给我们。'),
@@ -47,7 +47,7 @@ const MEMORIES = {
   scenery: {
     reply: '你说想记住风景。可我再看那片风景，里面总是先有你。',
     title: '把你写进慕尼黑的春天',
-    body: '廊柱收下阳光，喷泉收下微风。\n樱花落进你的发间，你走进我的风景。\n今天的慕尼黑，因为有你，值得一再想起。',
+    body: '拱廊收下阳光，喷泉收下微风。\n樱花落进你的发间，你走进我的风景。\n今天的慕尼黑，因为有你，值得一再想起。',
   },
   together: {
     reply: '你说想记住我们聊天的下午。我也是，连那些安静的空白都喜欢。',
@@ -62,7 +62,7 @@ const MEMORIES = {
 };
 
 export const PHOTO_REACTIONS = {
-  facade: `${SPEAKERS.companion}：拍到了！以后看见这排廊柱，就会想起今天在这里等你。`,
+  facade: `${SPEAKERS.companion}：拍到了！以后看见这排拱廊，就会想起今天在这里等你。`,
   fountain: `${SPEAKERS.player}：水花也留下来了，好像照片里还能听见声音。`,
   couple: `${SPEAKERS.companion}：这张我最喜欢。你看，我们都笑得好开心。`,
 };

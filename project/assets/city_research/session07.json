@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "id": "session07",
+  "district": "Sendling-Westpark",
+  "places": [
+    {
+      "id": "session07-rose-garden",
+      "name": "玫瑰园喷泉旁 · Rosengarten",
+      "lon": 11.5094,
+      "lat": 48.1226,
+      "description": "从玫瑰园喷泉旁的步道观察花坛与坡地，适合作为西公园西部探索的起点。花期随季节变化；导航点靠近喷泉，不指向水池内部。",
+      "source": "https://commons.wikimedia.org/wiki/File:Brunnen_am_Rosengarten_Westpark_Muenchen-1.jpg",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-lake-stage",
+      "name": "西湖露天剧场外侧 · Seebühne Westpark",
+      "lon": 11.5119,
+      "lat": 48.1235,
+      "description": "西湖岸的半圆形露天剧场，以石质阶梯面向湖景；市政府资料记载这里举办露天电影与戏剧。停留在外侧步道，活动期间能否入场以现场安排为准。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-thai-sala",
+      "name": "泰式水亭岸边 · Thai-Sala",
+      "lon": 11.5126,
+      "lat": 48.1232,
+      "description": "在岸边看水中的泰式亭阁及倒影。市政府介绍其采用曼谷风格、漆饰与釉面瓦，亭内设佛像；导航点位于亭西南侧附近，不要求进入亭内。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-nepal-pagoda",
+      "name": "尼泊尔木雕塔前 · Nepal-Pagode",
+      "lon": 11.5131,
+      "lat": 48.1233,
+      "description": "这座为 1983 年国际园艺博览会制作并运来慕尼黑的木雕塔，是亚洲园林组团中的建筑观察点。从塔前附近欣赏木构与雕刻，不把建筑内部当作通行路线。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-chinese-garden",
+      "name": "芳华园附近 · China-Garten",
+      "lon": 11.5135,
+      "lat": 48.1232,
+      "description": "由广州市园林部门设计的中国园，以四季组织游园意象，包含石舫与冬亭。建议从园门附近观察曲折路线与墙体框景；园内通行以现场开放情况为准。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-japanese-garden",
+      "name": "日本园步道 · Japanischer Garten",
+      "lon": 11.5131,
+      "lat": 48.123,
+      "description": "来自友好城市札幌的园林，将池岛、冥想与茶园元素结合。留意墙篱转折后展开的水面和亭阁视线；此点靠近已绘制的说明牌，不是池中踏石。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-historic-garden",
+      "name": "历史主题园 · Historischer Garten",
+      "lon": 11.5146,
+      "lat": 48.1228,
+      "description": "位于西湖与 Bayerwaldhaus 之间，以对称花坛、中央喷泉、绿荫廊道及座椅营造巴洛克式园林空间。这里的“历史”指主题造园风格，不代表原址保留的古代花园。",
+      "source": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/historischer-garten/50281211/",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session07-bayerwald-house",
+      "name": "巴伐利亚森林农舍外 · Bayerwaldhaus",
+      "lon": 11.5166,
+      "lat": 48.1229,
+      "description": "沿公共步道到木栅栏外观察农舍与花园。Commons 和高校旅游资料将其记为来自巴伐利亚森林地区、为园博会迁入的历史农舍；不默认室内开放。",
+      "source": "https://bayerwaldhaus-westpark.de/das-haus/",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "尼泊尔木雕塔 · Nepal-Pagode",
+      "lon": 11.5132,
+      "lat": 48.1234,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Nepalpagode_im_Westpark_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "以手工木雕构件和木构塔体作为辨识重点；市政府明确记载其制作与迁运背景。",
+        "建模参考应表达台地上的塔体与入口层次，雕刻纹样从摄影页逐项核对；不从单张照片推算真实尺寸。"
+      ],
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html"
+    },
+    {
+      "name": "泰式水亭 · Thai-Sala",
+      "lon": 11.5127,
+      "lat": 48.1233,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Thai-Sala_Westpark_M%C3%BCnchen.jpg",
+      "author": "Peterf",
+      "license": "CC BY-SA 4.0 International — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "照片可见开放柱亭、层叠坡屋顶、翘起的金色屋脊及红绿相间的屋面。",
+        "中央佛像、细柱与低栏杆形成通透轮廓；白色基座临水，倒影是环境关系的重要参考。",
+        "市政府资料支持曼谷风格、漆饰和釉面瓦；照片中的颜色不作为材料光学参数。"
+      ],
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html"
+    },
+    {
+      "name": "巴伐利亚森林农舍 · Bayerwaldhaus",
+      "lon": 11.5166,
+      "lat": 48.123,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Bayerwaldhaus_Westpark_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "照片可见深色木墙、低坡双坡屋顶与明显出檐，山墙正面有连续木栏阳台。",
+        "浅色竖条木栅栏围合前院，阳台花箱与前院植物强化住宅尺度。",
+        "花箱和植被属于摄影时的状态；建模保留木屋、屋顶和阳台关系，不固定季节花量。"
+      ],
+      "source": "https://bayerwaldhaus-westpark.de/das-haus/"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session07-westpark-discovery",
+      "name": "从玫瑰园到木农舍：西公园短步行",
+      "stops": [
+        "session07-rose-garden",
+        "session07-lake-stage",
+        "session07-thai-sala",
+        "session07-nepal-pagoda",
+        "session07-chinese-garden",
+        "session07-japanese-garden",
+        "session07-historic-garden",
+        "session07-bayerwald-house"
+      ],
+      "description": "自编探索顺序：从玫瑰园走向西湖剧场外侧，沿湖岸观察泰式亭，再看尼泊尔塔与中日园林，最后经历史主题园到农舍外。集中在西公园西部，无须横穿 Mittlerer Ring。按现场公共步道绕行水面与围栏；园门关闭时在外侧观察。可预留约 30–45 分钟连同短暂停留，此为行程建议，非实测步行时间或官方导览。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/sendling-westpark-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Sendling-Westpark 区域介绍"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "title": "慕尼黑市政府：公园与绿地；Westpark、亚洲园林与主题种植介绍"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/westpark",
+      "title": "慕尼黑城市门户：西公园、玫瑰园、亚洲园林与露天剧场"
+    },
+    {
+      "url": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/seebuehne/50022185/",
+      "title": "慕尼黑应用科学大学旅游学院发布于 Outdooractive：Seebühne，含位置"
+    },
+    {
+      "url": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/historischer-garten/50281211/",
+      "title": "慕尼黑应用科学大学旅游学院发布于 Outdooractive：历史主题园，含位置"
+    },
+    {
+      "url": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/bayerwaldhaus/43949551/",
+      "title": "慕尼黑应用科学大学旅游学院发布于 Outdooractive：Bayerwaldhaus；坐标与 OSM 不完全一致"
+    },
+    {
+      "url": "https://bayerwaldhaus-westpark.de/das-haus/",
+      "title": "Bayerwaldhaus 运营机构：房屋介绍"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Nepalpagode_im_Westpark_Muenchen-1.jpg",
+      "title": "Commons：尼泊尔塔照片；Rufus46，2009；作者、许可及相机位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Thai-Sala_Westpark_M%C3%BCnchen.jpg",
+      "title": "Commons：泰式水亭照片；Peterf，2018；作者、许可及被摄物位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Bayerwaldhaus_Westpark_Muenchen-1.jpg",
+      "title": "Commons：Bayerwaldhaus 照片；Rufus46，2009；作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Brunnen_am_Rosengarten_Westpark_Muenchen-1.jpg",
+      "title": "Commons：玫瑰园喷泉，含被摄物位置及 OSM node 4021885200"
+    },
+    {
+      "url": "https://www.openstreetmap.org/copyright",
+      "title": "OpenStreetMap 贡献者；地图数据采用 ODbL 1.0"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/105310173",
+      "title": "OpenStreetMap：湖边剧场；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/144194176",
+      "title": "OpenStreetMap：尼泊尔塔；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/144194194",
+      "title": "OpenStreetMap：泰式水亭；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/144194195",
+      "title": "OpenStreetMap：中国园；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/236897381",
+      "title": "OpenStreetMap：日本园；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/144194187",
+      "title": "OpenStreetMap：Bayerwaldhaus 建筑轮廓；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/5304665130",
+      "title": "OpenStreetMap：日本园说明牌；经 API 核对几何位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/api/0.6/map?bbox=11.511,48.122,11.518,48.124",
+      "title": "本次读取的 OSM 小范围 XML：建筑、园林与说明牌位置"
+    }
+  ],
+  "limitations": [
+    "核查日期：2026-11-09。本包重点细化第 7 区西公园西部的步行体验，不代表全区完整调查。",
+    "全部经纬度为 WGS84 近似导航锚点，四舍五入至小数点后四位；参考 OSM 轮廓、说明牌或来源定位作小幅室外偏移，不是测绘入口、地籍边界或安全落点保证。建筑坐标也只是近似位置。",
+    "OSM 小范围 XML 直接读取成功；Overpass 查询失败，未把失败的查询当作证据。尼泊尔塔 Commons 页的经纬度是相机位置，塔体位置采用 OSM way 144194176。",
+    "高校 Bayerwaldhaus 页面定位比 OSM 建筑偏南约数十米；采用 OSM 建筑轮廓及其南侧室外锚点。",
+    "步行路线只提供地点顺序，未实测路长、坡度、无障碍条件或园门开放状态；不得用点间直线穿越池塘、围栏或建筑。",
+    "只引用摄影说明页，不在包内复制图片。三张照片的作者与许可分别核对；日后复用照片需保留署名、许可链接及修改说明。老照片不证明当前花卉、涂装或设施维护状况。",
+    "尼泊尔塔木工人数在市政府与摄影说明中不一致，故不写人数；不从照片猜测建筑精确尺寸。"
+  ]
+}

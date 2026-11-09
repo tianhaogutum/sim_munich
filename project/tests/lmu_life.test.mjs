@@ -79,3 +79,38 @@ test('postcard flock gathers near the couple, leaves photo clearance, then celeb
   sim.update(.016,31,{x:2,z:75},companion,'done');
   assert.equal(nearby.state,'flight');
 });
+
+test('surveyed lane motion respects source order, constant speed and end-of-way pause', async () => {
+  const { compileLane, laneAtTime }=await import('../src/lmu_life_sim.mjs');
+  const lane=compileLane([{x:0,z:0},{x:30,z:0},{x:30,z:40}]);
+  const a=laneAtTime(lane,2,5,0,10),b=laneAtTime(lane,8,5,0,10);
+  assert.deepEqual([a.x,a.z],[10,0]);
+  assert.deepEqual([b.x,b.z],[30,10]);
+  assert.ok(Math.abs(a.yaw-Math.PI/2)<1e-9);assert.equal(b.yaw,0);
+  assert.equal(laneAtTime(lane,15,5,0,10).visible,false);
+  assert.deepEqual(laneAtTime(lane,24,5,0,10),{...laneAtTime(lane,0,5,0,10),cycle:1});
+  assert.equal(compileLane([]),null);assert.equal(laneAtTime(null,10).visible,false);
+});
+test('ambient lane samples stay on one uninterrupted retained OSM polyline', async () => {
+  const { LANES }=await import('../src/lmu_block_ludwigstrasse_plan.mjs');
+  const { compileLane, laneAtTime }=await import('../src/lmu_life_sim.mjs');
+  for(const mode of ['motor','cycle']) {
+    const candidates=LANES.filter(l=>l.mode===mode).map(l=>compileLane(l.points)).filter(Boolean).sort((a,b)=>b.length-a.length);
+    const lane=candidates[0];assert.ok(lane.length>100);
+    for(let t=0;t<lane.length/6;t+=.05){
+      const p=laneAtTime(lane,t,6,0,10);
+      assert.ok(Number.isFinite(p.x)&&Number.isFinite(p.z)&&Number.isFinite(p.yaw));
+      assert.ok(p.x<=-150||p.x>=150,'no invented connection across protected core gap');
+    }
+  }
+});
+test('new core walker starts and routes are injected without moving through mapped buildings', async () => {
+  const {coreBlocked}=await import('../src/lmu_core_data.mjs');
+  const blocked=(x,z)=>coreBlocked(x,z);
+  const safe=[[-52,24],[-29,23],[-16,53],[-5.9,38],[4,16]].filter(([x,z])=>!blocked(x,z));
+  const sim=createLifeSimulation({blocked,routes:[safe],flockStarts:safe.slice(0,4),random:seededRandom(17)});
+  for(let i=0;i<1200;i++){
+    sim.update(.05,i*.05,{x:-52,z:24},{x:-50,z:24},'photos');
+    for(const p of sim.pedestrians)assert.equal(blocked(p.x,p.z),false);
+  }
+});

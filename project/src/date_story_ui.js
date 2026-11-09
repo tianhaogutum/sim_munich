@@ -253,7 +253,7 @@ export function createStoryUI(engine, story) {
       const activePhoto = Boolean(engine.isPhotoMode?.());
       if (activePhoto !== photoMode) { photoMode = activePhoto; objective.hidden = photoMode; }
       if (!scene || choosing || !confirm.hidden || typed >= characters.length) return;
-      typed = Math.min(characters.length, typed + Math.max(0, dt) * 36);
+      typed = Math.min(characters.length, typed + Math.max(0, dt) * 36 * (engine.preferences?.subtitleSpeed ?? 1));
       text.textContent = characters.slice(0, Math.floor(typed)).join('');
     },
     handleKey(key, event) {

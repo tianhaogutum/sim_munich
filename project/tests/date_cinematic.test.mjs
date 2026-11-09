@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { SPAWN } from '../src/date_route.mjs';
 import {
   catmullRom, sampleSpline, buildArcLengthTable, arcParameter, distance3,
   compilePath, samplePath, ease, easeInOut, defaultCameraPose, createSequence, SEQUENCES,
@@ -88,9 +89,9 @@ test('intro terminates at the live player default camera, including yaw and heig
   close3(pose.target, [8, 3.6, 63]);
   close(pose.fov, 61);
   const spawn = defaultCameraPose();
-  close(spawn.position[0], 0);
+  close(spawn.position[0], SPAWN.x + Math.sin(SPAWN.yaw) * Math.cos(.28) * 14);
   close(spawn.position[1], Math.sin(0.28) * 14 + 1.2);
-  close(spawn.position[2], 92 + Math.cos(0.28) * 14);
+  close(spawn.position[2], SPAWN.z + Math.cos(SPAWN.yaw) * Math.cos(.28) * 14);
 });
 
 test('ending starts around the couple midpoint and rises to a wide view', () => {

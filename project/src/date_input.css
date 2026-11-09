@@ -169,3 +169,26 @@ body.di-touch #date-audio-root { top: 10px !important; bottom: auto !important; 
   .di-hud-toggle { bottom: calc(190px + env(safe-area-inset-bottom)); }
   .di-look-hint { top: 30%; }
 }
+
+/* Responsive utility rows keep touch targets separate from movement controls. */
+@media (max-width: 700px) {
+ body.di-touch #date-audio-root { top: auto !important; bottom: calc(220px + env(safe-area-inset-bottom)) !important; left: auto !important; right: 12px !important; }
+ body.di-touch .dm-panel { top: 300px; left: 12px; width: 150px; padding: 8px; box-sizing: border-box; }
+ body.di-touch .dm-toggle { min-height: 44px; }
+ body.di-touch .dc-launcher { bottom: calc(330px + env(safe-area-inset-bottom)); right: 12px; min-height: 44px; max-width: calc(100vw - 202px); }
+ body.di-touch .di-look-hint { display: none; }
+ body.di-touch .ds-menu { min-height: 44px; }
+ body.di-touch .di-context { max-width: calc(100vw - 190px); }
+}
+@media (max-height: 480px) and (min-width: 600px) {
+ body.di-touch #status-panel { display: none; }
+ body.di-touch #days-counter { top: 12px; }
+ body.di-touch .dm-panel { display: none; }
+ body.di-touch .dc-launcher { top: 180px; bottom: auto; right: 12px; min-height: 44px; }
+ body.di-touch #date-audio-root { top: 12px !important; right: 82px !important; left: auto !important; bottom: auto !important; }
+ body.di-touch .di-joystick { width: 120px; height: 120px; }
+ body.di-touch .di-movement { width: 120px; left: 14px; bottom: 10px; }
+ body.di-touch .di-hud-toggle { bottom: 154px; min-height: 44px; }
+ body.di-touch .di-actions { bottom: 12px; }
+ body.di-touch .di-look-hint { display: none; }
+}

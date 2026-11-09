@@ -86,6 +86,7 @@ export default {
     "credits": "Credits",
     "chapter2": "Chapter 2 · A walk in the English Garden",
     "chapter3": "Chapter 3 · Inside the main building",
+    "city": "Munich · Explore the city",
     "settings": "Settings",
     "choose": "Choose",
     "go": "Let's go",
@@ -470,7 +471,7 @@ export default {
     "postcard": "Our postcard",
     "export": "Save postcard",
     "saved": "Photo saved",
-    "facade": "Main building and columns",
+    "facade": "Main building and arcades",
     "fountain": "Fountain",
     "couple": "The two of us",
     "moveCloser": "Move a little closer",
@@ -504,7 +505,7 @@ export default {
     "sights": {
       "entrance": {
         "name": "LMU main entrance · Haupteingang",
-        "text": "Built in 1835–1840, this entrance was designed by Friedrich von Gärtner in the Romanesque-inspired Rundbogenstil.\nThe eight columns at the central entrance stand about 9.2 metres high and define the façade.",
+        "text": "Designed by Friedrich von Gärtner, the main building was begun in 1835 and opened in 1840. Its arcaded entrance, paired round-arched windows and returning side wings define the Rundbogenstil facade.",
         "source": "Source: Official LMU guide · lmu.de"
       },
       "white_rose": {

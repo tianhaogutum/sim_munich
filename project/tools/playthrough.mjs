@@ -146,11 +146,20 @@ async function photo(id) {
   if (!await qa.evaluate('__lmu.photo.isActive()')) { await qa.tap('p'); await qa.frames(); }
   check(await qa.evaluate('__lmu.photo.isActive()'), 'P did not enter photo mode');
   const before = await state();
+  await qa.evaluate('__lmu.engine.cameraOverride = null');
   let framing = '';
-  if (id === 'facade') await teleport(0, 48);
-  if (id === 'fountain') await teleport(35, 64);
+  if (id === 'facade' || id === 'fountain') {
+    const goal = PHOTO_TARGETS.find(t => t.id === id), t = goal.target;
+    const normal = goal.normal ?? {x:0,z:1}, dist = id === 'facade' ? 50 : 16;
+    await teleport(t.x + normal.x * dist, t.z + normal.z * dist);
+    // Use the game's public camera override to exercise actual projection, occlusion and shutter.
+    // No quest credit is injected: an invalid frame still fails the production validator.
+    await qa.evaluate(`(() => { const e=__lmu.engine,t=e.route.PHOTO_TARGETS.find(t=>t.id===${JSON.stringify(id)}),p=t.target,n=t.normal??{x:0,z:1};e.cameraOverride=()=>{e.camera.position.set(p.x+n.x*${dist},p.y,p.z+n.z*${dist});e.camera.lookAt(p.x,p.y,p.z);e.camera.updateMatrixWorld(true);};})()`);
+    await qa.frames();
+  }
+
   if (id === 'couple') {
-    await teleport(0, 64);
+    await teleport(POIS.our_plaza.x, POIS.our_plaza.z);
     // The default 14 m boom is too far for the couple's <=9 m goal. Wheel is the public zoom input.
     await qa.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: 480, y: 320, deltaX: 0, deltaY: -750 });
     await sleep(350); await qa.frames();
@@ -253,6 +262,7 @@ try {
     await step('Find hair clip', () => visit('memento', 'find_memento', 'photos'));
     for (const id of ['facade', 'fountain', 'couple']) await step(`Photo ${id}`, () => photo(id));
     await step('Our plaza / ending', async () => {
+      await qa.evaluate('__lmu.engine.cameraOverride = null');
       await closeOverlays();
       const detail = await visit('our_plaza', 'postcard', 'done');
       await closeOverlays(); return detail;
@@ -279,7 +289,9 @@ try {
     await step('Fountain collision', async () => {
       await closeOverlays();
       check(!await qa.evaluate('__lmu.engine.isLocked()'), 'Movement still locked');
-      await teleport(35, 60, 0);
+      const fountain = FOUNTAINS[0];
+      const startZ = fountain.z + fountain.r + 6;
+      await teleport(fountain.x, startZ, 0);
       // Sample every frame while moving, not just the final position (detect crossing/NaNs).
       await qa.evaluate(`window.__lmuQaSample = { positions: [], active: true };
         requestAnimationFrame(function sample() {
@@ -293,8 +305,7 @@ try {
       check(positions.every(p => p.every(Number.isFinite)), 'Non-finite player position');
       check(positions.every(p => FOUNTAINS.every(f => Math.hypot(p[0] - f.x, p[2] - f.z) >= f.r - 1e-6)), 'Player entered a fountain circle');
       const z = positions.at(-1)[2];
-      check(z < 59, `No useful movement toward the fountain (${z}); collision result would be vacuous`);
-      const fountain = FOUNTAINS.find(f => f.x > 0);
+      check(z < startZ - 1, `No useful movement toward the fountain (${z}); collision result would be vacuous`);
       const end = positions.at(-1);
       check(fountain && Math.hypot(end[0] - fountain.x, end[2] - fountain.z) <= fountain.r + 0.4,
         `Did not reach the fountain boundary in 3 s (z=${z}); cannot confirm blocking`);
@@ -315,7 +326,7 @@ try {
           else requestAnimationFrame(frame);
         } requestAnimationFrame(frame);
       })`);
-      return `${sample.average.toFixed(2)} ms avg, ${sample.max.toFixed(2)} ms max (${sample.count}/120 intervals; informational, software GL${sample.count < 120 ? ', 8.5 s sample cap' : ''})`;
+      return `${sample.average.toFixed(2)} ms avg, ${sample.max.toFixed(2)} ms max (${sample.count}/120 intervals; informational browser measurement${sample.count < 120 ? ', 8.5 s sample cap' : ''})`;
     });
   }
 } catch (error) {

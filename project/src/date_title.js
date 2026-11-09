@@ -64,6 +64,7 @@ export function createTitle(engine, story) {
   let appliedAudio = null;
   let lastState = null;
   const settings = readSettings();
+  engine.preferences = settings; // Live shared camera/dialogue preferences.
   // M and the audio button persist through the audio module, not this menu.
   settings.muted = engine.audio?.isMuted?.() ?? settings.muted;
   const bloomStrengths = new WeakMap();
@@ -84,6 +85,7 @@ export function createTitle(engine, story) {
     const ratio = settings.quality === 'low' ? 0.75 : settings.quality === 'medium'
       ? 1 : Math.min(globalThis.devicePixelRatio || 1, 2);
     engine.renderer?.setPixelRatio(ratio);
+    if (engine.renderer?.shadowMap) { engine.renderer.shadowMap.enabled = settings.quality !== 'low'; engine.renderer.shadowMap.needsUpdate = true; }
     // EffectComposer caches its own pixel ratio; keep its render targets in sync too.
     engine.composer?.setPixelRatio?.(ratio);
     engine.composer?.setSize(innerWidth, innerHeight);
@@ -133,6 +135,7 @@ export function createTitle(engine, story) {
           ${button('start', `${t('title.start')} <span aria-hidden="true">↗</span>`, 'dt-primary dt-start')}
           ${hasProgress() ? button('continue', `${t('title.continue')} <span class="dt-button-note">${t('title.continueNote')}</span>`, 'dt-continue') : ''}
           <div class="dt-menu-pair">${button('chapter2', `${t('title.chapter2')} <span aria-hidden="true">→</span>`, 'dt-chapter2')}${button('chapter3', `${t('title.chapter3')} <span aria-hidden="true">→</span>`, 'dt-chapter3')}</div>
+          ${button('city', `${t('title.city')} <span aria-hidden="true">↗</span>`, 'dt-city')}
           <div class="dt-menu-pair">${button('help', t('title.help'))}${button('credits', t('title.credits'))}</div>${button('settings', t('title.settings'))}
         </nav>
         <p class="dt-keyhint"><kbd>↑</kbd> <kbd>↓</kbd> ${t('title.choose')} <span>·</span> <kbd>Enter</kbd> ${t('title.go')}</p>
@@ -277,6 +280,7 @@ export function createTitle(engine, story) {
       case 'title': show('title'); break;
       case 'chapter2': location.href = './park.html'; break;
       case 'chapter3': location.href = './interior.html'; break;
+      case 'city': location.href = './city.html'; break;
     }
   }
 

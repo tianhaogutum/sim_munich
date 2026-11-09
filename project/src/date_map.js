@@ -2,6 +2,8 @@ import { t, onLocaleChange } from './date_i18n.mjs';
 // North-up navigation for the Munich date chapter. Only owns #date-map-root.
 // createMap(engine, story) -> { update(dt, et), handleKey(k, event), dispose() }
 import { objectiveFor } from './date_story.mjs';
+import { CORE_BUILDINGS, CORE_TREES } from './lmu_core_data.mjs';
+import { ROAD_WAYS } from './lmu_block_ludwigstrasse_data.mjs';
 
 const TAU = Math.PI * 2;
 const TREES = [
@@ -29,7 +31,7 @@ export function createMap(engine = {}, story = {}) {
   root.className = 'dm-root';
   root.innerHTML = `
     <section class="dm-panel" aria-label="${t('map.label')}">
-      <div class="dm-heading"><span>${t('map.title')}</span><span class="dm-north">N ↑</span></div>
+      <div class="dm-heading"><span>${t('map.title')}</span><span class="dm-north">N →</span></div>
       <div class="dm-objective"><span class="dm-bearing">${CHEVRON}</span><span class="dm-distance"></span></div>
       <canvas class="dm-canvas" role="img" aria-label="${t('map.canvas')}"></canvas>
       <button class="dm-toggle" type="button" aria-keyshortcuts="N" aria-pressed="false"><span class="dm-mode">${t('map.nearby')}</span><span><kbd>N</kbd> ${t('map.overview')}</span></button>
@@ -136,45 +138,27 @@ export function createMap(engine = {}, story = {}) {
 
   function paint(p, yaw, time) {
     if (!ctx) return;
-    scale = overview ? Math.min((width - 12) / 380, (height - 14) / 166) : width / 114;
+    scale = overview ? Math.min((width - 12) / 1040, (height - 14) / 740) : width / 114;
     centerX = overview ? 0 : p.x;
     centerZ = overview ? 40 : p.z;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = '#141822'; ctx.fillRect(0, 0, width, height);
-    rect(-210, -52, 420, 182, '#20292c');
-    rect(-100, 0, 200, 80, '#41413e', '#626053');
-    // Paved entrance axis, plaza path and Ludwigstraße.
-    rect(-8, 0, 16, 118, '#565346');
-    rect(-100, 77, 200, 5, '#595648');
-    rect(112, -180, 33, 420, '#292a33', '#626052');
-    ctx.beginPath(); ctx.moveTo(mapX(128.5), mapY(-180)); ctx.lineTo(mapX(128.5), mapY(240));
-    ctx.strokeStyle = '#85816a'; ctx.lineWidth = .8;
-    ctx.setLineDash([4, 5]); ctx.stroke(); ctx.setLineDash([]);
-    rect(-136, -35, 48, 40, '#6e6465', '#ac9381');
-    rect(88, -35, 48, 40, '#6e6465', '#ac9381');
-    rect(-182, -39, 36, 44, '#5d585f', '#887a76');
-    rect(146, -39, 36, 44, '#5d585f', '#887a76');
-    rect(-80, -22, 160, 22, '#9c8672', '#d6b994');
-    rect(-18, -22, 36, 24.8, '#b09a7a', '#e0c899');
-    rect(-80, -22, 12, 23.2, '#b09a7a', '#d6b994');
-    rect(68, -22, 12, 23.2, '#b09a7a', '#d6b994');
-    rect(-19, 3, 38, 3, '#7b705f');
-    for (const tree of TREES) dot(tree[0], tree[1], Math.max(1.4, 3 * scale), '#829477', '#acb78a');
-    // Basins are scenery, independent of the interactable fountain POI.
-    for (const x of [-35, 35]) {
-      dot(x, 48, 5 * scale, '#62999e', '#bad1be');
-      dot(x, 48, Math.max(1, .8 * scale), '#d4d8c2');
+    // North is +X (to the right); east is +Z (down). Draw surveyed geometry, not the retired plaza.
+    ctx.strokeStyle='#51575b';ctx.lineCap='round';
+    for(const road of ROAD_WAYS){
+      ctx.lineWidth=Math.max(1,Number(road.tags?.lanes||2)*3.1*scale);ctx.beginPath();
+      road.points.forEach((p,i)=>i?ctx.lineTo(mapX(p.x),mapY(p.z)):ctx.moveTo(mapX(p.x),mapY(p.z)));ctx.stroke();
     }
-    ctx.font = `${overview ? 9 : 10}px Nunito, sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#f0dcaf';
-    ctx.fillText('LMU', mapX(0), mapY(-11));
-    if (overview) {
-      ctx.fillStyle = '#b9b8a0'; ctx.font = '8px Nunito, sans-serif';
-      ctx.fillText(t('map.plaza'), mapX(-55), mapY(35));
-      ctx.save(); ctx.translate(mapX(137), mapY(47)); ctx.rotate(-Math.PI / 2);
-      ctx.fillText('Ludwigstraße', 0, 0); ctx.restore();
+    for(const building of CORE_BUILDINGS){
+      ctx.beginPath();building.ring.forEach((p,i)=>i?ctx.lineTo(mapX(p.x),mapY(p.z)):ctx.moveTo(mapX(p.x),mapY(p.z)));ctx.closePath();
+      ctx.fillStyle='#98826d';ctx.fill();ctx.strokeStyle='#c0a787';ctx.lineWidth=.7;ctx.stroke();
     }
+    for(const tree of CORE_TREES)dot(tree.x,tree.z,Math.max(1,2*scale),'#81916e');
+    for(const f of engine.route?.FOUNTAINS??[]){dot(f.x,f.z,Math.max(1.7,f.r*scale),'#72a6ad','#c0d4cc');}
+    for(const landmark of engine.world?.landmarks??[]){dot(landmark.x,landmark.z,2,'#c6ba91');}
+    ctx.font='9px Nunito, sans-serif';ctx.textAlign='center';ctx.fillStyle='#f0dcaf';
+    ctx.fillText('LMU',mapX(2),mapY(3));
     if (objective) {
       // A fine dotted route is a bearing guide, not a walkability path.
       ctx.beginPath(); ctx.moveTo(mapX(p.x), mapY(p.z)); ctx.lineTo(mapX(objective.x), mapY(objective.z));
