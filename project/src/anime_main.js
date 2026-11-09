@@ -654,6 +654,8 @@ const engine = {
   },
   companion: null,                                    // set below: { getPosition(), getHeadPosition(), root }
   audio: null,                                        // set below: { cue(name), setMuted(), isMuted() }
+  cameraOverride: null,                               // optional (dt, et) => void; while set, the module owns the camera
+  getCameraTarget: () => camTgt,                      // the point the default camera looks at (player head)
 };
 
 const story   = createStory();
@@ -780,11 +782,16 @@ function loop() {
   camPos.x += (idealX - camPos.x)*k;
   camPos.y += (idealY - camPos.y)*k;
   camPos.z += (idealZ - camPos.z)*k;
-  camera.position.copy(camPos);
   camTgt.x += (player.pos.x - camTgt.x) * .85;
   camTgt.y += (player.pos.y + 1.6 - camTgt.y) * .85;
   camTgt.z += (player.pos.z - camTgt.z) * .85;
-  camera.lookAt(camTgt);
+  if (engine.cameraOverride) {
+    engine.cameraOverride(dt, et);                    // a module drives camera.position / quaternion itself
+    camPos.copy(camera.position);                     // so the spring resumes smoothly when it lets go
+  } else {
+    camera.position.copy(camPos);
+    camera.lookAt(camTgt);
+  }
 
   // ── Sky rotation follows camera (static sky) ──
   skySphere.position.copy(camera.position);
