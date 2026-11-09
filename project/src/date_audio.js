@@ -89,6 +89,7 @@ export function createAudio(engine = {}, story = null) {
   const doc = globalThis.document;
   let disposed = false;
   let muted = false;
+  let volume = 1;
   try { muted = globalThis.localStorage?.getItem(STORAGE_KEY) === 'true'; } catch { /* private browsing */ }
   let context = null, master = null, music = null, effects = null, fountain = null;
   let base = null, photos = null, golden = null;
@@ -198,7 +199,7 @@ export function createAudio(engine = {}, story = null) {
         nextBar = context.currentTime + 0.06;
         nextBird = context.currentTime + 3 + Math.random() * 5;
         applyStage();
-        smooth(master.gain, muted ? 0 : 0.62, 0.12);
+        smooth(master.gain, muted ? 0 : 0.62 * volume, 0.12);
       }
       // Do not await: browsers can leave resume pending until a trusted gesture arrives.
       context.resume()?.catch(() => {});
@@ -228,10 +229,16 @@ export function createAudio(engine = {}, story = null) {
     if (disposed) return;
     muted = Boolean(value);
     try { globalThis.localStorage?.setItem(STORAGE_KEY, String(muted)); } catch { /* storage is optional */ }
-    if (master) smooth(master.gain, muted ? 0 : 0.62, 0.045);
+    if (master) smooth(master.gain, muted ? 0 : 0.62 * volume, 0.045);
     // Begin the current progression at a fresh bar after a long silent interval.
     if (!muted && context && nextBar < context.currentTime) nextBar = context.currentTime + 0.06;
     renderIndicator();
+  }
+
+  function setVolume(value) {
+    if (disposed || !Number.isFinite(value)) return;
+    volume = clamp(value, 0, 1);
+    if (master) smooth(master.gain, muted ? 0 : 0.62 * volume, 0.045);
   }
 
   function toggleMute() {
@@ -375,7 +382,7 @@ export function createAudio(engine = {}, story = null) {
   const unsubscribeLocale = onLocaleChange(renderIndicator);
 
   return {
-    update, setMuted, isMuted: () => muted, cue,
+    update, setMuted, setVolume, isMuted: () => muted, cue,
     handleKey(k, event) {
       if (disposed || typeof k !== 'string' || k.toLowerCase() !== 'm') return false;
       if (event?.ctrlKey || event?.metaKey || event?.altKey) return false;
@@ -384,7 +391,7 @@ export function createAudio(engine = {}, story = null) {
     },
     // Read-only diagnostics; the native context and nodes stay owned by this module.
     getDebugState: () => ({ contextState: context?.state ?? 'uninitialized', muted, disposed,
-      stage, activeVoices: voices.size, permanentNodes: permanent.length,
+      stage, volume, activeVoices: voices.size, permanentNodes: permanent.length,
       masterGain: master?.gain.value ?? 0, fountainGain: fountain?.gain.value ?? 0,
       fountainTarget: waterAmount, baseGain: base?.gain.value ?? 0,
       photosGain: photos?.gain.value ?? 0, goldenGain: golden?.gain.value ?? 0, ...counters }),

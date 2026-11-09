@@ -85,6 +85,7 @@ export default {
     "help": "How to play",
     "credits": "Credits",
     "chapter2": "Chapter 2 · A walk in the English Garden",
+    "chapter3": "Chapter 3 · Inside the main building",
     "settings": "Settings",
     "choose": "Choose",
     "go": "Let's go",

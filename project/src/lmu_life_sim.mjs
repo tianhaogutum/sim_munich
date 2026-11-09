@@ -3,7 +3,10 @@ export const TRAM_PERIOD = 40;
 export const TRAM_TRAVEL = 28;
 const TAU = Math.PI * 2;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-export const distance = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+export const distance = (a, b) => {
+  const dx = a.x - b.x, dz = a.z - b.z;
+  return Math.sqrt(dx * dx + dz * dz);
+};
 export function seededRandom(seed = 714) {
   return () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
 }
@@ -56,14 +59,14 @@ export function createWaypoints(start, end, blocked = () => false) {
 // Projection handles even a player teleporting onto an NPC. If walls constrain
 // the first escape direction, search around the personal-space circle instead.
 export function avoidPoint(pos, obstacle, radius, blocked = () => false, side = 1) {
-  if (!obstacle || distance(pos, obstacle) >= radius) return { ...pos };
+  if (!obstacle || distance(pos, obstacle) >= radius) return pos;
   const angle = Math.atan2(pos.x - obstacle.x || .001 * side, pos.z - obstacle.z);
   for (let i = 0; i < 32; i++) {
     const a = angle + (i % 2 ? 1 : -1) * Math.ceil(i / 2) * Math.PI / 16;
     const p = { x: obstacle.x + Math.sin(a) * (radius + .01), z: obstacle.z + Math.cos(a) * (radius + .01) };
     if (!blocked(p.x, p.z)) return p;
   }
-  return { ...pos };
+  return pos;
 }
 export function steerPedestrian(actor, target, player, dt, blocked = () => false) {
   dt = clamp(dt, 0, .1);
@@ -144,6 +147,7 @@ export function createLifeSimulation({ blocked = () => false, random = seededRan
       route, goal: (i + 1) % route.length, waypoints: [], idle: 0, seated: false, moving: true, phase: random() * TAU };
   });
   let previousStage = null, endingFlock = null;
+  const flockContext = { blocked, random, player: null, companion: null, celebrate: false };
   return {
     flocks, pedestrians,
     update(dt, time, player, companion, stage) {
@@ -165,9 +169,11 @@ export function createLifeSimulation({ blocked = () => false, random = seededRan
             Object.assign(endingFlock,next);
         }
       }
-      for (const flock of flocks) stepFlock(flock, dt, { player, companion, blocked, random, celebrate });
+      flockContext.player = player; flockContext.companion = companion; flockContext.celebrate = celebrate;
+      for (const flock of flocks) stepFlock(flock, dt, flockContext);
       for (const p of pedestrians) {
-        if (p.idle > 0 && (!player || distance(p, player) > 2.2)) {
+        if (p.idle > 0 && (!player || distance(p, player) > 2.2) &&
+            (!companion || distance(p, companion) >= 1.65)) {
           p.idle -= dt; p.moving = false; continue;
         }
         p.seated = false;

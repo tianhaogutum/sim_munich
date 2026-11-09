@@ -21,7 +21,7 @@ export function createCollect(engine = {}, story = {}) {
   const storage = attempt(() => globalThis.localStorage);
   let saved = attempt(() => validateCollectState(JSON.parse(storage?.getItem(COLLECT_STORAGE_KEY))), initialCollectState());
   let disposed = false, opened = false, page = 0, tab = 'memories', lastPos = null;
-  let saveIn = 0, renderIn = 0, previousFocus = null, toastIn = 0, badgeIn = 0;
+  let saveIn = 0, renderIn = 0, achievementIn = 0, previousFocus = null, toastIn = 0, badgeIn = 0;
   const objects = [];
   const listeners = [];
   let root, panel, content, launcher, toast, badge;
@@ -324,6 +324,7 @@ export function createCollect(engine = {}, story = {}) {
     if (saved.found[object.item.id]) return;
     saved.found[object.item.id] = { foundAt: Date.now(), elapsedSeconds: saved.elapsedSeconds };
     object.pop = 0;
+    checkAchievements();
     lastPickup = object.item;
     notify(t('collect.pickup', { title: object.item.title, count: getStats().fragmentsFound }), 3400);
     attempt(() => engine.audio?.cue?.('collect'));
@@ -394,7 +395,8 @@ export function createCollect(engine = {}, story = {}) {
     if (p && Number.isFinite(p.x) && Number.isFinite(p.z)) {
       const movement = lastPos ? Math.hypot(p.x - lastPos.x, p.z - lastPos.z) : Infinity;
       if (visible && !locked() && !hiding) saved.distanceWalked += distanceStep(lastPos, p);
-      lastPos = { x: p.x, z: p.z };
+      if (!lastPos) lastPos = { x: p.x, z: p.z };
+      else { lastPos.x = p.x; lastPos.z = p.z; }
       const pois = engine.route?.POIS ?? POIS;
       for (const id of VISIT_IDS) {
         const point = pois[id];
@@ -419,10 +421,14 @@ export function createCollect(engine = {}, story = {}) {
         object.body.rotation.y = time * .5 + object.phase;
         object.ring.position.y = .10 - group.position.y;
         object.ring.material.opacity = .3 + Math.sin(time * 2 + object.phase) * .1;
-        object.sparkles.forEach((sparkle, i) => { sparkle.rotation.y = time + i; sparkle.scale.setScalar(.75 + Math.sin(time * 2 + i) * .3); });
+        for (let i = 0; i < object.sparkles.length; i++) {
+          const sparkle = object.sparkles[i];
+          sparkle.rotation.y = time + i; sparkle.scale.setScalar(.75 + Math.sin(time * 2 + i) * .3);
+        }
       }
     }
-    checkAchievements();
+    achievementIn += step;
+    if (achievementIn >= .5) { checkAchievements(); achievementIn = 0; }
     if (toastIn > 0 && !opened && !hiding) { toastIn -= step; if (toastIn <= 0 && toast) toast.hidden = true; }
     if (badgeIn > 0 && !opened && !hiding) { badgeIn -= step; if (badgeIn <= 0 && badge) badge.hidden = true; }
     saveIn += step;
@@ -453,7 +459,7 @@ export function createCollect(engine = {}, story = {}) {
       else if (tab === 'memories') selectPage(page + 1);
       return true;
     }
-    return false;
+    return true; // An open journal owns the remaining keys, including Space/P/N.
   }
 
   const hook = { getStats, getFoundTitles };

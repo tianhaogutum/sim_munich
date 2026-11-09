@@ -209,6 +209,7 @@ export function createInput(engine, story) {
     lastLocked = isLocked;
     lastPhoto = isPhoto;
     root.hidden = !active;
+    document.body.classList.toggle('di-touch', active);
     root.classList.toggle('di-locked', isLocked);
     root.classList.toggle('di-photo-mode', isPhoto);
     // Leave camera gestures available in photo mode even if it locks movement.
@@ -335,6 +336,9 @@ export function createInput(engine, story) {
     let pads;
     // Some embedding contexts disallow access to the gamepad API.
     try { pads = navigator.getGamepads?.() ?? []; } catch { pads = []; }
+    let connected = false;
+    for (let i = 0; i < pads.length; i++) if (pads[i]?.connected !== false && pads[i]?.mapping === 'standard') { connected = true; break; }
+    if (!connected) { padButtons.clear(); padNeedsBaseline = true; return; }
     const present = new Set();
     const editing = document.activeElement?.matches('input, textarea, select, [contenteditable="true"]');
     for (const pad of pads) {
@@ -382,6 +386,7 @@ export function createInput(engine, story) {
       unsubscribeLocale();
       listeners.forEach(remove => remove());
       root.remove();
+      document.body.classList.remove('di-touch');
       if (ownsStylesheet) stylesheet.remove();
       if (currentInput === api) currentInput = null;
     },

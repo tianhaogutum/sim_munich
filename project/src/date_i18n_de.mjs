@@ -85,6 +85,7 @@ export default {
     "help": "Steuerung",
     "credits": "Mitwirkende",
     "chapter2": "Kapitel 2 · Spaziergang im Englischen Garten",
+    "chapter3": "Kapitel 3 · Im Hauptgebäude",
     "settings": "Einstellungen",
     "choose": "Wählen",
     "go": "Los geht’s",

@@ -71,7 +71,7 @@ export function achievementIds(stats = {}) {
 }
 
 export function distanceStep(previous, current) {
-  if (![previous?.x, previous?.z, current?.x, current?.z].every(finite)) return 0;
+  if (!finite(previous?.x) || !finite(previous?.z) || !finite(current?.x) || !finite(current?.z)) return 0;
   const step = Math.hypot(current.x - previous.x, current.z - previous.z);
   return step <= 5 ? step : 0;
 }

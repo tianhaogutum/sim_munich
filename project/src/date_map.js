@@ -274,7 +274,7 @@ export function createMap(engine = {}, story = {}) {
     if (!p || !Number.isFinite(p.x) || !Number.isFinite(p.z)) { panel.hidden = true; edge.hidden = true; return; }
     panel.hidden = false;
     const time = Number.isFinite(et) ? et : clock;
-    if (lastPaint >= 0 && clock - lastPaint < 1 / 30) return;
+    if (lastPaint >= 0 && clock - lastPaint < 1 / 10) return;
     lastPaint = clock;
     if (resizePending) {
       const bounds = canvas.getBoundingClientRect();

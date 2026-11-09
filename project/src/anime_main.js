@@ -573,8 +573,14 @@ const solids = [
 const extraBlockers = [];                            // (x, z) => boolean, registered by world blocks
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
-  if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
-  if (solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd)) return true;
+  for (let i = 0; i < FOUNTAINS.length; i++) {
+    const f = FOUNTAINS[i], dx = x - f.x, dz = z - f.z;
+    if (dx * dx + dz * dz < f.r * f.r) return true;
+  }
+  for (let i = 0; i < solids.length; i++) {
+    const s = solids[i];
+    if (Math.abs(x - s.cx) < s.hw && Math.abs(z - s.cz) < s.hd) return true;
+  }
   for (let i = 0; i < extraBlockers.length; i++) if (extraBlockers[i](x, z)) return true;
   return false;
 }
@@ -701,6 +707,12 @@ const engine = {
   companion: null,                                    // set below: { getPosition(), getHeadPosition(), root }
   audio: null,                                        // set below: { cue(name), setMuted(), isMuted() }
   cameraOverride: null,                               // optional (dt, et) => void; while set, the module owns the camera
+  getDefaultCameraPose: () => ({
+    position: [player.pos.x + Math.sin(player.yaw) * camDist * Math.cos(pitch),
+      player.pos.y + Math.sin(pitch) * camDist + 1.2,
+      player.pos.z + Math.cos(player.yaw) * camDist * Math.cos(pitch)],
+    target: [camTgt.x, camTgt.y, camTgt.z],
+  }),
   getCameraTarget: () => camTgt,                      // the point the default camera looks at (player head)
 };
 
@@ -736,17 +748,17 @@ function openSight(i) {
   openPanel(panel, 'open', 'panel-close');
 }
 
-// Key routing: story UI first (dialogue), then photo mode, then the default world actions.
+// Key routing: title/cinematic, journal, story/photo, then shared and world actions.
 // Movement keys are tracked separately above and are frozen by engine.lock().
 addEventListener('keydown', e => {
-  if (editingKey(e)) return;
+  if (editingKey(e)) return;                                        // text fields / IME never reach the game
   const k = e.key.toLowerCase();
   if (title.handleKey(k, e)) { e.preventDefault(); return; }       // title / pause menu owns everything while open
   if (e.repeat && !['q','r','pageup','pagedown','+','=','-'].includes(k)) {   // ignore auto-repeat (camera keys excepted)
     if ([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
     return;
   }
-  if (cinematic.handleKey(k, e) || storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e) || collect.handleKey(k, e)) { e.preventDefault(); return; }
+  if (cinematic.handleKey(k, e) || collect.handleKey(k, e) || storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e' && !engine.isLocked() && !engine.isPhotoMode() && !storyUI.isModalOpen()) {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
