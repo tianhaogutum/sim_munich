@@ -1,0 +1,43 @@
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#191d25}
+body{font-family:'Nunito',sans-serif;color:#f0e8c8}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+[hidden]{display:none!important}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid #f5d878;outline-offset:4px}
+#loading{position:fixed;inset:0;display:grid;place-items:center;background:#191d25;color:#f5d878;font:20px 'Klee One',serif;z-index:100}
+#hud{position:fixed;inset:0;pointer-events:none;transition:opacity .3s}
+#hud.hidden,#hud.cine-hidden{opacity:0}
+#status-panel,#interior-objectives{position:fixed;left:20px;padding:10px 16px;background:rgba(8,6,20,.72);backdrop-filter:blur(12px);border:1px solid rgba(220,185,90,.25);border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+#status-panel{top:18px;font-size:12px;line-height:1.8}
+#status-panel .title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:#f5d878;letter-spacing:.05em}
+kbd{display:inline-block;padding:1px 6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:5px;font:11px 'Nunito',sans-serif}
+#floor-indicator{margin-top:7px;border-top:1px solid #c9ac6c33;padding-top:5px;font-size:11px;color:#d7cfb0;letter-spacing:.1em}
+#days-counter{position:fixed;top:18px;left:50%;transform:translateX(-50%);padding:8px 24px;background:rgba(8,6,20,.72);backdrop-filter:blur(12px);border:1px solid rgba(220,185,90,.3);border-radius:20px;color:#f5d878;font:italic 16px 'Cormorant Garamond',serif;white-space:nowrap;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+#chapter-label{position:fixed;right:24px;top:21px;text-align:right;font:19px 'Klee One',serif;text-shadow:0 2px 9px #12151e;color:#fff1d3}
+#chapter-label span{font:10px 'Nunito',sans-serif;letter-spacing:.3em;color:#e8c483}
+#chapter-label em{display:block;font:italic 18px 'Cormorant Garamond',serif;letter-spacing:.14em;margin-top:4px}
+#interior-objectives{top:186px;width:233px;font-size:12px;line-height:1.85}
+.objective-title{font:15px 'Klee One',serif;color:#f5d878;margin-bottom:8px}.objective-title span{float:right;font:12px 'Nunito',sans-serif;padding-top:5px}
+#sight-list{list-style:none}#sight-list li{color:#d7cfb4}#sight-list li:before{content:'◇';display:inline-block;width:23px;color:#d1b97d}#sight-list li.visited{color:#f9e6b5}#sight-list li.visited:before{content:'✓';color:#a9cbb3}
+#objective-note{font-size:10px;color:#bcad90;border-top:1px solid #c9ac6c25;margin-top:10px;padding-top:8px;line-height:1.5}
+#prompt{position:fixed;bottom:22%;left:50%;transform:translateX(-50%);padding:10px 22px;background:rgba(8,6,20,.8);backdrop-filter:blur(10px);border:1px solid rgba(220,185,90,.35);border-radius:24px;color:#f0e8c8;font-size:14px;white-space:nowrap;pointer-events:auto}
+#prompt kbd{margin-right:6px;color:#f5d878;border-color:#f5d87866}
+#return-link{position:fixed;bottom:22px;left:20px;pointer-events:auto;color:#ebd8a4;text-decoration:none;font-size:12px;letter-spacing:.04em;padding:10px 15px;border:1px solid #d9b96b55;background:#100e20bb;border-radius:22px;backdrop-filter:blur(10px)}
+#return-link.complete{color:#fff2cd;border-color:#f5d878;box-shadow:0 0 22px #f5d87844}
+#interior-caption{position:fixed;bottom:25px;right:24px;font:italic 14px 'Cormorant Garamond','Klee One',serif;color:#eee0bd;text-shadow:0 2px 8px #1d2130}
+#panel{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(560px,88vw);background:rgba(12,9,28,.94);backdrop-filter:blur(20px);border:1px solid rgba(220,185,90,.25);border-radius:20px 20px 0 0;padding:28px 30px 26px;z-index:30;box-shadow:0 -12px 80px #12101844}
+#panel-icon{font-size:28px;color:#f5d878;margin-bottom:8px}#panel-kicker{font-size:10px;letter-spacing:.18em;color:#b4a37d;margin-bottom:6px}
+#panel-title{font:600 24px 'Cormorant Garamond','Klee One',serif;color:#f5d878;margin-bottom:12px}
+#panel-text{font:15px/1.9 'Klee One',serif;white-space:pre-line;color:#e8dfc0;margin-bottom:15px}
+#panel-source{font:11px/1.7 'Nunito',sans-serif;color:#bbac8c;border-top:1px solid #c8b98c22;padding-top:10px}
+#panel-close{position:absolute;top:12px;right:18px;background:none;border:none;color:#dcb95a;font-size:25px}
+#panel-done{margin-top:18px;padding:8px 16px;border:1px solid #dcb95a66;background:#f5d87815;color:#f5d878;border-radius:18px;font-size:12px}
+#photo-overlay{position:fixed;inset:0;pointer-events:none;z-index:20}.letterbox-top,.letterbox-bot{position:absolute;left:0;right:0;height:9%;background:#090b11}.letterbox-top{top:0}.letterbox-bot{bottom:0}
+#photo-hint{position:absolute;bottom:13%;left:50%;transform:translateX(-50%);font:italic 14px 'Cormorant Garamond','Klee One',serif;color:#f5d878;white-space:nowrap;text-shadow:0 2px 8px #000}
+.photo-corner{position:absolute;width:35px;height:35px;border-color:#fff1bd88;border-style:solid}.tl{top:15%;left:10%;border-width:1px 0 0 1px}.tr{top:15%;right:10%;border-width:1px 1px 0 0}.bl{bottom:18%;left:10%;border-width:0 0 1px 1px}.br{bottom:18%;right:10%;border-width:0 1px 1px 0}
+#photo-btn{position:fixed;right:24px;bottom:13%;padding:10px 20px;background:#100c24cc;color:#f5d878;border:1px solid #f5d87866;border-radius:22px;z-index:25}
+#toast{position:fixed;top:74px;left:50%;transform:translateX(-50%);max-width:85vw;padding:10px 22px;background:#100c24ed;border:1px solid #dcb95a55;border-radius:20px;color:#f5d878;font-size:13px;pointer-events:none;z-index:50;opacity:0;transition:opacity .3s;text-align:center}
+@media(max-width:700px){#status-panel{top:64px;left:12px;font-size:10px;padding:7px 10px}#status-panel .title{font-size:16px}#days-counter{top:12px;font-size:13px;padding:7px 14px}#chapter-label{display:none}#interior-objectives{top:218px;left:12px;width:190px;padding:10px;font-size:11px}#interior-caption{display:none}#return-link{left:auto;right:12px;bottom:14px;font-size:11px}#date-audio-root{right:auto!important;left:12px!important;bottom:auto!important;top:10px!important}#prompt{font-size:12px;bottom:26%;padding:9px 14px}#panel{padding:22px;width:94vw}#panel-text{font-size:14px}#photo-hint{top:11%;bottom:auto;font-size:11px}.objective-title{font-size:13px}}
+@media(max-height:570px){#interior-objectives{top:auto;bottom:75px}#interior-objectives ul{display:none}#status-panel{font-size:10px}#panel{max-height:80vh;overflow-y:auto}}
