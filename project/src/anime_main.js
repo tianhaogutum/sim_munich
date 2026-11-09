@@ -15,6 +15,8 @@ import { createCast }    from './date_cast.js';
 import { createPhoto }   from './date_photo.js';
 import { createAudio }   from './date_audio.js';
 import { createInput }   from './date_input.js';
+import { createMap }     from './date_map.js';
+import { createTitle }   from './date_title.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -667,7 +669,9 @@ const photo   = createPhoto(engine, story);
 photoModule = photo;
 const storyUI = createStoryUI(engine, story);
 const input   = createInput(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI, audio, input };   // debug handle for the console / headless checks
+const map     = createMap(engine, story);
+const title   = createTitle(engine, story);
+window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
@@ -687,9 +691,10 @@ function openSight(i) {
 // Key routing: story UI first (dialogue), then photo mode, then the default world actions.
 // Movement keys are tracked separately above and are frozen by engine.lock().
 addEventListener('keydown', e => {
-  if (e.repeat) return;
   const k = e.key.toLowerCase();
-  if (storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e)) { e.preventDefault(); return; }
+  if (title.handleKey(k, e)) { e.preventDefault(); return; }       // title / pause menu owns everything while open
+  if (e.repeat) return;
+  if (storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e') {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
@@ -826,6 +831,8 @@ function loop() {
   // ── Chapter modules + scene hooks ──
   photo.update(dt, et);
   storyUI.update(dt, et);
+  map.update(dt, et);
+  title.update(dt, et);
   sceneHooks.update(dt, et);
 
   // ── Render ──
