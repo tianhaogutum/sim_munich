@@ -251,6 +251,7 @@ export function createTitle(engine, story) {
         busy = false;
         document.body.classList.remove('dt-hud-hidden');
         engine.unlock('title');
+        window.dispatchEvent(new CustomEvent('lmu:intro', { detail: { fresh } }));   // cinematic module hook
         if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
       }, 420);
     }, 380);
