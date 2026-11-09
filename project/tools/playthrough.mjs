@@ -244,6 +244,9 @@ try {
       await qa.tap('e'); await qa.frames();
       // Optional information must not skip the required chapter objective.
       check((await state()).stage === before, 'Optional POI unexpectedly advanced the quest');
+      check(await qa.evaluate(`!!(__lmu.story.getState().visited?.white_rose ||
+        __lmu.storyUI.isModalOpen() || document.querySelector('#panel.open'))`),
+        'White rose input was ignored: no recorded visit, dialogue, or information panel');
       await closeOverlays(); return `visited; stage remains ${before}`;
     });
     await step('Fountain dialogue', () => visit('fountain', 'fountain_talk', 'find_memento'));
