@@ -1,0 +1,66 @@
+{
+  "scope": "Research-only static check using proposed route, mapped building polygons and fountain r=6.1; not production collision/render validation",
+  "reachableGridCells": 38482,
+  "positions": {
+    "spawn": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 48.70745076855663
+    },
+    "entrance": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 32.105588200417095
+    },
+    "white_rose": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 27.97308113467468
+    },
+    "fountain": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 8.017818793898053
+    },
+    "our_plaza": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 10.614920532001525
+    },
+    "memento": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 30.63022217263973
+    },
+    "waitAt": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 29.627104742941487
+    },
+    "fountainSeat": {
+      "blocked": false,
+      "reachable": true,
+      "nearestFountainDistance": 8.542346284699825
+    }
+  },
+  "photoCameraDistances": {
+    "facade": {
+      "camera": {
+        "x": 26,
+        "y": 10,
+        "z": 32
+      },
+      "distance": 30.157751905604634,
+      "withinLimits": true
+    },
+    "fountain": {
+      "camera": {
+        "x": -19,
+        "y": 8,
+        "z": 30
+      },
+      "distance": 19.230448393590926,
+      "withinLimits": true
+    }
+  }
+}
