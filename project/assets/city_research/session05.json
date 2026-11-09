@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "id": "session05",
+  "district": "Au-Haidhausen",
+  "places": [
+    {
+      "id": "session05-mariahilfplatz",
+      "name": "玛利亚救助广场 · Mariahilfplatz",
+      "lon": 11.5835,
+      "lat": 48.1253,
+      "description": "在教堂外围广场辨认 Au 的街区中心；这里是 Auer Dult 的举办地，集市并非每日举行。适合观察独立教堂与周边街巷的关系。",
+      "source": "https://www.muenchen.de/stadtteile/die-au-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-volksbad",
+      "name": "穆勒公共浴场外 · Müllersches Volksbad",
+      "lon": 11.5884,
+      "lat": 48.1324,
+      "description": "从 Rosenheimer Straße 一侧的公共步道欣赏浴场外观。SWM 确认这座新艺术风格建筑于 1901 年开放；本导航点只指向建筑外部。",
+      "source": "https://www.swm.de/baeder/muellersches-volksbad",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-muffatwerk",
+      "name": "穆法特文化厂外 · Muffatwerk",
+      "lon": 11.5896,
+      "lat": 48.1331,
+      "description": "在 Zellstraße 的公共街道观察伊萨尔河东岸、Gasteig 下方的文化场馆；机构列有 Muffathalle、Ampere、咖啡馆和啤酒花园，室内演出需另查活动安排。",
+      "source": "https://www.muenchen.de/veranstaltungen/veranstaltungsorte/muffatwerk-muffathalle",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-wiener-platz",
+      "name": "维也纳广场 · Wiener Platz",
+      "lon": 11.5959,
+      "lat": 48.1343,
+      "description": "市场、五月柱与周边小店构成海德豪森的生活节点。官方页面说明市场整修至 2027 年，期间使用临时摊位；步行以现场围挡与标识为准。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/wiener-platz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-an-der-kreppe",
+      "name": "坡巷小屋 · An der Kreppe",
+      "lon": 11.5968,
+      "lat": 48.135,
+      "description": "从 Wiener Platz 附近的公共巷道观察低矮 Herbergshäuser，与周围较高街屋比较尺度。官方步道将这里列为海德豪森小屋景观；不进入住宅院落。",
+      "source": "https://www.muenchen.de/freizeit/von-gasteig-bis-werksviertel-der-erlebnisweg-haidhausen",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-johannisplatz",
+      "name": "约翰广场 · Johannisplatz",
+      "lon": 11.5981,
+      "lat": 48.1336,
+      "description": "在广场外围观察新 St. Johann Baptist 教堂的高西塔与陶土色外墙。此处是 Johannisplatz 的新堂，勿与 Kirchenstraße 的老堂混淆。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/st-johann-baptist",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-weissenburger-platz",
+      "name": "魏森堡广场 · Weißenburger Platz",
+      "lon": 11.5958,
+      "lat": 48.1286,
+      "description": "沿法国街区步行到广场，在 Glaspalastbrunnen 喷泉周围停留，比较放射状街道与周围街屋的视线关系。",
+      "source": "https://www.muenchen.de/freizeit/von-gasteig-bis-werksviertel-der-erlebnisweg-haidhausen",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session05-bordeauxplatz",
+      "name": "波尔多广场 · Bordeauxplatz",
+      "lon": 11.6008,
+      "lat": 48.1302,
+      "description": "沿菩提树列与低矮树篱边的步道，观察浅水喷泉旁的野猪、公羊、狍与岩羊石雕；周边是十九世纪扩城时期的街屋。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "玛利亚救助教堂 · Mariahilfkirche",
+      "lon": 11.5836,
+      "lat": 48.1253,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Mariahilfkirche_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/ (Commons 另列 GFDL；此处选择 CC BY-SA 3.0)",
+      "features": [
+        "以裸露砖墙和新哥特式竖向节奏建立主体，避免使用光滑的现代幕墙。",
+        "区分高塔、长堂屋顶与外侧扶壁体块；尖拱窗、尖塔轮廓依照片做视觉参照，不推算精确尺寸。",
+        "历史之家记录了战争破坏与战后重建；模型不要把今日外观宣称为完整保存的十九世纪原貌。"
+      ],
+      "source": "https://hdbg.eu/wiederaufbau/gebaeude/detail/kath-mariahilfkirche-in-der-au/360"
+    },
+    {
+      "name": "新圣若翰洗者教堂 · St. Johann Baptist",
+      "lon": 11.5984,
+      "lat": 48.1337,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:St._Johann_Baptist_Haidhausen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/ (Commons 另列 GFDL；此处选择 CC BY-SA 3.0)",
+      "features": [
+        "突出高西塔与唱诗班端两座较小塔的层级，保持教堂独立于周围街屋。",
+        "新哥特式尖拱、红褐色砖与陶土饰面是识别重点；高塔比例仅由照片近似。",
+        "从 Johannisplatz 留出环绕观察空间，不将本堂与 Kirchenstraße 的老堂合并。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/st-johann-baptist"
+    },
+    {
+      "name": "穆勒公共浴场 · Müllersches Volksbad",
+      "lon": 11.5883,
+      "lat": 48.1323,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Muellersches_Volksbad_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/ (Commons 另列 GFDL；此处选择 CC BY-SA 3.0)",
+      "features": [
+        "以不对称组合的浴场大厅、突出塔楼和多段屋顶建立河岸轮廓。",
+        "参考带巴洛克色彩的新艺术风格，表现浅色墙面、装饰性窗框与曲线山墙。",
+        "河侧挡墙、球形栏杆细部和北端小亭可作后续细化层；不从单张照片推算隐蔽立面或精确高度。"
+      ],
+      "source": "https://www.swm.de/baeder/muellersches-volksbad"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session05-haidhausen-discovery",
+      "name": "市场、小屋与法国街区",
+      "stops": [
+        "session05-an-der-kreppe",
+        "session05-wiener-platz",
+        "session05-johannisplatz",
+        "session05-bordeauxplatz",
+        "session05-weissenburger-platz"
+      ],
+      "description": "建议从 An der Kreppe 的公共巷道起步，回到 Wiener Platz，再经 Innere Wiener Straße、Kirchenstraße 到 Johannisplatz；沿 Metzstraße 方向前往 Bordeauxplatz，最后沿 Wörthstraße、Pariser Straße 一带的公共人行道到 Weißenburger Platz。比较低矮小屋、独立教堂和绿化广场；约 1.5–2 公里、留 40–60 分钟是规划估计，并非实测导航。Wiener Platz 施工时按现场标识绕行。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/wiener-platz",
+      "title": "Wiener Platz：市场与施工信息"
+    },
+    {
+      "url": "https://www.muenchen.de/stadtteile/die-au-wissenswertes-tipps-und-infos",
+      "title": "Die Au：街区与 Mariahilfplatz"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "title": "慕尼黑市政府：城市广场与 Bordeauxplatz"
+    },
+    {
+      "url": "https://www.muenchen.de/freizeit/von-gasteig-bis-werksviertel-der-erlebnisweg-haidhausen",
+      "title": "海德豪森体验步道：小屋与法国街区"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/st-johann-baptist",
+      "title": "St. Johann Baptist：建筑与历史"
+    },
+    {
+      "url": "https://hdbg.eu/wiederaufbau/gebaeude/detail/kath-mariahilfkirche-in-der-au/360",
+      "title": "巴伐利亚历史之家：Mariahilfkirche 重建档案"
+    },
+    {
+      "url": "https://www.swm.de/baeder/muellersches-volksbad",
+      "title": "SWM：Müller’sches Volksbad"
+    },
+    {
+      "url": "https://www.muffatwerk.de/de/besucherservice/kontakt",
+      "title": "Muffatwerk：机构地址与场馆组成"
+    },
+    {
+      "url": "https://www.muenchen.de/veranstaltungen/veranstaltungsorte/muffatwerk-muffathalle",
+      "title": "Muffathalle：伊萨尔河畔文化场馆"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Mariahilfkirche_Muenchen-1.jpg",
+      "title": "Commons 照片：玛利亚救助教堂 · Mariahilfkirche；Rufus46，CC BY-SA 3.0"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:St._Johann_Baptist_Haidhausen-1.jpg",
+      "title": "Commons 照片：新圣若翰洗者教堂 · St. Johann Baptist；Rufus46，CC BY-SA 3.0"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Muellersches_Volksbad_Muenchen-1.jpg",
+      "title": "Commons 照片：穆勒公共浴场 · Müllersches Volksbad；Rufus46，CC BY-SA 3.0"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Wiener_Markt_(München)",
+      "title": "Commons：Wiener Markt 坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:An_der_Kreppe_1-5_(München)",
+      "title": "Commons：An der Kreppe 1–5 坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Neue_Pfarrkirche_St._Johann_Baptist_(Haidhausen)",
+      "title": "Commons：新 St. Johann Baptist 坐标与建筑概述"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:BRUNNEN,_WEISSENBURGER_PLATZ,_MÜNCHEN-HAIDHAUSEN,_25.06.2025.jpg",
+      "title": "Commons：Weißenburger Platz 户外拍摄点坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Brunnen_mit_jagdbaren_Tieren_(Bordeauxplatz)",
+      "title": "Commons：Bordeauxplatz 动物喷泉坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Muffatwerk",
+      "title": "Commons：Muffatwerk 坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Müllersches_Volksbad",
+      "title": "Commons：Müllersches Volksbad 坐标与建筑概述"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Mariahilfkirche_(Munich)",
+      "title": "Commons：Mariahilfkirche 坐标"
+    }
+  ],
+  "limitations": [
+    "核实日期：2026-11-09。坐标均为 WGS84 的近似位置，保留四位小数；不是实测入口、地籍点、行政边界或保证安全的落脚点。",
+    "坐标依据：Commons 的 Wiener Markt、An der Kreppe 1–5、新 St. Johann Baptist、Bordeauxplatz 动物喷泉、Muffatwerk、Müllersches Volksbad、Mariahilfkirche 分类页定位。户外点在相应建筑或喷泉附近做小幅近似偏移；Weißenburger Platz 采用所列照片的户外拍摄坐标。需由运行时地图和碰撞层确认最终落点。",
+    "建筑坐标是主体近似定位；建筑 features 是来源和照片支持的建模提示，并非测绘成果。未填写精确尺寸、高度或未见立面。",
+    "照片仅链接 Commons 文件说明页，没有下载或嵌入。三张照片拍摄于 2006、2009、2010 年，不能证明 2026 年立面、施工或周边设施现状；再利用须保留作者、许可链接并标明修改。",
+    "Wiener Platz 官方页面列有至 2027 年的市场整修；路线未实地踏勘，也未验证连续无台阶通行、夜间照明或实时封路。喷泉是否喷水受季节及维护影响。"
+  ]
+}

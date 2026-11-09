@@ -86,6 +86,7 @@ export default {
     "credits": "Mitwirkende",
     "chapter2": "Kapitel 2 · Spaziergang im Englischen Garten",
     "chapter3": "Kapitel 3 · Im Hauptgebäude",
+    "city": "München · Stadt erkunden",
     "settings": "Einstellungen",
     "choose": "Wählen",
     "go": "Los geht’s",
@@ -470,7 +471,7 @@ export default {
     "postcard": "Unsere Postkarte",
     "export": "Postkarte speichern",
     "saved": "Foto gespeichert",
-    "facade": "Hauptgebäude und Säulen",
+    "facade": "Hauptgebäude und Arkaden",
     "fountain": "Brunnen",
     "couple": "Wir beide",
     "moveCloser": "Geh etwas näher heran",
@@ -504,7 +505,7 @@ export default {
     "sights": {
       "entrance": {
         "name": "LMU-Haupteingang",
-        "text": "Dieser Eingang entstand 1835–1840 nach einem Entwurf von Friedrich von Gärtner im romanisch geprägten Rundbogenstil.\nDie acht Säulen vor dem zentralen Eingang sind etwa 9,2 Meter hoch und prägen die Fassade.",
+        "text": "Das von Friedrich von Gärtner entworfene Hauptgebäude wurde 1835 begonnen und 1840 bezogen. Arkaden am Eingang, gepaarte Rundbogenfenster und seitliche Flügel prägen die Fassade im Rundbogenstil.",
         "source": "Quelle: Offizieller LMU-Rundgang · lmu.de"
       },
       "white_rose": {

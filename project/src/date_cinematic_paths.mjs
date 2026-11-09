@@ -126,7 +126,7 @@ export const SEQUENCES = {
 
 // Resolve dynamic endpoints once at shot start; all inputs/outputs are plain data.
 export function createSequence(name, { player = [SPAWN.x, 0, SPAWN.z], yaw = SPAWN.yaw,
-  companion = player, fov = 52, basin = FOUNTAINS[1] } = {}) {
+  companion = player, fov = 52, basin = FOUNTAINS[0] } = {}) {
   const spec = SEQUENCES[name];
   if (!spec) throw new RangeError(`Unknown cinematic: ${name}`);
   const end = defaultCameraPose(player, yaw);
@@ -134,11 +134,11 @@ export function createSequence(name, { player = [SPAWN.x, 0, SPAWN.z], yaw = SPA
   let frames;
   if (name === 'intro') {
     frames = [
-      { time: 0, position: [132, 54, 84], target: [0, 11, 3.4], fov: 49, ease: 'in' },
-      { time: 4, position: [50, 25, 42], target: [0, 12, 3.4], fov: 51 },
-      { time: 6.8, position: [-10, 8.5, 20], target: [2, 6.8, 3.4], fov: 56 },
+      { time: 0, position: [100, 54, 140], target: [2, 11.5, 13.8], fov: 49, ease: 'in' },
+      { time: 4, position: [-50, 25, 75], target: [2, 12, 13.8], fov: 51 },
+      { time: 6.8, position: [24, 8.5, 39], target: [2, 6.8, 13.8], fov: 56 },
       { time: 9.8, position: [basin.x + 14, 8, basin.z + 19], target: [basin.x, 4, basin.z], fov: 51 },
-      { time: 11.6, position: [20, 7, 90], target: [5, 2.5, 82], fov: 53, ease: 'out' },
+      { time: 11.6, position: [-20, 7, 32], target: [6.5, 2, 20], fov: 53, ease: 'out' },
       { time: length, ...end, fov },
     ];
   } else if (name === 'ending') {

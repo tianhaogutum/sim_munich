@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "id": "session06",
+  "district": "Sendling",
+  "places": [
+    {
+      "id": "session06-harras",
+      "name": "Harras 广场",
+      "lon": 11.5395,
+      "lat": 48.1168,
+      "description": "Sendling 的中心广场；在喷泉与树荫座椅旁停留，向南比较邮局的现代建筑与周边较早的街区立面。导航点取广场户外区域，不是地下车站入口。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/am-harras",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-new-st-margaret",
+      "name": "新圣玛格丽特教堂 · Neue St. Margaret",
+      "lon": 11.5388,
+      "lat": 48.1201,
+      "description": "从 Margaretenplatz 西侧观察主立面和偏北侧的高塔。这座新巴洛克教堂与附近旧教堂是不同建筑；本点用于外观探索，不要求进入礼拜空间。",
+      "source": "https://www.pfarrverband-sendling.de/pfarrverband/kirchen/st-margaret/",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-stemmerhof",
+      "name": "Stemmerhof 历史农庄",
+      "lon": 11.5407,
+      "lat": 48.1218,
+      "description": "Plinganserstraße 6 的历史农庄，与旧圣玛格丽特教堂隔街相望。由街边观察农庄建筑与旧村核心的关系，院落通行以现场开放情况为准。",
+      "source": "https://commons.wikimedia.org/wiki/Category:Stemmerhof",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-old-st-margaret",
+      "name": "旧圣玛格丽特教堂 · Alte Sendlinger Kirche",
+      "lon": 11.541,
+      "lat": 48.1214,
+      "description": "位于 Plinganserstraße 与 Lindwurmstraße 交会附近的伊萨尔高阶地边缘，是上巴伐利亚巴洛克乡村教堂。沿街观察教堂、围墙与坡地的组合；避免把它与西南侧的新教堂混为一处。",
+      "source": "https://www.pfarrverband-sendling.de/index.php?id=210",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-schmied-von-kochel",
+      "name": "科赫尔铁匠纪念喷泉 · Schmied von Kochel",
+      "lon": 11.5416,
+      "lat": 48.1219,
+      "description": "位于 Lindwurmstraße 与 Plinganserstraße 交会处、旧教堂对面。市政府喷泉名录将作品列为 Carl Ebbinghaus 与 Carl Sattler 的 1911 年作品；铁匠属于传说人物，不将其生平当作已证实史实。",
+      "source": "https://stadt.muenchen.de/infos/brunnen-muenchen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-neuhofener-berg",
+      "name": "Neuhofener Berg 公园",
+      "lon": 11.5425,
+      "lat": 48.1085,
+      "description": "Sendling 伊萨尔高岸一带的绿地，可观察坡面、树木与邻近住宅区的关系。此点是公园内的近似探索锚点，不代表山顶、喷泉或无障碍入口。",
+      "source": "https://commons.wikimedia.org/wiki/Category:Neuhofener_Berg_(M%C3%BCnchen)",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session06-flauchersteg",
+      "name": "Flauchersteg 河岸步行桥",
+      "lon": 11.553,
+      "lat": 48.1056,
+      "description": "从步行桥观察 Flaucher 的分汊河道、砾石滩与河岸林。导航点位于桥线附近，探索限于步道与桥面；临时封闭和水位以现场信息为准。",
+      "source": "https://www.muenchen.de/freizeit/flaucher-flauchersteg",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "旧圣玛格丽特教堂 · Alte Sendlinger Kirche",
+      "lon": 11.5414,
+      "lat": 48.1214,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Munich_Sendling_Old_Church_St_Margaret_seen_from_Stemmerhof.jpg",
+      "author": "Dominik Hundhammer",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "上巴伐利亚巴洛克乡村教堂的较小体量；先建立教堂主体与塔楼的比例关系。",
+        "保留教堂、墓地围墙和伊萨尔高岸边缘的组合，不把场地处理为平坦的大广场。",
+        "所列照片为从 Stemmerhof 方向的外观参考；仅依据可见表面细化，背立面和精确尺度需另行核实。"
+      ],
+      "source": "https://www.pfarrverband-sendling.de/index.php?id=210"
+    },
+    {
+      "name": "新圣玛格丽特教堂 · Neue St. Margaret",
+      "lon": 11.5394,
+      "lat": 48.1201,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Munich_Sendling_New_Church_St_Margaret_West.jpg",
+      "author": "Dominik Hundhammer",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "以意大利盛期巴洛克为参照的教堂外观，重点表现西立面的立体层次和主入口。",
+        "高塔偏置于西立面的北侧；建立不对称轮廓，避免误建成双塔正立面。",
+        "围绕独立教堂保留 Margaretenplatz 的观看空间；照片提供西侧视角，未拍到的侧面不推定细部。"
+      ],
+      "source": "https://www.pfarrverband-sendling.de/pfarrverband/kirchen/st-margaret/"
+    },
+    {
+      "name": "Harras 邮局建筑 · Postamt am Harras",
+      "lon": 11.5394,
+      "lat": 48.1163,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Harras_Post_9241.jpg",
+      "author": "Henning Schlottmann (User:H-stt)",
+      "license": "CC BY-SA 4.0 International — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "1932 年的现代建筑，是 Harras 广场南侧的空间边界。",
+        "以新客观主义的建筑体量和简洁立面组织为建模重点，避免添加教堂式巴洛克装饰。",
+        "将广场朝向的建筑体量与相连住宅部分一起核对；窗格、入口与退台细节按照片可见部分处理，不从照片推算精确高度。"
+      ],
+      "source": "https://commons.wikimedia.org/wiki/Category:Postamt_am_Harras"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session06-old-village-walk",
+      "name": "从 Harras 到 Sendling 旧村核心",
+      "stops": [
+        "session06-harras",
+        "session06-new-st-margaret",
+        "session06-stemmerhof",
+        "session06-old-st-margaret",
+        "session06-schmied-von-kochel"
+      ],
+      "description": "自编短线：从 Harras 向北沿街到 Margaretenplatz，先看新教堂，再向东北到 Stemmerhof，与隔街旧教堂比较体量，最后到 Lindwurmstraße 交会处的纪念喷泉。全程约一公里以内、预留约半小时至四十五分钟含停留（估算，非官方路线时长）。过 Plinganserstraße 使用现场人行过街设施，不穿越车流抄近路。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/sendling-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Sendling 街区介绍"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3A758f83ca-21a0-47e4-9c77-0d0ad5922319/KulturGeschichtsPfad-6-Sendling.pdf",
+      "title": "慕尼黑市文化局：KulturGeschichtsPfad 6 Sendling"
+    },
+    {
+      "url": "https://www.pfarrverband-sendling.de/index.php?id=210",
+      "title": "Pfarrverband Sendling：Die Alte Sendlinger Kirche"
+    },
+    {
+      "url": "https://www.pfarrverband-sendling.de/pfarrverband/kirchen/st-margaret/",
+      "title": "Pfarrverband Sendling：St. Margaret"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/am-harras",
+      "title": "慕尼黑城市门户：Am Harras"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/brunnen-muenchen.html",
+      "title": "慕尼黑市政府：Brunnen in München"
+    },
+    {
+      "url": "https://www.muenchen.de/freizeit/flaucher-flauchersteg",
+      "title": "慕尼黑城市门户：Der Flaucher"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Stemmerhof",
+      "title": "Wikimedia Commons：Stemmerhof（位置与建筑类别）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Neuhofener_Berg_(M%C3%BCnchen)",
+      "title": "Wikimedia Commons：Neuhofener Berg（位置；OSM way 4674483）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Flauchersteg_(M%C3%BCnchen)",
+      "title": "Wikimedia Commons：Flauchersteg（桥梁位置）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Alte_Pfarrkirche_St._Margaret_(Munich)",
+      "title": "Wikimedia Commons：Alte Pfarrkirche St. Margaret（位置与场地组成）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Neue_Pfarrkirche_St._Margaret_(Munich)",
+      "title": "Wikimedia Commons：Neue Pfarrkirche St. Margaret（位置）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Postamt_am_Harras",
+      "title": "Wikimedia Commons：Postamt am Harras（位置与建筑类别）"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Munich_Sendling_Old_Church_St_Margaret_seen_from_Stemmerhof.jpg",
+      "title": "Wikimedia Commons：旧圣玛格丽特教堂，从 Stemmerhof 观察；作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Munich_Sendling_New_Church_St_Margaret_West.jpg",
+      "title": "Wikimedia Commons：新圣玛格丽特教堂西立面；作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Harras_Post_9241.jpg",
+      "title": "Wikimedia Commons：Harras Post 9241；作者与许可"
+    }
+  ],
+  "limitations": [
+    "核对日期：2026-11-09。坐标为 WGS84 近似户外导航点；教堂、农庄、公园、桥梁和邮局的位置以 Commons 地理信息为参照，广场与喷泉以官方所列地点为参照，并作约略户外偏移；未经实地测量或逐点路网吸附。",
+    "建筑坐标只定位对象，不是入口或轮廓；照片仅作外观参考，未下载或嵌入照片。重用照片应保留作者、原始页面和相应许可证信息。",
+    "照片拍摄年代不同，可能不反映最新改造。建筑特征是建模重点，不提供精确尺寸、完整背立面或碰撞几何；邮局不同来源的合作建筑师署名不一致，因此不在正文作确定归属。",
+    "路线为依据地点位置与市文化步道背景编排的短线，不是官方导览原线，也未经现场步行验证；路况、院落开放、礼拜活动和无障碍条件需现场确认。",
+    "Flaucher 点位用于桥上观察，不表示允许下水或进入砾石滩；河流范围与桥线不得视为街区行政边界。"
+  ]
+}

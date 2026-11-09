@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "id": "session01",
+  "district": "Altstadt-Lehel",
+  "places": [
+    {
+      "id": "session01-isartor",
+      "name": "伊萨尔门 · Isartor",
+      "lon": 11.5825,
+      "lat": 48.1336,
+      "description": "从 Tal 街东端的步行空间观察城门：矩形主塔、三个拱形通道与两座八角侧塔形成清晰层次；朝 Tal 的钟面采用反向读时设计。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/isartor",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-st-lukas",
+      "name": "圣路加堂河岸 · St. Lukas",
+      "lon": 11.5878,
+      "lat": 48.135,
+      "description": "在伊萨尔河西岸步道旁观察圣路加堂的穹顶轮廓，再绕向 Mariannenplatz，比较河岸正面与街区一侧的空间关系。此点用于室外观察。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/st-lukas",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-maxmonument",
+      "name": "马克西米利安二世纪念碑 · Maxmonument",
+      "lon": 11.5881,
+      "lat": 48.1376,
+      "description": "从 Maximilianstraße 的人行道观察纪念碑：君主立像位于基座上，台阶附近四个人物象征统治者的美德。周边有车流与电车，不把纪念碑中心作为落脚点。",
+      "source": "https://www.muenchen.de/stadtteile/lehel-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-st-anna-platz",
+      "name": "圣安娜广场 · St.-Anna-Platz",
+      "lon": 11.5879,
+      "lat": 48.1402,
+      "description": "沿有树木、座椅与咖啡馆的广场慢行，观察新罗马式圣安娜堂。附近另有较早的同名修道院教堂，两者不能混为同一建筑。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/pfarrkirche-st-anna",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-eisbach-bank",
+      "name": "冰溪岸边 · Eisbach",
+      "lon": 11.5879,
+      "lat": 48.1435,
+      "description": "Haus der Kunst 旁、Prinzregentenstraße 桥附近的岸上观察点；看水道穿过桥下进入绿地。仅作为岸边发现目标，不把水面或冲浪活动作为路线通行条件。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/freizeit-tipps-fuer-das-muenchner-lehel",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-hofgarten",
+      "name": "宫廷花园亭旁 · Hofgarten",
+      "lon": 11.5805,
+      "lat": 48.1435,
+      "description": "在花园中央亭附近辨认交叉与对角步道；亭子的八个入口拱洞呼应花园路径，顶端雕像为复制品。适合比较开阔花园与王宫边界。",
+      "source": "https://residenz-muenchen.de/deutsch/hofgart/index.htm",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-kabinettsgarten",
+      "name": "王宫小庭园 · Kabinettsgarten",
+      "lon": 11.5801,
+      "lat": 48.1407,
+      "description": "位于王宫东侧、诸圣宫廷教堂旁的安静庭园；观察浅水池、石凳与围合立面。路径规划应使用实际开放入口，不能穿越王宫建筑。",
+      "source": "https://www.residenz-muenchen.de/deutsch/hoefe/index.htm",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session01-odeonsplatz",
+      "name": "音乐厅广场南端 · Odeonsplatz",
+      "lon": 11.5779,
+      "lat": 48.1425,
+      "description": "在统帅堂前的公共广场比较铁阿提纳教堂、王宫与敞廊的轮廓，再转入宫廷花园；这里处在 Altstadt-Lehel 与 Maxvorstadt 的交界。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/odeonsplatz",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "圣安娜堂 · Pfarrkirche St. Anna im Lehel",
+      "lon": 11.588,
+      "lat": 48.1402,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Pfarrkirche_St._Anna_im_Lehel_-_M%C3%BCnchen_-_Westansicht.jpg",
+      "author": "Digital cat",
+      "license": "CC BY-SA 3.0 DE — https://creativecommons.org/licenses/by-sa/3.0/de/",
+      "features": [
+        "新罗马式教堂；以西立面照片作为主入口与总体轮廓参考。",
+        "西门上方的山花浮雕由 Anton Pruska 创作，表现最后的审判；适合单独制作门楣细节。",
+        "广场中的主体教堂与对面的同名修道院教堂应分别建模。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/pfarrkirche-st-anna"
+    },
+    {
+      "name": "圣路加堂 · St. Lukas",
+      "lon": 11.5873,
+      "lat": 48.1352,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Lukaskirche_M%C3%BCnchen.jpg",
+      "author": "Oliver Kurmis",
+      "license": "CC BY 2.0 — https://creativecommons.org/licenses/by/2.0/",
+      "features": [
+        "以穹顶为主要远景识别形体，河岸一侧与 Mariannenplatz 一侧分别处理。",
+        "主入口朝向伊萨尔河西岸的步道，避免依据广场地址误判入口朝向。",
+        "照片为 2006 年外观记录，可用于体量与立面层次参考；不据照片推算精确高度。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/st-lukas"
+    },
+    {
+      "name": "伊萨尔门 · Isartor",
+      "lon": 11.5825,
+      "lat": 48.1336,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Isartor,_M%C3%BCnchen.jpg",
+      "author": "Lothar Mueller",
+      "license": "CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "矩形主塔、两座八角侧塔与三拱通道是应保留的结构识别点。",
+        "通道上方的横向历史壁画表现巴伐利亚的路德维希凯旋；作为独立表面细节，不替代几何。",
+        "朝 Tal 的西侧钟面反向，朝 Isartorplatz 的东侧钟面正常；两面不能复用同一钟面方向。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/isartor"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session01-lehel-discovery",
+      "name": "城门、河岸与圣安娜广场",
+      "stops": [
+        "session01-isartor",
+        "session01-st-lukas",
+        "session01-maxmonument",
+        "session01-st-anna-platz"
+      ],
+      "description": "从伊萨尔门沿室外街道前往圣路加堂河岸，再沿西岸向北到 Maximilianstraße，最后经 Lehel 街巷抵达圣安娜广场。建议预留约 35–50 分钟含停留（编辑估计，非官方时长）；以路口人行横道连接各站，在纪念碑处留在人行道。发现任务：比较城门拱洞、教堂穹顶与广场教堂三种轮廓。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/freizeit-tipps-fuer-das-muenchner-lehel",
+      "title": "慕尼黑城市门户：Lehel 户外探索"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/pfarrkirche-st-anna",
+      "title": "慕尼黑城市门户：Pfarrkirche St. Anna"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/st-lukas",
+      "title": "慕尼黑城市门户：St. Lukas"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/isartor",
+      "title": "慕尼黑城市门户：Isartor"
+    },
+    {
+      "url": "https://www.muenchen.de/stadtteile/lehel-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Lehel 地标"
+    },
+    {
+      "url": "https://residenz-muenchen.de/deutsch/hofgart/index.htm",
+      "title": "巴伐利亚宫殿管理局：Hofgarten"
+    },
+    {
+      "url": "https://www.residenz-muenchen.de/deutsch/hoefe/index.htm",
+      "title": "巴伐利亚宫殿管理局：王宫庭院"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/odeonsplatz",
+      "title": "慕尼黑城市门户：Odeonsplatz"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Pfarrkirche_St._Anna_im_Lehel_-_M%C3%BCnchen_-_Westansicht.jpg",
+      "title": "Commons：圣安娜堂西立面，Digital cat"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Lukaskirche_M%C3%BCnchen.jpg",
+      "title": "Commons：Lukaskirche München，Oliver Kurmis"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Isartor,_M%C3%BCnchen.jpg",
+      "title": "Commons：Isartor, München，Lothar Mueller"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St.-Anna-Platz_(M%C3%BCnchen)",
+      "title": "Commons：圣安娜广场位置参考"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St._Lukas_(Munich)",
+      "title": "Commons：圣路加堂对象位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Maxmonument",
+      "title": "Commons：Maxmonument 位置及 OSM 对象链接"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Kabinettsgarten_Residenz_Muenchen.jpg",
+      "title": "Commons：小庭园室外摄影位置参考"
+    },
+    {
+      "url": "https://stadt.muenchen.de/rathaus/daten-fakten/bezirke.html",
+      "title": "慕尼黑市：行政区目录（项目既有范围来源）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1336&mlon=11.5825#map=18/48.1336/11.5825",
+      "title": "伊萨尔门 · Isartor：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.135&mlon=11.5878#map=18/48.135/11.5878",
+      "title": "圣路加堂河岸 · St. Lukas：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1376&mlon=11.5881#map=18/48.1376/11.5881",
+      "title": "马克西米利安二世纪念碑 · Maxmonument：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1402&mlon=11.5879#map=18/48.1402/11.5879",
+      "title": "圣安娜广场 · St.-Anna-Platz：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1435&mlon=11.5879#map=18/48.1435/11.5879",
+      "title": "冰溪岸边 · Eisbach：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1435&mlon=11.5805#map=18/48.1435/11.5805",
+      "title": "宫廷花园亭旁 · Hofgarten：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1407&mlon=11.5801#map=18/48.1407/11.5801",
+      "title": "王宫小庭园 · Kabinettsgarten：近似导航点地图链接（非实测节点）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/?mlat=48.1425&mlon=11.5779#map=18/48.1425/11.5779",
+      "title": "音乐厅广场南端 · Odeonsplatz：近似导航点地图链接（非实测节点）"
+    }
+  ],
+  "limitations": [
+    "经纬度为 WGS84 近似室外观察锚点，不是测量值、建筑中心、精确入口或行政边界；新增点参考 Commons 地理信息及官方地址，Hofgarten、Odeonsplatz、Eisbach 沿用项目既有近似锚点。",
+    "OSM 链接仅显示本包坐标，不能视为对 OSM 节点或步行可达性的逐点核验；落点与碰撞需由实际地图处理。",
+    "只引用照片说明页，不下载或嵌入照片；作者及许可按所引用文件页记录，使用图片时须遵守对应署名与许可条件。",
+    "建筑要点用于外观简化，不提供精确尺寸、材质参数或完整立面测绘；参考照片不保证反映当前施工状态。",
+    "未实地核查临时围挡、庭园开放时间与无障碍通行；路线为编辑建议而非官方导航，庭园若关闭可在外围观察。"
+  ]
+}

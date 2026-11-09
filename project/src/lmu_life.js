@@ -1,4 +1,5 @@
-import { createLifeSimulation, seededRandom, distance } from './lmu_life_sim.mjs';
+import { createLifeSimulation, seededRandom, distance, compileLane, laneAtTime } from './lmu_life_sim.mjs';
+import { LANES } from './lmu_block_ludwigstrasse_plan.mjs';
 
 /** Cheap ambient life. Only the engine contract is used; no global game state. */
 export function createLife(engine, story) {
@@ -6,7 +7,21 @@ export function createLife(engine, story) {
   const root = new T.Group(); root.name = 'LMU ambient life'; engine.scene.add(root);
   const random = seededRandom(20261109);
   const blocked = engine.blocked ? (x, z) => engine.blocked(x, z) : () => false;
-  const sim = createLifeSimulation({ blocked, random });
+  // Mapped streets replaced the old perpendicular road. Keep ambient walkers
+  // on the west pedestrian forecourt, with collision-checked starting points.
+  const clear = (x,z,r=.7) => [[0,0],[r,0],[-r,0],[0,r],[0,-r]].every(([a,b])=>!blocked(x+a,z+b));
+  const walkPoints=[];
+  for(const x of [-52,-40,-29,-16,-5,8,20,32]) for(const z of [20,30,40,50])
+    if(z<77+.315*x-18 && clear(x,z)) walkPoints.push([x,z]);
+  const routes = walkPoints.length>=2 ? Array.from({length:4},(_,n)=>walkPoints.filter((_,i)=>i%4===n||i===0)) : undefined;
+  const safeRoutes=routes?.map(r=>r.length>=2?r:walkPoints.slice(0,2));
+  const flockStarts=(walkPoints.filter(([x,z])=>clear(x,z,2.8)).slice(0,4));
+  const sim = createLifeSimulation({ blocked, random, routes:safeRoutes, flockStarts:flockStarts.length===4?flockStarts:undefined });
+  const lanes = mode => LANES.filter(l=>l.mode===mode).map(l=>({...l,compiled:compileLane(l.points)})).filter(l=>l.compiled).sort((a,b)=>b.compiled.length-a.compiled.length);
+  const motorLanes=lanes('motor'), cycleLanes=lanes('cycle');
+  // The central lane of the longest three-lane carriageway leaves kerb clearance.
+  const busLane=(motorLanes[1]??motorLanes[0])?.compiled;
+  const cyclePaths=Array.from({length:4},(_,i)=>cycleLanes[i%cycleLanes.length]?.compiled);
   const geometries = new Set(), materials = new Set(), batches = [];
   const painted = engine.toon(0xffffff, 4, { vertexColors: true }); materials.add(painted);
   const matrix = new T.Matrix4(), local = new T.Matrix4(), world = new T.Matrix4();
@@ -150,41 +165,25 @@ export function createLife(engine, story) {
   const cyclistColors = [0x7b99b2,0xcf8069,0x849b79,0xb796bd];
   cyclistColors.forEach((c,i)=>tint(riders,i,c));
 
-  // One merged mesh per tram material, including both carriages and their trim.
-  const tram = new T.Group(); tram.name='Ludwigstraße / two-car tram'; root.add(tram);
-  function tramMesh(name,parts,material=painted) { const m=new T.Mesh(merge(parts),material); m.name=name; tram.add(m); return m; }
-  const shells=[], trims=[], panes=[], undercarriage=[];
-  for(const z of [-4.7,4.7]) {
-    shells.push(P(box(),[0,2.0,z],[2.8,2.75,8.8],0xc4ad7c),P(box(),[0,3.43,z],[2.65,.18,8.55],0xb7aa8f));
-    trims.push(P(box(),[0,.94,z],[2.87,.55,8.88],0x235c83),P(box(),[0,1.29,z],[2.89,.10,8.90],0x405978));
-    undercarriage.push(P(box(),[0,.47,z],[2.2,.34,7.9],0x323c50));
-    for(const side of [-1,1]) {
-      for(const dz of [-3,-1.5,0,1.5,3]) {
-        panes.push(P(box(),[side*1.412,2.37,z+dz],[.025,1.12,1.22],0xffffff));
-        trims.push(P(box(),[side*1.433,1.80,z+dz],[.035,.045,1.28],0x416380));
-      }
-      for(const dz of [-2.7,2.7]) undercarriage.push(P(cylinder(.40,.18),[side*1.12,.43,z+dz],[1,1,1],0x272e40,[0,0,Math.PI/2]));
-      // Tall inset doors, separated from windows by cream uprights.
-      trims.push(P(box(),[side*1.435,1.88,z+.77],[.035,2.05,.62],0x42637c),P(box(),[side*1.46,1.72,z+.78],[.03,.04,.48],0xe8d49f));
-    }
+  // A generic city bus on one continuous surveyed motor lane. This is ambient
+  // scenery, not a claim about a real service number or timetable.
+  const bus = new T.Group(); bus.name='Ludwigstraße / city bus'; root.add(bus);
+  function busMesh(name,parts,material=painted) { const m=new T.Mesh(merge(parts),material);m.name=name;bus.add(m);return m; }
+  const body=[P(box(),[0,1.75,0],[2.5,2.7,10.4],0xe2e4de),P(box(),[0,3.14,0],[2.38,.12,10.15],0xbac2bd)];
+  const trim=[P(box(),[0,.75,0],[2.54,.55,10.42],0x428994),P(box(),[0,3.03,0],[2.54,.12,10.42],0x428994)];
+  const panes=[], gear=[];
+  for(const side of [-1,1]) {
+    for(const z of [-4,-2.4,-.8,.8,2.4,4]) panes.push(P(box(),[side*1.265,2.2,z],[.025,1.18,1.4],0xffffff));
+    for(const z of [-3.5,3.5])gear.push(P(cylinder(.45,.22),[side*1.16,.47,z],[1,1,1],0x252d32,[0,0,Math.PI/2]));
   }
-  for(const end of [-1,1]) {
-    panes.push(P(box(),[0,2.43,end*9.115],[2.38,1.1,.025],0xffffff));
-    trims.push(P(box(),[0,3.15,end*9.13],[1.60,.24,.025],0x2e4557),P(box(),[0,3.15,end*9.15],[.64,.10,.025],0xf2cf85));
-    for(const x of [-.9,.9]) trims.push(P(sphere(),[x,1.35,end*9.13],[.13,.10,.055],0xffe4a0));
-  }
-  trims.push(P(box(),[0,1.95,0],[2.48,2.45,.55],0x5a616c),
-    rod([0,3.6,-1.4],[0,4.55,0],.055,0x485064),rod([0,4.55,0],[0,3.6,1.4],.055,0x485064),
-    P(box(),[0,4.56,0],[1.65,.055,.09],0x485064));
-  const shell = tramMesh('tram / cream bodywork',shells);
-  // The house outline works on a merged, non-instanced carriage shell.
-  if(engine.outline) { engine.outline(shell,.026); shell.children.forEach(o=>{ if(o.material) materials.add(o.material); }); }
-  tramMesh('tram / blue trim and pantograph',trims);
-  const windowMaterial=engine.toon(0x253e50,4,{vertexColors:true,emissive:0xe0a760,emissiveIntensity:.025}); materials.add(windowMaterial);
-  tramMesh('tram / illuminated windows',panes,windowMaterial);
-  tramMesh('tram / running gear',undercarriage);
+  panes.push(P(box(),[0,2.15,5.22],[2.18,1.25,.025],0xffffff));
+  trim.push(P(box(),[0,2.99,5.25],[1.6,.22,.04],0x1d333a),P(box(),[0,3,5.28],[.9,.07,.02],0xdacb8b));
+  for(const x of [-.9,.9])trim.push(P(box(),[x,.95,5.24],[.32,.18,.025],0xffe6aa),P(box(),[x,.95,-5.24],[.22,.22,.025],0xad4546));
+  busMesh('bus / body',body);busMesh('bus / blue trim',trim);
+  const windowMaterial=engine.toon(0x253e50,4,{vertexColors:true,emissive:0xe0a760,emissiveIntensity:.025});materials.add(windowMaterial);
+  busMesh('bus / windows',panes,windowMaterial);busMesh('bus / wheels',gear);
 
-  let density=1, disposed=false, elapsed=0, lastBellCycle=-Infinity;
+  let density=1, disposed=false, elapsed=0;
   function update(dt=0,et) {
     if(disposed) return;
     dt=Number.isFinite(dt)?Math.min(.1,Math.max(0,dt)):0;
@@ -192,7 +191,8 @@ export function createLife(engine, story) {
     const player=engine.player?.pos;
     const companion=engine.companion?.getPosition?.();
     const stage=story?.getState?.()?.stage;
-    const tramState=sim.update(dt,elapsed,player,companion,stage);
+    sim.update(dt,elapsed,player,companion,stage);
+    const busState=laneAtTime(busLane,elapsed,6.5,8,10);
     const birdCount=Math.round(24*density), peopleCount=Math.round(10*density), cycleCount=Math.round(4*density);
     birds.count=feet.count=birdCount; wings.count=birdCount*2;
     for(let i=0;i<birdCount;i++) {
@@ -232,8 +232,9 @@ export function createLife(engine, story) {
     }
     wheels.count=cycleCount*2; frames.count=riders.count=helmets.count=cycleCount; pedals.count=cycleCount*4;
     for(let i=0;i<cycleCount;i++) {
-      const dir=i%2?-1:1, z=((elapsed*(4.5+i*.3)+i*71)%280-140)*dir;
-      at(dir>0?115:142,.12,z,dir>0?0:Math.PI,Math.sin(elapsed*.9+i)*.025);
+      const ride=laneAtTime(cyclePaths[i],elapsed,4.5+i*.3,i*13,3);
+      // Hide the short pause at a source-way endpoint without connecting it to an unrelated way.
+      at(ride.x,ride.visible ? .12 : -100,ride.z,ride.yaw,Math.sin(elapsed*.9+i)*.025);
       put(frames,i); put(wheels,i*2,0,.36,-.58,elapsed*12); put(wheels,i*2+1,0,.36,.64,elapsed*12);
       put(riders,i,0,1.39,-.04,.30); put(helmets,i,0,1.95,.16,.12);
       for(let s=0;s<2;s++) {
@@ -253,13 +254,9 @@ export function createLife(engine, story) {
         }
       }
     }
-    tram.visible=density>0&&tramState.visible; tram.position.set(128,.10,tramState.z);
+    bus.visible=density>0&&busState.visible;
+    bus.position.set(busState.x,.10,busState.z);bus.rotation.y=busState.yaw;
     windowMaterial.emissiveIntensity=(stage==='postcard'||stage==='done') ? .20 : .025;
-    if(density>0&&tramState.visible&&tramState.z>=86&&lastBellCycle!==tramState.cycle) {
-      // A nearby pass rings once even when a slow frame skips the exact crossing.
-      if(tramState.z<104&&(!player||Math.hypot(player.x-128,player.z-90)<85)) engine.audio?.cue?.('tick');
-      lastBellCycle=tramState.cycle;
-    }
     batches.forEach(b=>{ b.instanceMatrix.needsUpdate=true; });
   }
   function setDensity(value) { density=Number.isFinite(value)?Math.max(0,Math.min(1,value)):1; update(0,elapsed); }
@@ -268,5 +265,5 @@ export function createLife(engine, story) {
     batches.forEach(b=>b.dispose()); geometries.forEach(g=>g.dispose()); materials.forEach(m=>m.dispose());
   }
   update(0,0);
-  return { update,setDensity,dispose };
+  return { update,setDensity,dispose, getTransportState:()=>({bus:laneAtTime(busLane,elapsed,6.5,8,10),cyclePaths:cyclePaths.length,source:'OpenStreetMap lane geometry',liveService:false}) };
 }

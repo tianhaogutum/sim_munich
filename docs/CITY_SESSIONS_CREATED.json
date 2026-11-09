@@ -1,0 +1,114 @@
+{
+  "createdCount": 13,
+  "requestedCount": 20,
+  "workspace": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+  "newWorktrees": 0,
+  "remainingCreationBlockedBy": "T3 parent_not_active; Computer Use disabled by user",
+  "futureServiceTier": "default",
+  "sessions": [
+    {
+      "id": "bb844664-2532-4615-b43c-2b9d0a089427",
+      "title": "Research Bogenhausen City Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/bb844664-2532-4615-b43c-2b9d0a089427>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "0862e3af-201d-4d6b-8063-dbf57e827692",
+      "title": "Research Moosach City Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/0862e3af-201d-4d6b-8063-dbf57e827692>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "d264c952-8baf-4f11-9969-875bb5c84923",
+      "title": "Build Sendling City Research Pack",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/d264c952-8baf-4f11-9969-875bb5c84923>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "4a9b0bd4-74cc-4706-8c6d-4f1147e92f5a",
+      "title": "Research Milbertshofen-Am Hart Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/4a9b0bd4-74cc-4706-8c6d-4f1147e92f5a>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "16c04e45-7621-4fe0-9887-b880a6b6ef39",
+      "title": "Schwabing-Freimann City Content",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/16c04e45-7621-4fe0-9887-b880a6b6ef39>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "156fb796-1d45-4b70-be51-38354a4f7254",
+      "title": "Research Neuhausen-Nymphenburg Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/156fb796-1d45-4b70-be51-38354a4f7254>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "9cac144c-06bd-4611-935e-c00d8dd371b8",
+      "title": "Sendling-Westpark City Research Pack",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/9cac144c-06bd-4611-935e-c00d8dd371b8>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "f980b97a-c34a-4ab0-a852-a55b3f5d5c0f",
+      "title": "Research Schwanthalerhöhe City Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/f980b97a-c34a-4ab0-a852-a55b3f5d5c0f>",
+      "status": "completed",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "64eb1268-928c-4754-8da3-8c2f3b63c499",
+      "title": "Au-Haidhausen City Research Pack",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/64eb1268-928c-4754-8da3-8c2f3b63c499>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "32c508fe-326c-4db0-a6fb-95bfd9d8301a",
+      "title": "Munich Schwabing-West City Content",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/32c508fe-326c-4db0-a6fb-95bfd9d8301a>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "c95194f2-2d39-4ebf-8fb7-e951089b7e7a",
+      "title": "Research Maxvorstadt City Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/c95194f2-2d39-4ebf-8fb7-e951089b7e7a>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "e52feabc-33df-4548-9e01-c8968eda3dc1",
+      "title": "Munich District Discovery Content",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/e52feabc-33df-4548-9e01-c8968eda3dc1>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    },
+    {
+      "id": "b0a95f83-b4eb-478e-885e-36495dcf604f",
+      "title": "Research Altstadt-Lehel City Destinations",
+      "link": "<t3-thread://v2/cc66cc34-fbbb-4af9-985c-ff75471b153b/b0a95f83-b4eb-478e-885e-36495dcf604f>",
+      "status": "running",
+      "worktree": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+      "branch": "t3/identify-current-project"
+    }
+  ]
+}

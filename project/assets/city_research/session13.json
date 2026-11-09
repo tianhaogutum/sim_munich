@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "id": "session13",
+  "district": "Bogenhausen",
+  "places": [
+    {
+      "id": "session13-friedensengel",
+      "name": "和平天使观景台 · Friedensengel",
+      "lon": 11.5969,
+      "lat": 48.1414,
+      "description": "从伊萨尔河东侧高岸的平台回望城市，观察柱顶的金色有翼雕像与下方纪念建筑；作为老博根豪森短步行的起点。停留在平台步道，勿把导航点当作台阶入口。",
+      "source": "https://www.munich.travel/pois/stadt-viertel/friedensengel",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session13-hildebrandhaus",
+      "name": "文学馆街侧 · Monacensia im Hildebrandhaus",
+      "lon": 11.5988,
+      "lat": 48.1436,
+      "description": "Maria-Theresia-Straße 23 的原艺术家住宅现为市立文学档案与图书馆。先从街侧辨认花园立面与窗扇；阅读花园在机构正常开放时段向访客免费开放，路线不要求入馆。",
+      "source": "https://www.muenchner-stadtbibliothek.de/monacensia-im-hildebrandhaus",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session13-st-georg",
+      "name": "圣乔治教堂外 · St. Georg",
+      "lon": 11.6016,
+      "lat": 48.1478,
+      "description": "在 Bogenhauser Kirchplatz 的公共街侧观察教堂双重收束的洋葱形塔顶；周围墓园保留了旧村落核心的安静尺度。探索以教堂外观为主，进入墓园时尊重悼念者与现场规定。",
+      "source": "https://stadt.muenchen.de/dam/jcr%3A08de7849-e842-4917-a904-5d221b95e044/KulturGeschichtsPfad-13-Bogenhausen.pdf",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session13-mae-west",
+      "name": "Effnerplatz 的 Mae West · 街侧观察点",
+      "lon": 11.6142,
+      "lat": 48.1526,
+      "description": "从广场外围人行道观察 Rita McBride 的公共艺术：旋转排列的杆件形成收腰、向上与向下展开的轮廓。这里是繁忙交通节点，勿沿导航直线穿越车道或电车轨道。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session13-hvb-tower",
+      "name": "HVB-Tower · Arabellastraße 街侧",
+      "lon": 11.6174,
+      "lat": 48.1503,
+      "description": "在 Arabellastraße 的公共街侧辨认原 Hypo-Haus 的高层轮廓，比较金属立面与周围街区尺度。银行公布的改造资料强调保留建筑外观，并记录铝制面板重新利用；此点只用于外部观察。",
+      "source": "https://www.hypovereinsbank.de/hvb/ueber-uns/presse/presseinformationen/presse-2016/17-03-2016",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session13-denninger-anger",
+      "name": "Denninger Anger · 中段绿地",
+      "lon": 11.6331,
+      "lat": 48.1444,
+      "description": "从密集街区转入连绵绿地，沿公园步道观察草坡、树群与开阔草地。市门户介绍其起伏地形，并说明东侧可继续寻找地质园与小湖；本点仅为公园中段附近的导航锚点。",
+      "source": "https://www.muenchen.de/freizeit/ruheorte-fuer-die-kurze-auszeit-in-muenchen",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "Hildebrandhaus / Monacensia",
+      "lon": 11.5989,
+      "lat": 48.1436,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Hildebrandhaus_der_Monacensia.jpg",
+      "author": "Fentriss",
+      "license": "CC0 1.0 Universal — https://creativecommons.org/publicdomain/zero/1.0/",
+      "features": [
+        "以花园侧照片为立面构图参考；它不是街侧所有立面的完整记录。",
+        "改造说明明确保留并翻新原有箱式窗，绿色窗扇按旧样恢复；建模保留窗洞与可开合窗扇的区别。",
+        "南侧现代扩建与旧艺术家住宅应分成不同体量；扩建承担访客接待与无障碍入口，不能把照片中的历史立面当作全部建筑。"
+      ],
+      "source": "https://stadt.muenchen.de/dam/jcr%3Ac7877ce1-582b-41cc-92f0-0e032e9283b7/Monacensia-Hildebrandhaus.pdf"
+    },
+    {
+      "name": "St. Georg (Bogenhausen)",
+      "lon": 11.6015,
+      "lat": 48.1478,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:KircheStGeorgMuenchenBogenhausenA.jpg",
+      "author": "Heizer (Commons: Heizer~commonswiki)",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/ (文件另提供 GFDL 许可)",
+      "features": [
+        "优先塑造钟塔的双重收束洋葱形塔顶；这一识别特征由市政府文化历史步道明确记述。",
+        "以照片校对塔身与低矮教堂主体的体量关系，避免把整个建筑统一拉成高楼。",
+        "教堂与环绕墓园共同构成旧村落节点；地表环境应保留围合与通路，不能根据外观照片推断室内布局。"
+      ],
+      "source": "https://stadt.muenchen.de/dam/jcr%3A08de7849-e842-4917-a904-5d221b95e044/KulturGeschichtsPfad-13-Bogenhausen.pdf"
+    },
+    {
+      "name": "HVB-Tower / Hypo-Haus",
+      "lon": 11.6172,
+      "lat": 48.15,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Hypo-Hochhaus_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/ (文件另提供 GFDL 许可)",
+      "features": [
+        "用照片校对塔楼错落的上部体量和竖向支撑关系，避免简化为单一矩形棱柱。",
+        "立面区分窗带与金属面板；业主改造资料明确提到更换立面单元并清洁、重新安装铝板。",
+        "照片摄于 2007 年，早于 2013—2015 年塔楼改造；可参考保留的轮廓，入口和近景细节需以较新资料补充。"
+      ],
+      "source": "https://www.hypovereinsbank.de/hvb/ueber-uns/presse/presseinformationen/presse-2016/17-03-2016"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session13-old-bogenhausen-walk",
+      "name": "高岸、文学与旧村落：博根豪森短步行",
+      "stops": [
+        "session13-friedensengel",
+        "session13-hildebrandhaus",
+        "session13-st-georg"
+      ],
+      "description": "从和平天使平台出发，沿 Maria-Theresia-Straße 北行到 Hildebrandhaus 街侧，再沿公共街道人行道前往 Bogenhauser Kirchplatz 的圣乔治教堂。依次比较纪念柱、艺术家住宅与旧村教堂的轮廓；线路借鉴市政府文化历史步道的相邻节点，约 1 公里量级，为本包拟定的短线而非官方逐段导航。花园关闭时在街侧完成观察，平台台阶可按现场情况绕行。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/bogenhausen-wissenswertes-tipps-und-infos",
+      "title": "Bogenhausen: Wissenswertes, Tipps und Infos — Stadtportal München"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3A08de7849-e842-4917-a904-5d221b95e044/KulturGeschichtsPfad-13-Bogenhausen.pdf",
+      "title": "KulturGeschichtsPfad 13 Bogenhausen — Landeshauptstadt München"
+    },
+    {
+      "url": "https://www.munich.travel/pois/stadt-viertel/friedensengel",
+      "title": "Friedensengel — München Tourismus"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Friedensengel_(M%C3%BCnchen)",
+      "title": "Friedensengel (München) — Commons 地标坐标"
+    },
+    {
+      "url": "https://www.muenchner-stadtbibliothek.de/monacensia-im-hildebrandhaus",
+      "title": "Monacensia im Hildebrandhaus — Münchner Stadtbibliothek"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3Ac7877ce1-582b-41cc-92f0-0e032e9283b7/Monacensia-Hildebrandhaus.pdf",
+      "title": "Hildebrandvilla mit neuem Anbau — 市政府改造说明"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Hildebrandhaus",
+      "title": "Hildebrandhaus — Commons 地标坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Hildebrandhaus_der_Monacensia.jpg",
+      "title": "Hildebrandhaus der Monacensia — Fentriss，2022，CC0 1.0"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St._Georg_(Bogenhausen)",
+      "title": "St. Georg (Bogenhausen) — Commons 地标坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:KircheStGeorgMuenchenBogenhausenA.jpg",
+      "title": "KircheStGeorgMuenchenBogenhausenA — Heizer，2007，CC BY-SA 3.0"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "title": "Die Münchner Plätze — Effnerplatz mit Kunstwerk Mae West"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Mae_West_(M%C3%BCnchen)",
+      "title": "Mae West (München) — Commons 地标坐标及 OSM way 99526606"
+    },
+    {
+      "url": "https://www.hypovereinsbank.de/hvb/ueber-uns/presse/presseinformationen/presse-2016/17-03-2016",
+      "title": "HVB-Tower 企业总部改造 — HypoVereinsbank，2016-03-17"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Hypo-Haus",
+      "title": "Hypo-Haus — Commons 建筑坐标"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Hypo-Hochhaus_Muenchen-1.jpg",
+      "title": "Hypo-Hochhaus Muenchen-1 — Rufus46，2007，CC BY-SA 3.0"
+    },
+    {
+      "url": "https://www.muenchen.de/freizeit/ruheorte-fuer-die-kurze-auszeit-in-muenchen",
+      "title": "Orte für Auszeit: Denninger Anger — Stadtportal München"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Denninger_Anger_(M%C3%BCnchen)",
+      "title": "Denninger Anger (München) — Commons 公园坐标"
+    }
+  ],
+  "limitations": [
+    "所有坐标均为 WGS84 近似户外导航锚点，依据 Commons 地标坐标与机构地址取整或作街侧偏移；不是测量点、入口、行政边界或经现场确认的安全落脚点。",
+    "和平天使、Hildebrandhaus、圣乔治教堂、Mae West、HVB-Tower 与 Denninger Anger 的原始位置依据分别见 sources 中对应 Commons 分类页；照片的相机坐标不作为建筑中心。",
+    "未取得可用的实时 OSM 几何查询；未核实各锚点的地表碰撞、临时围挡、过街设施或无障碍连续性。路线距离只是量级估计，实际走法以公共步道和现场标识为准。",
+    "照片只链接 Commons 文件说明页，未下载或嵌入原图。建筑 features 是基于照片和机构说明的外观建模提示，不提供未经测量的高度、尺寸或隐蔽结构。",
+    "参考照片年代不同；HVB-Tower 照片早于改造。花园、墓园及机构开放状态可能变化，本包不承诺全天通行，也不要求进入银行或教堂内部。"
+  ]
+}

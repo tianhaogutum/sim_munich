@@ -54,3 +54,22 @@
   .ds-choices { gap: 6px; margin-bottom: 8px; }
   #date-story-root .ds-choice { padding: 5px 12px; }
 }
+
+/* Reserve a full row below the four-line control legend. */
+.ds-objective { top: 164px; box-sizing: border-box; }
+@media (max-width: 700px) {
+  .ds-objective { top: 182px; left: 12px; width: calc(100vw - 24px); max-width: none; }
+  #date-story-root .ds-menu { top: 90px; min-height: 44px; }
+  .ds-dialogue { max-height: calc(100dvh - 28px); }
+  #date-story-root .ds-advance, #date-story-root .ds-small { min-height: 44px; }
+  .ds-dialogue-footer { align-items: flex-end; }
+  .ds-hint { max-width: 72%; line-height: 1.5; }
+  .ds-ending-actions { flex-wrap: wrap; }
+}
+@media (max-height: 480px) and (min-width: 600px) {
+  .ds-objective { top: 12px; left: 12px; width: 290px; padding: 8px 12px; }
+  .ds-objective .ds-eyebrow { display: none; }
+  #date-story-root .ds-menu { top: 68px; right: 12px; min-height: 44px; }
+  .ds-dialogue { bottom: 8px; max-height: calc(100dvh - 16px); padding: 12px 18px; }
+  .ds-dialogue .ds-hint { max-width: 70%; }
+}

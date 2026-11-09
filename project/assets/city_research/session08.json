@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "id": "session08",
+  "district": "Schwanthalerhöhe",
+  "places": [
+    {
+      "id": "session08-gollierplatz",
+      "name": "Gollierplatz · 圣鲁佩特教堂前广场",
+      "lon": 11.5359,
+      "lat": 48.136,
+      "description": "在教堂北侧的广场停留，观察 St. Rupert 面向 Gollierplatz 的门廊与角塔。教区确认入口位于广场的交通缓和区域；本点设在户外，不要求进入教堂。",
+      "source": "https://www2.erzbistum-muenchen.de/pfarrei/heiligeedithstein-muenchen/Pfarrei/st-rupert/104577",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-georg-freundorfer-platz",
+      "name": "Georg-Freundorfer-Platz · 社区休闲广场",
+      "lon": 11.5395,
+      "lat": 48.1333,
+      "description": "白色坐墙与深色铺地环绕草坪，攀爬设施以去皮刺槐木柱形成鲜明轮廓；市政资料还列有球场、乒乓球及棋类设施。适合观察密集住宅街区中的公共活动空间。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-verkehrszentrum-platz",
+      "name": "交通博物馆前广场 · Sweet Brown Snail",
+      "lon": 11.543,
+      "lat": 48.1331,
+      "description": "旧展馆前的开放广场连接交通博物馆、Bavariapark 和旧会议厅。寻找 Jason Rhoades 与 Paul McCarthy 的蜗牛雕塑，再观察展馆与浅色铺地的关系；这里只设置室外发现点。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-alte-kongresshalle",
+      "name": "Alte Kongresshalle · 旧会议厅外观",
+      "lon": 11.5443,
+      "lat": 48.1323,
+      "description": "从前广场观察旧会议厅与交通博物馆相对的布局。市政区情介绍将其列为举办音乐会和活动的场所；户外观赏无需参加室内活动。",
+      "source": "https://www.muenchen.de/stadtteile/schwanthalerhoehe-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-bavariapark",
+      "name": "Bavariapark · 林荫步道",
+      "lon": 11.5431,
+      "lat": 48.131,
+      "description": "在 Bavaria 与 Ruhmeshalle 西侧的公园步道中散步，寻找草坪、老树与散布其间的雕塑。市政公园介绍列举了泉水仙女、休息的农牧神和铜鹿，适合作为从展馆广场转入绿地的一站。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/bavariapark",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-ruhmeshalle",
+      "name": "Ruhmeshalle · 荣誉堂前庭",
+      "lon": 11.5451,
+      "lat": 48.1307,
+      "description": "在面向 Theresienwiese 的前庭观察三翼柱廊。巴伐利亚宫殿管理局确认建筑由 Leo von Klenze 设计，陈列受表彰的巴伐利亚人物胸像；此站关注柱廊外观，不承诺内部开放。",
+      "source": "https://schloesser.bayern.de/deutsch/schloss/objekte/mu_ruhm.htm",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session08-bavaria",
+      "name": "Bavaria · 纪念像前观景点",
+      "lon": 11.546,
+      "lat": 48.1306,
+      "description": "在纪念像前的室外平台回望荣誉堂并眺望 Theresienwiese。宫殿管理局说明铜像依 Ludwig Schwanthaler 的模型铸成，象征巴伐利亚；不把登像内部列入路线。",
+      "source": "https://schloesser.bayern.de/deutsch/schloss/objekte/mu_ruhm.htm",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "St. Rupert · 圣鲁佩特教堂",
+      "lon": 11.5359,
+      "lat": 48.1357,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Iglesia_de_San_Ruperto,_M%C3%BAnich,_Alemania,_2013-03-30,_DD_01.JPG",
+      "author": "Diego Delso (Poco a poco)",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "教区资料确认：新罗曼式—拜占庭式中央式建筑，平面呈三叶草形。",
+        "清水砖与人造石并用；优先表现两种材料的色彩与构件分界。",
+        "圆形交叉部塔楼覆锥形屋顶；面向 Gollierplatz 的入口门廊与角塔形成主要立面。",
+        "参考照片拍于 2013 年；按资料建立体量，窗洞和装饰比例需后续多视角核对，不从单张照片推导尺寸。"
+      ],
+      "source": "https://www2.erzbistum-muenchen.de/pfarrei/heiligeedithstein-muenchen/Pfarrei/st-rupert/104577"
+    },
+    {
+      "name": "Deutsches Museum Verkehrszentrum · 历史展馆",
+      "lon": 11.543,
+      "lat": 48.1327,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Deutsches_Museum_Verkehrszentrum,_M%C3%BAnich,_Alemania,_2013-03-30,_DD_01.JPG",
+      "author": "Diego Delso (Poco a poco)",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "博物馆资料确认：三个历史展馆组成建筑群，1908 年启用；应分别建模馆体而非合成一个盒体。",
+        "Halle III 为钢筋混凝土馆体，结构表达应与其他馆体区分。",
+        "Halle I 前的新入口建筑于 2011 年完成，圆形前部是识别要点。",
+        "照片是 2013 年外观参考；屋顶、开窗及入口的具体比例需结合其他视角复核，不添加未经证实的高度。"
+      ],
+      "source": "https://www.deutsches-museum.de/verkehrszentrum/besuch/das-museum"
+    },
+    {
+      "name": "Ruhmeshalle · 荣誉堂",
+      "lon": 11.545,
+      "lat": 48.1307,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen_-_Ruhmeshalle.jpg",
+      "author": "Fred Romero",
+      "license": "CC BY 2.0 — https://creativecommons.org/licenses/by/2.0/",
+      "features": [
+        "宫殿管理局确认：Leo von Klenze 设计的三翼柱廊，面向 Bavaria 一侧开放。",
+        "Commons 照片说明标为多立克柱廊；建模抓住连续柱列、横向檐部及两侧翼的围合关系。",
+        "胸像陈列是功能与空间识别线索，可作简化占位，避免虚构人物肖像。",
+        "将前庭、台阶与独立的 Bavaria 纪念像作为相邻要素；不从照片推断精确柱距或建筑尺寸。"
+      ],
+      "source": "https://schloesser.bayern.de/deutsch/schloss/objekte/mu_ruhm.htm"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session08-westend-discovery",
+      "name": "从社区广场到 Bavaria 的户外发现步行",
+      "stops": [
+        "session08-gollierplatz",
+        "session08-georg-freundorfer-platz",
+        "session08-verkehrszentrum-platz",
+        "session08-alte-kongresshalle",
+        "session08-bavariapark",
+        "session08-ruhmeshalle",
+        "session08-bavaria"
+      ],
+      "description": "从 Gollierplatz 观察 St. Rupert，沿公共人行道经 Bergmannstraße、Kazmairstraße 到 Georg-Freundorfer-Platz，再经 Ganghoferstraße 与 Am Bavariapark 到交通博物馆前广场。经过旧会议厅外侧，沿公园现有步道转向荣誉堂，最后在 Bavaria 前眺望 Theresienwiese。建议预留约 35–50 分钟含停留；这是编辑建议路线和时间估计，非已测绘导航轨迹。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://stadt.muenchen.de/infos/muenchner-plaetze.html",
+      "title": "慕尼黑市：城市广场，含 Georg-Freundorfer-Platz 与交通博物馆前广场"
+    },
+    {
+      "url": "https://www2.erzbistum-muenchen.de/pfarrei/heiligeedithstein-muenchen/Pfarrei/st-rupert/104577",
+      "title": "慕尼黑与弗赖辛总教区：St. Rupert 建筑、地址与入口"
+    },
+    {
+      "url": "https://www.deutsches-museum.de/verkehrszentrum/besuch/das-museum",
+      "title": "德意志博物馆：三个历史展馆及入口建筑"
+    },
+    {
+      "url": "https://schloesser.bayern.de/deutsch/schloss/objekte/mu_ruhm.htm",
+      "title": "巴伐利亚宫殿管理局：Ruhmeshalle 与 Bavaria"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/bavariapark",
+      "title": "慕尼黑城市门户：Bavariapark"
+    },
+    {
+      "url": "https://www.muenchen.de/stadtteile/schwanthalerhoehe-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Schwanthalerhöhe 区情"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St._Rupert_(Munich)",
+      "title": "Commons：St. Rupert 分类与位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Georg-Freundorfer-Platz_(M%C3%BCnchen)",
+      "title": "Commons：Georg-Freundorfer-Platz 分类与位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Deutsches_Museum_Verkehrszentrum",
+      "title": "Commons：交通博物馆分类与位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Alte_Kongresshalle_(M%C3%BCnchen)?uselang=de",
+      "title": "Commons：Alte Kongresshalle 分类与位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Bavariapark_(M%C3%BCnchen)",
+      "title": "Commons：Bavariapark 分类与位置"
+    },
+    {
+      "url": "https://www.mvg.de/aushangfahrplan/P8_H_SH_0.pdf",
+      "title": "MVG：Schwanthalerhöhe 地铁站周边街道与地点图"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Iglesia_de_San_Ruperto,_M%C3%BAnich,_Alemania,_2013-03-30,_DD_01.JPG",
+      "title": "Commons 照片：St. Rupert，Diego Delso，2013"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Deutsches_Museum_Verkehrszentrum,_M%C3%BAnich,_Alemania,_2013-03-30,_DD_01.JPG",
+      "title": "Commons 照片：Verkehrszentrum，Diego Delso，2013"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen_-_Ruhmeshalle.jpg",
+      "title": "Commons 照片：Ruhmeshalle，Fred Romero，2017"
+    }
+  ],
+  "limitations": [
+    "所有经纬度为 WGS84 近似室外导航点，参考 Commons 地点位置与 MVG 周边图后取整或移至邻近户外空间；不是实测入口、建筑中心或行政界线。",
+    "路线未实地踏勘，也未进行逐段路由计算；过街、台阶、临时围挡和公园通行以现场为准。Bavaria 与荣誉堂邻近节庆场地，不保证活动期间通行状态。",
+    "建筑坐标仅作定位；未提供测绘高度、柱距、精确尺寸或完整背立面。建模要点来自所列机构资料及照片说明。",
+    "仅链接照片说明页，未下载或嵌入图像。作者和许可针对指定照片；复用需遵守相应署名、许可链接及适用的相同方式共享要求。照片年代不代表当前现场状态。"
+  ]
+}

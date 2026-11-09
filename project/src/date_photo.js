@@ -5,7 +5,7 @@ import { postcardText } from './date_story.mjs';
 
 const STORAGE_KEY = 'lmu-date-photos-v1';
 const FRAME_LIMIT = 0.7; // NDC: the central 70% of the captured image.
-const LABELS = { facade: '主楼与廊柱', fountain: '喷泉', couple: '我们的合影' };
+const LABELS = { facade: '主楼与拱廊', fountain: '喷泉', couple: '我们的合影' };
 const REASONS = {
   far: '太远了', near: '太近了', frame: '不在画面中央', blocked: '被挡住了', missing: 'TA 不在画面里',
 };
@@ -86,6 +86,8 @@ export function createPhoto(engine, story) {
   const projected = new THREE.Vector3();
   const direction = new THREE.Vector3();
   let blockers = [];
+  const blockerBounds = new WeakMap();
+  const boxHit = new THREE.Vector3();
 
   function notify(text) {
     toastEl.textContent = text;
@@ -129,6 +131,16 @@ export function createPhoto(engine, story) {
     blockers = [];
     scene.traverse(object => {
       if (!object.isMesh || ignored(object)) return;
+      // Static district batches are large: bounding-box rejection prevents a distant
+      // neighbourhood from raycasting every window triangle for a nearby photograph.
+      if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+      if (object.isInstancedMesh && !object.boundingBox) object.computeBoundingBox?.();
+      const localBounds = object.isInstancedMesh ? object.boundingBox : object.geometry.boundingBox;
+      if (localBounds) {
+        let worldBounds = blockerBounds.get(object);
+        if (!worldBounds) { worldBounds = new THREE.Box3(); blockerBounds.set(object, worldBounds); }
+        worldBounds.copy(localBounds).applyMatrix4(object.matrixWorld);
+      }
       const materials = Array.isArray(object.material) ? object.material : [object.material];
       if (materials.some(m => m && m.visible !== false && !m.transparent && m.opacity !== 0)) blockers.push(object);
     });
@@ -148,7 +160,13 @@ export function createPhoto(engine, story) {
     raycaster.near = 0.05;
     raycaster.far = distance - 1;
     // Filtering per intersection also supports mixed opaque / transparent material arrays.
-    return raycaster.intersectObjects(blockers, false).some(hit => {
+    const candidates = blockers.filter(object => {
+      const box = blockerBounds.get(object);
+      if (!box || box.containsPoint(cameraPosition)) return true;
+      if (!raycaster.ray.intersectBox(box, boxHit)) return false;
+      return cameraPosition.distanceToSquared(boxHit) <= raycaster.far * raycaster.far;
+    });
+    return raycaster.intersectObjects(candidates, false).some(hit => {
       const materials = hit.object.material;
       const material = Array.isArray(materials) ? materials[hit.face?.materialIndex ?? 0] : materials;
       return material && material.visible !== false && !material.transparent && material.opacity !== 0;
@@ -160,7 +178,7 @@ export function createPhoto(engine, story) {
     if (target.id === 'couple' || target.target === 'companion') {
       const companion = engine.companion?.getHeadPosition?.();
       if (!companion) return { target, valid: false, reason: 'missing', score: Infinity };
-      points = [new THREE.Vector3().copy(companion), new THREE.Vector3().copy(engine.player.pos).add(new THREE.Vector3(0, 1.6, 0))];
+      points = [new THREE.Vector3().copy(companion), engine.playerAvatar?.getHeadPosition?.().clone() ?? new THREE.Vector3().copy(engine.player.pos).add(new THREE.Vector3(0, 1.6, 0))];
       if (!inFrame(points[0])) return { target, valid: false, reason: 'missing', score: Infinity };
     } else {
       if (!target.target || typeof target.target !== 'object') return { target, valid: false, reason: 'frame', score: Infinity };
@@ -171,14 +189,15 @@ export function createPhoto(engine, story) {
       projected.copy(point).project(camera);
       return sum + projected.x ** 2 + projected.y ** 2;
     }, 0) / points.length;
-    const result = reason => ({ target, valid: !reason, reason, score });
+    const result = reason => ({ target, valid: !reason, reason, score, distance: Math.max(...distances) });
     if (distances.some(d => d < target.minDist)) return result('near');
     if (distances.some(d => d > target.maxDist)) return result('far');
     if (!points.every(inFrame)) return result('frame');
     if (target.id === 'facade') {
-      // Five samples spanning the colonnade, relative to the route's authoritative target.
-      const center = points[0];
-      const visible = [-10, -5, 0, 5, 10].filter(x => !occluded(center.clone().add(new THREE.Vector3(x, 0, 0)))).length;
+      // Follow the surveyed facade tangent rather than sampling an unrotated wall.
+      const center = points[0], tangent = target.tangent ?? { x: 1, z: 0 };
+      const span = Math.hypot(tangent.x, tangent.z) || 1;
+      const visible = [-10, -5, 0, 5, 10].filter(x => !occluded(center.clone().add(new THREE.Vector3(x * tangent.x / span, 0, x * tangent.z / span)))).length;
       if (visible < 3) return result('blocked');
     } else if (points.some(occluded)) return result('blocked');
     return result(null);
@@ -200,8 +219,12 @@ export function createPhoto(engine, story) {
       row.classList.toggle('dp-ready', !done && result.valid);
       row.classList.toggle('dp-complete', done);
       icon.textContent = done ? '✓' : result.valid ? '●' : '○';
-      status.textContent = done ? '已收藏' : result.valid ? '可以拍摄' : REASONS[result.reason];
+      status.textContent = done ? '已收藏' : result.valid ? '可以拍摄' : `${REASONS[result.reason]}${Number.isFinite(result.distance) ? ` · ${Math.round(result.distance)} m` : ''}`;
     }
+    const next = (results || []).find(result => !state.photos?.[result.target.id]);
+    const tip = root.querySelector('.dp-tip');
+    if (next?.target.id === 'couple') tip.textContent = '合影时用滚轮拉近，让两个人都进入框内。';
+    else if (next) tip.textContent = `${next.target.label}：在 ${next.target.minDist}–${next.target.maxDist} 米内，让主体居中，并避开树木和建筑。`;
   }
 
   function download(data, filename) {
@@ -341,7 +364,7 @@ export function createPhoto(engine, story) {
         ctx.fillText('这一刻，留在心里', 0, 80);
       }
       ctx.textAlign = 'center'; ctx.fillStyle = '#654a42'; ctx.font = '26px "Noto Serif SC", "Songti SC", serif';
-      ctx.fillText(targets[i]?.label || ['主楼与廊柱', '喷泉', '我们的合影'][i], 0, 174); ctx.restore();
+      ctx.fillText(targets[i]?.label || ['主楼与拱廊', '喷泉', '我们的合影'][i], 0, 174); ctx.restore();
     }
     ctx.textAlign = 'left'; ctx.fillStyle = '#6e5349'; ctx.font = '28px "Noto Serif SC", "Songti SC", serif';
     drawWrapped(ctx, copy.body, 96, 724, 1290, 46);
@@ -383,10 +406,14 @@ export function createPhoto(engine, story) {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     for (const target of targets) {
       const src = stored?.[target.id];
-      if (story.getState().photos?.[target.id] && typeof src === 'string' && src.startsWith('data:image/jpeg;base64,') && src.length < 350000)
-        goalPhotos[target.id] = { src, thumbnail: src, label: target.label };
+      if (story.getState().photos?.[target.id] && typeof src === 'string' && src.startsWith('data:image/jpeg;base64,') && src.length < 350000) {
+        const photo = { src, thumbnail: src, label: target.label, time: target.id, restored: true };
+        goalPhotos[target.id] = photo;
+        album.push(photo);
+      }
     }
   } catch { /* Private browsing, corrupt storage, or quotas must not block play. */ }
+  renderAlbum();
 
   function clearPhotos() {
     for (const id of Object.keys(goalPhotos)) delete goalPhotos[id];
@@ -426,6 +453,17 @@ export function createPhoto(engine, story) {
       if (refreshIn <= 0) { refreshFeedback(); refreshIn = 0.16; }
     },
     handleKey(key, event) {
+      if (modalOpen) {
+        if (key === 'escape') closePostcard();
+        // Focus trapping is handled by the dialog; leave native button activation intact.
+        if (key === 'tab') return false;
+        if ((key === 'enter' || key === ' ') && dialog.contains(document.activeElement)) {
+          if (!event?.repeat && document.activeElement.matches('button:not(:disabled)')) document.activeElement.click();
+          return true;
+        }
+        return true; // Postcard owns game shortcuts; P/N/G cannot leak through.
+      }
+      if (engine.isLocked() && !active) return false;
       if (key === 'p') { if (!event?.repeat && !modalOpen) setActive(!active); return true; }
       if (key === ' ' && active) { if (!event?.repeat) shutter(); return true; }
       if (key === 'escape' && (active || modalOpen)) {
@@ -435,5 +473,9 @@ export function createPhoto(engine, story) {
       return false;
     },
     isActive: () => active,
+    isModalOpen: () => modalOpen,
+    // Read-only diagnostics used by integration QA; neither method grants photo credit.
+    inspectView: () => evaluateView().map(({target, valid, reason, score, distance}) => ({id:target.id, valid, reason, score, distance})),
+    getAlbumStats: () => ({count:album.length, restored:album.filter(p => p.restored).length, goals:Object.keys(goalPhotos)}),
   };
 }

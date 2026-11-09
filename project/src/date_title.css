@@ -176,3 +176,12 @@ body.dt-hud-hidden #prompt { opacity: 0; }
   .dt-petal { animation: none; }
   .dt-root, .dt-surface, .dt-iris, .dt-button { transition-duration: .01ms; }
 }
+
+/* A short landscape window must scroll from its real top, not a centred overflow. */
+@media (max-height: 480px) {
+ .dt-surface { place-items: start center; padding: 12px; }
+ .dt-title { margin-block: 0; padding-block: 8px 48px; }
+ .dt-card { margin-block: 0; width: min(510px,100%); }
+ .dt-footer { position: fixed; bottom: 8px; font-size: 8px; }
+ .dt-setting { flex-wrap: wrap; }
+}

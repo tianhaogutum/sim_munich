@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "id": "session10",
+  "district": "Moosach",
+  "places": [
+    {
+      "id": "session10-martinsplatz",
+      "name": "莫萨赫圣马丁广场 · Moosacher St.-Martins-Platz",
+      "lon": 11.5165,
+      "lat": 48.181,
+      "description": "旧村中心的户外观察点，可同时辨认老圣马丁教堂与文化会馆。市政府正在规划广场更新；规划图不代表现状。",
+      "source": "https://stadt.muenchen.de/infos/sanierungsgebiet-moosach.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-old-st-martin",
+      "name": "老圣马丁教堂外侧 · Alte St. Martin",
+      "lon": 11.5164,
+      "lat": 48.1813,
+      "description": "从广场与围墙外观察老教堂；教区资料确认现存建筑保留罗马式基础，并经历后续改建。不要与 Chemnitzer Platz 的新圣马丁教堂混淆。",
+      "source": "https://www.erzbistum-muenchen.de/pfarrei/st-martin-moosach/cont/124481",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-pelkovenschloessl",
+      "name": "佩尔科芬小宫前广场 · Pelkovenschlössl",
+      "lon": 11.5169,
+      "lat": 48.181,
+      "description": "原领地小宫如今是文化与市民会馆，与邻近 Hacklhaus 共同使用。停在建筑外侧认识旧村公共生活，室内活动另查主办方安排。",
+      "source": "https://stadt.muenchen.de/service/info/kultur-und-burgerhaus/1052328/",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-borstei",
+      "name": "Borstei 住宅区街侧",
+      "lon": 11.535,
+      "lat": 48.1703,
+      "description": "从街侧认识受保护的住宅建筑群及庭院绿化；这是有人居住的社区，参观只走允许通行的道路，尊重住户。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/bauwerke-und-denkmaeler/borstei",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-westfriedhof",
+      "name": "西公墓入口周边 · Westfriedhof",
+      "lon": 11.527,
+      "lat": 48.1694,
+      "description": "Baldurstraße 入口附近可观察圆顶告别厅与钟塔。园内道路和绿地适合安静步行，入园须遵守开放时间与悼念礼仪。",
+      "source": "https://stadt.muenchen.de/service/info/westfriedhof/10320874/",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-uptown",
+      "name": "Uptown München 街侧观察点",
+      "lon": 11.5326,
+      "lat": 48.1769,
+      "description": "Georg-Brauchle-Ring 附近醒目的办公高楼，可在街侧比较其垂直轮廓与低层街区。地点用于外观观察，不表示办公园区开放。",
+      "source": "https://www.muenchen.de/stadtteile/moosach-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session10-kapuzinerhoelzl",
+      "name": "Kapuzinerhölzl 林间观察点",
+      "lon": 11.4949,
+      "lat": 48.168,
+      "description": "莫萨赫南侧的林地休闲目的地。沿现有步道感受树冠与林缘的变化，留在道路上保护林下植被；导航点不代表正式入口。",
+      "source": "https://www.muenchen.de/stadtteile/moosach-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "Pelkovenschlössl",
+      "lon": 11.5169,
+      "lat": 48.1809,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Moosacher_St.-Martins-Platz2_M%C3%BCnchen.jpg",
+      "author": "Peterfl",
+      "license": "CC BY-SA 3.0; https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "以低层横向体量表达巴洛克小宫，不把它处理成塔楼。",
+        "屋顶采用四坡轮廓；窗洞排列与立面色彩须以照片页核对。",
+        "保留建筑面前开敞广场关系；不把广场更新方案中的新建体量当作现存建筑。"
+      ],
+      "source": "https://stadt.muenchen.de/service/info/kultur-und-burgerhaus/1052328/"
+    },
+    {
+      "name": "Alte Pfarrkirche St. Martin",
+      "lon": 11.5164,
+      "lat": 48.1814,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Alt_St._Martin,_Moosach.jpg",
+      "author": "Gerda Arendt",
+      "license": "CC BY-SA 4.0; https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "以教堂主身、钟塔和周边墓园围墙分开组织体量。",
+        "照片从南侧墓园拍摄，墙面大型十字架是该视角的识别细节。",
+        "教区资料所述罗马式后殿分节可作细化依据；不推算未经测量的高度和墙厚。"
+      ],
+      "source": "https://www.erzbistum-muenchen.de/pfarrei/st-martin-moosach/cont/124481"
+    },
+    {
+      "name": "Uptown München",
+      "lon": 11.5317,
+      "lat": 48.1769,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Uptown_Munich_Building.jpg",
+      "author": "Afrank99",
+      "license": "CC BY-SA 2.5; https://creativecommons.org/licenses/by-sa/2.5/",
+      "features": [
+        "以纤长矩形塔楼为主体；建筑师项目页确认平面与顶部均有圆弧玻璃转角，建模时不应做成完全锐角的普通方盒。",
+        "外皮为单层全玻璃幕墙；保留规则网格与可用于自然通风的圆形窗细节。",
+        "从地面观察高楼与低层配套的体量层次；照片透视不用于反推精确高度。"
+      ],
+      "source": "https://www.christophingenhovenarchitects.com/projects/uptown-munich"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session10-old-village-walk",
+      "name": "旧村中心的广场、教堂与小宫",
+      "stops": [
+        "session10-martinsplatz",
+        "session10-old-st-martin",
+        "session10-pelkovenschloessl"
+      ],
+      "description": "短距离户外发现路线：从圣马丁广场辨认旧村格局，沿教堂外侧观察围墙与钟塔，再到小宫前看文化会馆与开敞空间。三个站点相邻，适合慢慢比较建筑；按现场人行通道行走，无须穿越墓园或进入室内。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/moosach-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Moosach 街区介绍"
+    },
+    {
+      "url": "https://stadt.muenchen.de/service/info/kultur-und-burgerhaus/1052328/",
+      "title": "慕尼黑市政府：Pelkovenschlössl 与 Hacklhaus"
+    },
+    {
+      "url": "https://www.erzbistum-muenchen.de/pfarrei/st-martin-moosach/cont/124481",
+      "title": "慕尼黑与弗赖辛总教区：圣马丁堂区历史"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/bauwerke-und-denkmaeler/borstei",
+      "title": "慕尼黑城市门户：Borstei 住宅区"
+    },
+    {
+      "url": "https://stadt.muenchen.de/service/info/westfriedhof/10320874/",
+      "title": "慕尼黑市政府：Westfriedhof"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/sanierungsgebiet-moosach.html",
+      "title": "慕尼黑市政府：Moosach 更新与广场规划"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Moosacher_St.-Martins-Platz2_M%C3%BCnchen.jpg",
+      "title": "Pelkovenschlössl 摄影参考、作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Alt_St._Martin,_Moosach.jpg",
+      "title": "Alte Pfarrkirche St. Martin 摄影参考、作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Uptown_Munich_Building.jpg",
+      "title": "Uptown München 摄影参考、作者与许可"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Alte_Pfarrkirche_St._Martin_(Moosach)",
+      "title": "Commons：老圣马丁教堂位置与照片索引"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Uptown_M%C3%BCnchen",
+      "title": "Commons：Uptown 建筑位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Borstei",
+      "title": "Commons：Borstei 位置与 OSM 对象索引"
+    },
+    {
+      "url": "https://edoc.ub.uni-muenchen.de/36319/1/Folwarczny_Elisabeth.pdf",
+      "title": "LMU 学位论文：Kapuzinerhölzl 户外采样点坐标"
+    },
+    {
+      "url": "https://www.christophingenhovenarchitects.com/projects/uptown-munich",
+      "title": "Christoph Ingenhoven Architects：Uptown Munich，圆弧玻璃转角与圆形通风窗"
+    },
+    {
+      "url": "https://www.wikidata.org/wiki/Q23786126",
+      "title": "Wikidata：Pelkovenschlössl 建筑位置，与照片对应"
+    },
+    {
+      "url": "https://mapcarta.com/de/W96955017",
+      "title": "OSM 对象 way 96955017 的 Mapcarta 镜像：小宫位置与 hipped 屋顶标签（交叉核对）"
+    },
+    {
+      "url": "https://muenchen-westfriedhof.de/rundgang",
+      "title": "西公墓导览地图：Baldurstraße 户外入口坐标（辅助定位，非市政府页面）"
+    }
+  ],
+  "limitations": [
+    "所有经纬度均为 WGS84 近似导航点，未作现场测量，也不是建筑入口、行政边界或无障碍路线保证。",
+    "现有 city_data.mjs 的 Moosach 广场锚点与本包核对的老教堂、小宫位置不同；本包采用约东经 11.516 的旧村中心，未修改运行时代码。",
+    "照片页仅作参考，未下载或嵌入照片；复用照片须按各页标明的作者、许可、署名与相同方式共享条款办理。",
+    "建筑特征为简化建模提示，不包含未经证实的尺寸；照片拍摄时间不同，不保证当前立面细节。",
+    "路线为本包编排的短途探索建议，不是官方导览或已实测路线；广场改造、施工和场所开放情况须现场确认。",
+    "坐标依据：旧教堂、Borstei、Uptown 参考 Commons 分类页；小宫参考 Wikidata 与 OSM 对象镜像；西公墓入口以导览地图辅助定位并与市政地址核对；林地以 LMU 论文采样点定位。均已四舍五入，未通过地理编码或现场测绘校准。"
+  ]
+}
