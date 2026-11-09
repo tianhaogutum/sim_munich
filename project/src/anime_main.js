@@ -571,9 +571,15 @@ function blocked(x, z) {
   if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
   return solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd);
 }
-addEventListener('keydown', e => { keys[e.key.toLowerCase()] = true; });
+// Keys typed into a text field or during IME composition never reach the game (QA finding 3).
+function editingKey(e) {
+  const el = e.target;
+  return e.isComposing || e.keyCode === 229 ||
+    (el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)));
+}
+addEventListener('keydown', e => { if (!editingKey(e)) keys[e.key.toLowerCase()] = true; });
 addEventListener('keyup',   e => { keys[e.key.toLowerCase()] = false; });
-addEventListener('blur',    () => { for (const k in keys) keys[k] = false; });   // no stuck keys after focus loss
+addEventListener('blur',    () => { for (const k in keys) keys[k] = false; drag = false; touches = {}; });   // no stuck keys/drags after focus loss
 
 // ── CAMERA (spring-arm third-person) ─────────────────────────────────────────
 let pitch = .28, camDist = 14;
@@ -583,6 +589,7 @@ let drag = false, lastMX = 0, lastMY = 0;
 
 canvas.addEventListener('mousedown', e => { drag=true; lastMX=e.clientX; lastMY=e.clientY; });
 addEventListener('mouseup',   () => drag = false);
+addEventListener('mouseleave', () => drag = false);
 addEventListener('mousemove', e => {
   if (!drag) return;
   player.yaw -= (e.clientX - lastMX) * .004;
@@ -596,6 +603,9 @@ let touches = {};
 canvas.addEventListener('touchstart', e => {
   [...e.changedTouches].forEach(t => { touches[t.identifier] = { x:t.clientX, y:t.clientY }; });
 });
+const dropTouches = e => { [...e.changedTouches].forEach(t => delete touches[t.identifier]); };
+canvas.addEventListener('touchend', dropTouches);
+canvas.addEventListener('touchcancel', dropTouches);
 canvas.addEventListener('touchmove', e => {
   e.preventDefault();
   if (e.touches.length === 1) {
@@ -691,11 +701,15 @@ function openSight(i) {
 // Key routing: story UI first (dialogue), then photo mode, then the default world actions.
 // Movement keys are tracked separately above and are frozen by engine.lock().
 addEventListener('keydown', e => {
+  if (editingKey(e)) return;
   const k = e.key.toLowerCase();
   if (title.handleKey(k, e)) { e.preventDefault(); return; }       // title / pause menu owns everything while open
-  if (e.repeat) return;
+  if (e.repeat) {                                                   // ignore auto-repeat, but keep native defaults suppressed
+    if ([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
+    return;
+  }
   if (storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e)) { e.preventDefault(); return; }
-  if (k === 'e') {
+  if (k === 'e' && !engine.isLocked() && !engine.isPhotoMode() && !storyUI.isModalOpen()) {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
       openSight(nearestSight); return;

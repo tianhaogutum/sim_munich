@@ -20,6 +20,7 @@ const out = resolve(outIndex < 0 ? '/tmp/lmu_qa' : args[outIndex + 1]);
 await mkdir(out, { recursive: true });
 const url = new URL(base);
 url.searchParams.delete('stage'); // Persistence must be tested without the debug fresh-run override.
+url.searchParams.set('notitle', '1'); // Skip the title screen; it would hold a movement lock until 开始 is clicked.
 const routeUrl = new URL('../src/date_route.mjs', import.meta.url);
 const routeSource = await readFile(routeUrl, 'utf8');
 const { POIS, SPAWN, FOUNTAINS, PHOTO_TARGETS } = await import(routeUrl.href);
@@ -112,10 +113,14 @@ async function advanceDialogue(expectedStage) {
   }
 }
 async function closeOverlays() {
-  for (let i = 0; i < 3; i++) {
-    await qa.tap('Escape');
-    await visibleClick('.dp-close');
+  // Escape toggles the pause menu when nothing else is open, so only press it while something is open.
+  for (let i = 0; i < 4; i++) {
+    const open = await qa.evaluate(
+      '!!(__lmu.title?.isOpen?.() || __lmu.engine.isLocked() || __lmu.engine.isPhotoMode() || __lmu.storyUI.isModalOpen())');
+    if (!open) return;
+    if (!await visibleClick('.dp-close')) await qa.tap('Escape');
     await qa.frames();
+    await new Promise(r => setTimeout(r, 500));   // menus fade over ~420 ms before they release their lock
   }
 }
 async function visit(id, from, to) {
