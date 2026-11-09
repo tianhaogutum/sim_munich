@@ -1,0 +1,46 @@
+{
+  "block": "ludwig_west",
+  "observed_at": "2026-11-09",
+  "method": "Reference-only visual study. No photographic files copied into the repository. All rendering uses procedural geometry, toon materials, and a locally drawn sign atlas.",
+  "files": [],
+  "references": [
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:LMU-Philologicum_Fassade_Ludwigstra%C3%9Fe.jpg",
+      "author": "UB der LMU München",
+      "license": "CC BY-SA 3.0 (also CC BY-SA 3.0 DE)",
+      "use": "Viewed only: three-storey stone facade, arched lower windows, dark brown mullions, sill and cornice rhythm. No redistribution."
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Amalienstr._40_Muenchen-1.jpg",
+      "author": "Rufus46",
+      "license": "See Wikimedia Commons file page; reference only, no redistribution",
+      "use": "Viewed only: ochre plaster, pale window surrounds and stringcourses, dark glazing, ground-floor awnings. Generic neighborhood palette, not an assertion that every storefront has this design."
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Theresienstr4_Muenchen-01.jpg",
+      "author": "AHert",
+      "license": "CC BY-SA 3.0",
+      "use": "Viewed only: five horizontal facade bands, stone-colored institutional frontage, regular tall windows, restrained cornices."
+    },
+    {
+      "url": "https://verwaltungsgerichtsbarkeit.bayern.de/presse/fotos_medien/index.html",
+      "author": "Bayerische Verwaltungsgerichtsbarkeit",
+      "license": "Reference only; no photographic material redistributed",
+      "use": "Official reference for the Verwaltungsgerichtshof at Ludwigstraße 23, including arched openings and pale stone."
+    },
+    {
+      "url": "https://www.lmu.de/de/newsroom/newsuebersicht/news/feierliche-einweihung-des-philologicums-88e84526.html",
+      "author": "Ludwig-Maximilians-Universität München",
+      "license": "Reference only; no material redistributed",
+      "use": "Verifies that Ludwigstraße 25 is the Philologicum in the former Blindeninstitut and distinguishes its historic street facade from its modern courtyard side."
+    },
+    {
+      "url": "https://www.ub.lmu.de/de/standorte/standorte-am-lmu-hauptgebaeude/",
+      "author": "Universitätsbibliothek der LMU München",
+      "license": "Reference only; no material redistributed",
+      "use": "Institutional address context for the southern LMU campus."
+    }
+  ],
+  "geometry_sources": "../osm/ludwig_west.sources.json",
+  "geometry_attribution": "© OpenStreetMap contributors, ODbL"
+}
