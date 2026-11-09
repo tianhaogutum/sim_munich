@@ -1,0 +1,11 @@
+{
+  "query": "[out:json][timeout:55];(way[\"highway\"](48.1463,11.5789,48.1552,11.5838);way[\"building\"](48.1463,11.5789,48.1552,11.5838);node[\"natural\"=\"tree\"](48.1463,11.5789,48.1552,11.5838);node[\"highway\"=\"street_lamp\"](48.1463,11.5789,48.1552,11.5838);nwr[\"highway\"=\"bus_stop\"](48.1463,11.5789,48.1552,11.5838);nwr[\"public_transport\"=\"platform\"](48.1463,11.5789,48.1552,11.5838);node[\"railway\"=\"subway_entrance\"](48.1463,11.5789,48.1552,11.5838);nwr[\"amenity\"=\"bicycle_parking\"](48.1463,11.5789,48.1552,11.5838);way[\"name\"=\"Theatinerkirche\"](48.14,11.57,48.16,11.59);way[\"name\"=\"Feldherrnhalle\"](48.14,11.57,48.16,11.59);way[\"name\"=\"Siegestor\"](48.14,11.57,48.16,11.59););out tags geom;",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "retrieved_at": "2026-11-09T09:58:04Z",
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "additional_query": "[out:json][timeout:30];way[\"building\"](48.1411,11.5753,48.1431,11.5785);out tags geom;",
+  "raw_file": "ludwigstrasse.json",
+  "license_url": "https://www.openstreetmap.org/copyright",
+  "trim": "Retained road/path ways, rendered furniture nodes, core entry/lamp/platform handoff data, vista footprints, and neighbouring building outlines used to subtract paving. Geometry and tags of retained elements are unchanged.",
+  "supplementary_retrieved_at": "2026-11-09T09:59:06.238113Z"
+}
