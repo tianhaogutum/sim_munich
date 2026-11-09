@@ -1,0 +1,43 @@
+{
+  "version": 0.6,
+  "generator": "OpenStreetMap API 0.6 (supplementary landmark boundary check)",
+  "elements": [
+    {
+      "type": "node",
+      "id": 201979156,
+      "tags": {
+        "amenity": "fountain",
+        "drinking_water": "no",
+        "heritage": "4",
+        "heritage:operator": "BLfD",
+        "lit": "yes",
+        "name": "Römischer Brunnen",
+        "note": "name nach Wikipedia, Liste Münchner Brunnen",
+        "ref:BLfD": "D-1-62-000-2150",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wheelchair:description": "nur unmittelbar an den Brunnen selbst kann man nicht heranfahren",
+        "wikidata": "Q41181127",
+        "wikimedia_commons": "Category:Fountains at LMU Munich",
+        "wikipedia": "de:Schalenbrunnen (München)"
+      },
+      "lat": 48.1505312,
+      "lon": 11.581668
+    },
+    {
+      "type": "node",
+      "id": 288676926,
+      "tags": {
+        "conveying": "yes",
+        "description": "U-Bahnhof Universität",
+        "entrance": "yes",
+        "entrance_marker:subway": "yes",
+        "railway": "subway_entrance",
+        "ref": "B",
+        "wheelchair": "yes"
+      },
+      "lat": 48.151139,
+      "lon": 11.5819034
+    }
+  ]
+}
