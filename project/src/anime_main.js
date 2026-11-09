@@ -570,10 +570,13 @@ const solids = [
   // Right adjacent
   { cx: (D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
 ];
+const extraBlockers = [];                            // (x, z) => boolean, registered by world blocks
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
   if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
-  return solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd);
+  if (solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd)) return true;
+  for (let i = 0; i < extraBlockers.length; i++) if (extraBlockers[i](x, z)) return true;
+  return false;
 }
 // Keys typed into a text field or during IME composition never reach the game (QA finding 3).
 function editingKey(e) {
@@ -641,6 +644,9 @@ let photoModule = null;                               // set after createPhoto (
 const engine = {
   THREE, scene, camera, renderer, composer, canvas, player, route: ROUTE,
   blocked,                                            // (x, z) => true if the ground point is not walkable
+  addObstacle: ({ cx, cz, hw, hd }) => { solids.push({ cx, cz, hw, hd }); },   // axis-aligned box footprint
+  addBlocker: fn => { extraBlockers.push(fn); return () => { const i = extraBlockers.indexOf(fn); if (i >= 0) extraBlockers.splice(i, 1); }; },
+  heightAt: (x, z) => 0,                              // ground height; blocks with terrain may wrap this
   toon: (color, steps = 4, opts = {}) =>              // house toon material (cel steps 3 or 4)
     new THREE.MeshToonMaterial({ color, gradientMap: steps === 3 ? G3 : G4, ...opts }),
   outline: (mesh, thickness = 0.03) => ol(mesh, thickness),

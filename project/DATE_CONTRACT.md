@@ -21,7 +21,10 @@ keys, and calls each module's `update(dt, et)` every frame. Modules only receive
 | `THREE, scene, camera, renderer, composer, canvas` | Three.js r160 objects (from the CDN import map) |
 | `player` | `{ pos: Vector3, yaw }`. `yaw` is the camera orbit yaw. Only the entry moves the player. |
 | `route` | Everything in `src/date_route.mjs` |
-| `blocked(x, z)` | true if a ground point is not walkable (building, fountains, world bounds) |
+| `blocked(x, z)` | true if a ground point is not walkable (building, fountains, world bounds, registered blocks) |
+| `addObstacle({cx, cz, hw, hd})` | register an axis-aligned footprint as solid |
+| `addBlocker(fn)` | register `(x, z) => boolean` for precise footprints (polygons); returns an unregister function |
+| `heightAt(x, z)` | ground height (0 on the plaza) |
 | `toon(color, steps = 4, opts)` | house cel-shaded material; `steps` 3 or 4 |
 | `outline(mesh, thickness)` | house ink outline (inverted hull), returns the mesh |
 | `lock(id)`, `unlock(id)`, `isLocked()` | freeze player movement while any lock is held |
@@ -52,6 +55,14 @@ Edit only the files you own. Need a change elsewhere? Note it in your final repo
 | Photo | `src/date_photo.js`, `src/date_photo.css` |
 
 CSS: inject your stylesheet from your module with a `<link>`; prefix classes (`ds-`, `dp-`); never restyle shared ids.
+
+## Real-world blocks (`src/date_geo.mjs`)
+
+New districts are built from OpenStreetMap footprints: `toWorld(lat, lon)` maps WGS84 to game metres with
++X = north and +Z = east (origin: the LMU main portal). Block modules are `src/lmu_block_<name>.js` exporting
+`createBlock(engine) -> { group, update?(dt, et), dispose?() }`; they add their own geometry and register
+collision with `engine.addObstacle` / `engine.addBlocker`. Reference photos are used for proportions and
+palettes; any image copied into `assets/<block>/` must be openly licensed and listed in `sources.json`.
 
 ## Coordinates (`src/date_route.mjs`)
 
