@@ -63,14 +63,14 @@ test('missing keys fall back to Chinese and warn once per key only in debug mode
   }
 });
 
-test('detectLocale honors URL, then storage, then navigator, then Chinese fallback', () => {
+test('detectLocale honors URL, then storage, then the Chinese default (browser language is ignored)', () => {
   assert.equal(detectLocale({ search: '?lang=DE-de', storage: saved('en'), language: 'zh-CN' }), 'de');
   assert.equal(detectLocale({ search: '', storage: saved('en-US'), language: 'de-DE' }), 'en');
   assert.equal(detectLocale({ search: '?lang=fr', storage: saved('de'), language: 'en' }), 'de');
-  assert.equal(detectLocale({ search: '', storage: saved('invalid'), language: 'de-AT' }), 'de');
+  assert.equal(detectLocale({ search: '', storage: saved('invalid'), language: 'de-AT' }), 'zh');
   assert.equal(detectLocale({ search: '', storage: null, language: 'fr-FR' }), 'zh');
   assert.equal(detectLocale({ search: '?lang=zh', storage: null, language: 'en' }), 'zh');
-  assert.equal(detectLocale({ search: '', storage: { getItem() { throw new Error('denied'); } }, language: 'en-GB' }), 'en');
+  assert.equal(detectLocale({ search: '', storage: { getItem() { throw new Error('denied'); } }, language: 'en-GB' }), 'zh');
 });
 
 test('locale changes persist, notify once, unsubscribe, and reject unsupported locales', () => {

@@ -13,14 +13,15 @@ const normalize = code => typeof code === 'string'
   ? locales.find(locale => locale === code.trim().toLowerCase().split(/[-_]/)[0]) ?? null : null;
 const storage = () => { try { return globalThis.localStorage; } catch { return null; } };
 
-/** URL > saved preference > browser language > Chinese. Inputs can be injected in tests. */
+/** URL > saved preference > Chinese. The browser language is deliberately NOT used: the story and photo
+ *  copy exist only in Chinese so far, and a half-translated UI reads worse than a consistent one. Players
+ *  switch languages in the settings panel (persisted) or with ?lang=. Inputs can be injected in tests. */
 export function detectLocale(options = {}) {
   const search = options.search ?? globalThis.location?.search ?? '';
   const store = Object.hasOwn(options, 'storage') ? options.storage : storage();
-  const language = options.language ?? globalThis.navigator?.language;
   let saved;
   try { saved = store?.getItem(STORAGE_KEY); } catch { /* Storage is optional. */ }
-  return normalize(new URLSearchParams(search).get('lang')) || normalize(saved) || normalize(language) || 'zh';
+  return normalize(new URLSearchParams(search).get('lang')) || normalize(saved) || 'zh';
 }
 // Server-side imports retain the authored Chinese baseline; browsers auto-detect.
 let locale = globalThis.location ? detectLocale() : 'zh';
