@@ -618,6 +618,7 @@ document.getElementById('days-popup-close').onclick = () => daysPopup.classList.
 // ── ENGINE API (the only surface the chapter modules may use; see project/DATE_CONTRACT.md) ──
 const movementLocks = new Set();
 let toastEl = null, toastTimer = 0;
+let photoModule = null;                               // set after createPhoto (see engine.isPhotoMode)
 const engine = {
   THREE, scene, camera, renderer, composer, canvas, player, route: ROUTE,
   blocked,                                            // (x, z) => true if the ground point is not walkable
@@ -627,6 +628,8 @@ const engine = {
   lock:   id => movementLocks.add(id),                // freeze player movement while any lock is held
   unlock: id => movementLocks.delete(id),
   isLocked: () => movementLocks.size > 0,
+  isPhotoMode: () => !!photoModule?.isActive(),       // true while the photo overlay is open
+  days: DAYS_TOGETHER,                                // the "在一起第 N 天" counter
   capture({ maxWidth = 0, type = 'image/png', quality = 0.92 } = {}) {
     composer.render();                                // includes bloom; HTML HUD is not part of the canvas
     const src = renderer.domElement;
@@ -654,6 +657,7 @@ const story   = createStory();
 const cast    = createCast(engine, story);
 engine.companion = cast.companion;
 const photo   = createPhoto(engine, story);
+photoModule = photo;
 const storyUI = createStoryUI(engine, story);
 window.__lmu = { engine, story, cast, photo, storyUI };   // debug handle for the console / headless checks
 
