@@ -20,6 +20,7 @@ import { createTitle }   from './date_title.js';
 import { createBanter }  from './date_banter.js';
 import { createCollect } from './date_collect.js';
 import { createCinematic } from './date_cinematic.js';
+import { createLife }    from './lmu_life.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -679,6 +680,7 @@ const audio   = createAudio(engine, story);
 engine.audio = audio;
 const cast    = createCast(engine, story);
 engine.companion = cast.companion;
+const life    = createLife(engine, story);
 const photo   = createPhoto(engine, story);
 photoModule = photo;
 const storyUI = createStoryUI(engine, story);
@@ -688,7 +690,7 @@ const title   = createTitle(engine, story);
 const banter  = createBanter(engine, story);
 const collect = createCollect(engine, story);
 const cinematic = createCinematic(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter, collect, cinematic };   // debug handle for the console / headless checks
+window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter, collect, cinematic, life };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
@@ -798,6 +800,7 @@ function loop() {
 
   // ── Characters (avatar + companion) ──
   cast.update(dt, et);
+  life.update(dt, et);
   audio.update(dt, et);
   collect.update(dt, et);
 
