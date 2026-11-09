@@ -6,6 +6,8 @@ import { MEMORY_ITEMS, findPlacement, isPlacementValid, validateCollectState,
 import { BANTER_POOLS, pickLine, REPEAT_WINDOW } from '../src/date_banter_lines.mjs';
 import { createSequence, defaultCameraPose, samplePath, distance3 } from '../src/date_cinematic_paths.mjs';
 import { createLifeSimulation, seededRandom, distance } from '../src/lmu_life_sim.mjs';
+import { createAudio } from '../src/date_audio.js';
+import { createCollect } from '../src/date_collect.js';
 
 // Same building extents as the reviewed engine; route.test.mjs guards their source.
 const solids = [
@@ -105,4 +107,43 @@ test('R07: idle pedestrians yield when the companion reaches their position', ()
   sim.update(1 / 60, 1, { x: 0, z: 75 }, companion, 'photos');
   assert.ok(distance(actor, companion) >= 1.5,
     `idle actor ignored companion: gap ${distance(actor, companion)} m`);
+});
+
+test('side collections reset and unsubscribe without mutating the story or needing DOM/cast', () => {
+  const listeners = new Set();
+  let locked = false;
+  let state = { stage: 'photos', photos: {}, choices: {}, collected: {}, visited: {} };
+  const story = {
+    getState: () => state,
+    subscribe: fn => { listeners.add(fn); return () => listeners.delete(fn); },
+  };
+  const position = findPlacement(MEMORY_ITEMS[0], { blocked });
+  const engine = { player: { pos: { ...position } }, blocked, isLocked: () => locked };
+  const collect = createCollect(engine, story);
+  collect.update(1 / 60, 0);
+  assert.equal(collect.getStats().fragmentsFound, 1);
+  assert.deepEqual(state.collected, {}, 'optional pickup must not become the quest memento');
+  locked = true;
+  Object.assign(engine.player.pos, findPlacement(MEMORY_ITEMS[1], { blocked }));
+  collect.update(1 / 60, 1);
+  assert.equal(collect.getStats().fragmentsFound, 1, 'modal lock prevents pickup');
+  const before = state;
+  state = { ...state, stage: 'meet' };
+  for (const notify of listeners) notify(state, before, { type: 'RESTART' });
+  assert.equal(collect.getStats().fragmentsFound, 0);
+  collect.dispose(); collect.dispose();
+  assert.equal(listeners.size, 0);
+});
+
+test('R04: audio implements the volume API used by title settings', () => {
+  const audio = createAudio();
+  try {
+    assert.equal(typeof audio.setVolume, 'function', 'title slider currently calls a missing optional method');
+    audio.setVolume(.25);
+    assert.equal(audio.getDebugState().volume, .25);
+    audio.setVolume(2);
+    assert.equal(audio.getDebugState().volume, 1);
+    audio.setVolume(NaN);
+    assert.equal(audio.getDebugState().volume, 1);
+  } finally { audio.dispose(); }
 });
