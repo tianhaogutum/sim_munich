@@ -19,6 +19,7 @@ import { createMap }     from './date_map.js';
 import { createTitle }   from './date_title.js';
 import { createBanter }  from './date_banter.js';
 import { createCollect } from './date_collect.js';
+import { createCinematic } from './date_cinematic.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -625,6 +626,7 @@ canvas.addEventListener('touchmove', e => {
 const panel    = document.getElementById('panel');
 const promptEl = document.getElementById('prompt');
 const daysPopup = document.getElementById('days-popup');
+const hud      = document.getElementById('hud');
 
 let nearestSight = -1;
 
@@ -685,7 +687,8 @@ const map     = createMap(engine, story);
 const title   = createTitle(engine, story);
 const banter  = createBanter(engine, story);
 const collect = createCollect(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter, collect };   // debug handle for the console / headless checks
+const cinematic = createCinematic(engine, story);
+window.__lmu = { engine, story, cast, photo, storyUI, audio, input, map, title, banter, collect, cinematic };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
@@ -712,7 +715,7 @@ addEventListener('keydown', e => {
     if ([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
     return;
   }
-  if (storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e) || collect.handleKey(k, e)) { e.preventDefault(); return; }
+  if (cinematic.handleKey(k, e) || storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e) || map.handleKey(k, e) || collect.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e' && !engine.isLocked() && !engine.isPhotoMode() && !storyUI.isModalOpen()) {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
@@ -797,6 +800,10 @@ function loop() {
   cast.update(dt, et);
   audio.update(dt, et);
   collect.update(dt, et);
+
+  // ── Cinematics / free cam (may take over engine.cameraOverride) ──
+  cinematic.update(dt, et);
+  hud.classList.toggle('cine-hidden', cinematic.isPlaying());
 
   // ── Spring-arm camera ──
   const idealX = player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch);
