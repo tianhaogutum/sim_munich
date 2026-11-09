@@ -64,6 +64,8 @@ export function createTitle(engine, story) {
   let appliedAudio = null;
   let lastState = null;
   const settings = readSettings();
+  // M and the audio button persist through the audio module, not this menu.
+  settings.muted = engine.audio?.isMuted?.() ?? settings.muted;
   const bloomStrengths = new WeakMap();
 
   function saveSettings() {
@@ -130,7 +132,7 @@ export function createTitle(engine, story) {
         <nav class="dt-menu" aria-label="${t('title.mainMenu')}">
           ${button('start', `${t('title.start')} <span aria-hidden="true">↗</span>`, 'dt-primary dt-start')}
           ${hasProgress() ? button('continue', `${t('title.continue')} <span class="dt-button-note">${t('title.continueNote')}</span>`, 'dt-continue') : ''}
-          ${button('chapter2', `${t('title.chapter2')} <span aria-hidden="true">→</span>`, 'dt-chapter2')}
+          <div class="dt-menu-pair">${button('chapter2', `${t('title.chapter2')} <span aria-hidden="true">→</span>`, 'dt-chapter2')}${button('chapter3', `${t('title.chapter3')} <span aria-hidden="true">→</span>`, 'dt-chapter3')}</div>
           <div class="dt-menu-pair">${button('help', t('title.help'))}${button('credits', t('title.credits'))}</div>${button('settings', t('title.settings'))}
         </nav>
         <p class="dt-keyhint"><kbd>↑</kbd> <kbd>↓</kbd> ${t('title.choose')} <span>·</span> <kbd>Enter</kbd> ${t('title.go')}</p>
@@ -146,6 +148,7 @@ export function createTitle(engine, story) {
         `<p class="dt-keyhint"><kbd>Esc</kbd> ${t('title.escapeHint')}</p>`);
       renderProgress();
     } else if (screen === 'settings') {
+      settings.muted = engine.audio?.isMuted?.() ?? settings.muted;
       const segments = (key, choices) => `<div class="dt-segments" role="group" aria-label="${key === 'quality' ? t('title.quality') : t('title.subtitleSpeed')}">` +
         choices.map(([value, label]) => `<button type="button" class="dt-segment" data-dt-setting="${key}" data-dt-value="${value}" aria-pressed="${settings[key] === value}">${label}</button>`).join('') + '</div>';
       surface.innerHTML = card(heading(t('title.settingsEyebrow'), t('title.settingsTitle'), t('title.settingsDescription')) +
@@ -273,6 +276,7 @@ export function createTitle(engine, story) {
       case 'confirm-restart': start(true); break;
       case 'title': show('title'); break;
       case 'chapter2': location.href = './park.html'; break;
+      case 'chapter3': location.href = './interior.html'; break;
     }
   }
 

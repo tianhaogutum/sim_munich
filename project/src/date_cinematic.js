@@ -19,6 +19,10 @@ export function createCinematic(engine, story) {
   let stage = story?.getState?.().stage;
   const held = new Set();
   const poseCamera = camera.clone();
+  const lookTarget = new THREE.Vector3();
+  const pathSample = { position: new Float64Array(3), target: new Float64Array(3), fov: camera.fov };
+  const sampledPose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion(), fov: camera.fov };
+  const mixedPose = { position: new THREE.Vector3(), quaternion: new THREE.Quaternion(), fov: camera.fov };
   const move = new THREE.Vector3();
   const rotation = new THREE.Euler(0, 0, 0, 'YXZ');
 
@@ -63,8 +67,11 @@ export function createCinematic(engine, story) {
   }
   function poseFrom(position, target, fov) {
     poseCamera.position.fromArray(position);
-    poseCamera.lookAt(new THREE.Vector3().fromArray(target));
-    return { position: poseCamera.position.clone(), quaternion: poseCamera.quaternion.clone(), fov };
+    poseCamera.lookAt(lookTarget.fromArray(target));
+    sampledPose.position.copy(poseCamera.position);
+    sampledPose.quaternion.copy(poseCamera.quaternion);
+    sampledPose.fov = fov;
+    return sampledPose;
   }
   function currentPose() {
     return { position: camera.position.clone(), quaternion: camera.quaternion.clone(), fov: camera.fov };
@@ -75,10 +82,14 @@ export function createCinematic(engine, story) {
     setFov(pose.fov);
   }
   function mixPose(a, b, t) {
-    return { position: a.position.clone().lerp(b.position, t),
-      quaternion: a.quaternion.clone().slerp(b.quaternion, t), fov: lerp(a.fov, b.fov, t) };
+    mixedPose.position.copy(a.position).lerp(b.position, t);
+    mixedPose.quaternion.copy(a.quaternion).slerp(b.quaternion, t);
+    mixedPose.fov = lerp(a.fov, b.fov, t);
+    return mixedPose;
   }
   function homePose() {
+    const live = engine.getDefaultCameraPose?.();
+    if (live) return poseFrom(live.position, live.target, originalFov);
     const target = engine.getCameraTarget?.();
     const pose = defaultCameraPose(triple(engine.player.pos), savedYaw, target ? triple(target) : undefined);
     return poseFrom(pose.position, pose.target, originalFov);
@@ -130,7 +141,7 @@ export function createCinematic(engine, story) {
   }
   function sequencePose(sequence, elapsed) {
     const t = Math.max(0, elapsed - sequence.spec.leadIn);
-    const sampled = samplePath(sequence.spec.path, t, originalFov);
+    const sampled = samplePath(sequence.spec.path, t, originalFov, pathSample);
     const pose = poseFrom(sampled.position, sampled.target, sampled.fov);
     return sequence.spec.leadIn && elapsed < sequence.spec.leadIn
       ? mixPose(sequence.from, pose, easeInOut(elapsed / sequence.spec.leadIn)) : pose;
@@ -258,7 +269,11 @@ export function createCinematic(engine, story) {
               beginReturn(spec.handoff);
               active.elapsed = overflow;
             } else {
-              const card = spec.captions.find(c => elapsed >= c.start && elapsed <= c.end);
+              let card = null;
+              for (let i = 0; i < spec.captions.length; i++) {
+                const candidate = spec.captions[i];
+                if (elapsed >= candidate.start && elapsed <= candidate.end) { card = candidate; break; }
+              }
               if (card) {
                 if (title.textContent !== card.title) title.textContent = card.title;
                 if (subtitle.textContent !== card.subtitle) subtitle.textContent = card.subtitle;

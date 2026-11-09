@@ -14,6 +14,10 @@
 }
 
 .di-root[hidden], .di-root [hidden] { display: none !important; }
+/* Reserve the bottom corners for the stick and action buttons. */
+body.di-touch .dm-panel { top: 230px; bottom: auto; }
+body.di-touch .dc-launcher { bottom: calc(220px + env(safe-area-inset-bottom)); }
+body.di-touch #date-audio-root { top: 10px !important; bottom: auto !important; z-index: 26 !important; }
 .di-root * { box-sizing: border-box; }
 
 .di-look {

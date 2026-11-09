@@ -85,6 +85,7 @@ export default {
     "help": "操作说明",
     "credits": "制作名单",
     "chapter2": "第二章 · 英国公园散步",
+    "chapter3": "第三章 · 主楼室内",
     "settings": "设置",
     "choose": "选择",
     "go": "出发",
