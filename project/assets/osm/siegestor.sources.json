@@ -1,0 +1,33 @@
+{
+  "query": "[out:json][timeout:35];(way[\"building\"](48.1521065,11.578328,48.155091,11.58372);way[\"highway\"](48.1521065,11.578328,48.155091,11.58372);node[\"natural\"=\"tree\"](48.1521065,11.578328,48.155091,11.58372);way[\"natural\"=\"tree_row\"](48.1521065,11.578328,48.155091,11.58372);nwr[\"name\"=\"Siegestor\"](48.1521065,11.578328,48.155091,11.58372););out geom;",
+  "timestamp": "2026-11-09T09:58:29.206409+00:00",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "geometryPolicy": "Original OSM way geometry preserved below; generated game footprints clipped to sector with 0.12 m inset. No downloaded imagery is included.",
+  "references": [
+    {
+      "url": "https://www.adbk.de/en/akademie-en/archive-historical/buildings.html",
+      "use": "Academy architectural history and postwar flat pavilion roofs"
+    },
+    {
+      "url": "https://www.muenchen.de/en/sights/siegestor",
+      "use": "Peace inscription south side, Bavaria and lion quadriga"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Muenchen_Siegestor01.jpg",
+      "use": "Visual reference only: south facade"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Siegestor_Muenchen_January_2013.JPG",
+      "use": "Visual reference only: north facade"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Akademie_Muenchen2.JPG",
+      "use": "Visual reference only: Academy stonework and window proportions"
+    },
+    {
+      "url": "https://www.munich.travel/en/pois/urban-districts/siegestor",
+      "use": "Siegestor marks the start of Leopoldstraße / Schwabing"
+    }
+  ]
+}
