@@ -84,6 +84,7 @@ export default {
     "continueNote": "赴我们的约",
     "help": "操作说明",
     "credits": "制作名单",
+    "chapter2": "第二章 · 英国公园散步",
     "settings": "设置",
     "choose": "选择",
     "go": "出发",

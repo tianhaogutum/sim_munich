@@ -130,6 +130,7 @@ export function createTitle(engine, story) {
         <nav class="dt-menu" aria-label="${t('title.mainMenu')}">
           ${button('start', `${t('title.start')} <span aria-hidden="true">↗</span>`, 'dt-primary dt-start')}
           ${hasProgress() ? button('continue', `${t('title.continue')} <span class="dt-button-note">${t('title.continueNote')}</span>`, 'dt-continue') : ''}
+          ${button('chapter2', `${t('title.chapter2')} <span aria-hidden="true">→</span>`, 'dt-chapter2')}
           <div class="dt-menu-pair">${button('help', t('title.help'))}${button('credits', t('title.credits'))}</div>${button('settings', t('title.settings'))}
         </nav>
         <p class="dt-keyhint"><kbd>↑</kbd> <kbd>↓</kbd> ${t('title.choose')} <span>·</span> <kbd>Enter</kbd> ${t('title.go')}</p>
@@ -271,6 +272,7 @@ export function createTitle(engine, story) {
       case 'cancel': show('pause'); break;
       case 'confirm-restart': start(true); break;
       case 'title': show('title'); break;
+      case 'chapter2': location.href = './park.html'; break;
     }
   }
 
