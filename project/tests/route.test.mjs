@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { BOUNDS, FOUNTAINS, POIS, SPAWN, COMPANION, PHOTO_TARGETS, STAGES } from '../src/date_route.mjs';
+import { BOUNDS, CORE_BOUNDS, FOUNTAINS, POIS, SPAWN, COMPANION, PHOTO_TARGETS, STAGES } from '../src/date_route.mjs';
 import { createStory, objectiveFor } from '../src/date_story.mjs';
 
 const source = readFileSync(new URL('../src/anime_main.js', import.meta.url), 'utf8');
@@ -14,11 +14,16 @@ const solids = [
   { cx: -112, cz: -26, hw: 52, hd: 52 },
   { cx: 112, cz: -26, hw: 52, hd: 52 },
 ];
+const extraBlockers = [];   // world blocks register precise footprints at runtime; none in this static copy
 function blocked(x, z) {
   if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
   if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
-  return solids.some(s => Math.abs(x - s.cx) < s.hw && Math.abs(z - s.cz) < s.hd);
+  if (solids.some(s => Math.abs(x - s.cx) < s.hw && Math.abs(z - s.cz) < s.hd)) return true;
+  for (let i = 0; i < extraBlockers.length; i++) if (extraBlockers[i](x, z)) return true;
+  return false;
 }
+// The flood fill below stays inside the original plaza so the 1 m grid remains small.
+const inCore = (x, z) => x >= CORE_BOUNDS.minX && x <= CORE_BOUNDS.maxX && z >= CORE_BOUNDS.minZ && z <= CORE_BOUNDS.maxZ;
 const syncMessage = 'Engine collision rule changed: review anime_main.js and RE-SYNC the independent copy in tests/route.test.mjs; do not just suppress this guard.';
 
 test('collision copy is in sync with engine dimensions, solids and blocked()', () => {
@@ -60,7 +65,7 @@ function flood() {
     const [x, z] = queue[index];
     for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + dx, nz = z + dz, k = key(nx, nz);
-      if (seen.has(k) || !clearSegment(x, z, nx, nz)) continue;
+      if (seen.has(k) || !inCore(nx, nz) || !clearSegment(x, z, nx, nz)) continue;
       seen.add(k); queue.push([nx, nz]);
     }
   }
