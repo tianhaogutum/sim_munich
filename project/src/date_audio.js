@@ -1,4 +1,5 @@
-// Procedural sound for the Munich date; no assets, imports, or eager AudioContext.
+import { t, onLocaleChange } from './date_i18n.mjs';
+// Procedural sound for the Munich date; no assets or eager AudioContext.
 // createAudio(engine?, story?) -> { update, handleKey, setMuted, isMuted, cue, dispose }.
 // Call update after player movement. Route keys after storyUI and photo. Assign engine.audio
 // to the returned object so either module can call engine.audio?.cue('tick' / 'shutter').
@@ -135,11 +136,11 @@ export function createAudio(engine = {}, story = null) {
 
   function renderIndicator() {
     if (!button) return;
-    const label = unavailable ? '声音不可用' : muted ? '声音已关' : started ? '声音已开' : '轻触开启声音';
+    const label = unavailable ? t('audio.unavailable') : muted ? t('audio.off') : started ? t('audio.on') : t('audio.activate');
     button.textContent = `${muted || unavailable ? '♫' : '♪'}  ${label}  ·  M`;
     button.setAttribute('aria-pressed', String(!muted));
-    button.setAttribute('aria-label', muted ? '开启声音 (M)' : '静音 (M)');
-    button.title = 'M · 切换音乐与环境声';
+    button.setAttribute('aria-label', muted ? t('audio.enable') : t('audio.mute'));
+    button.title = t('audio.hint');
     root.dataset.muted = String(muted);
     root.dataset.audioState = unavailable ? 'unavailable' : context?.state ?? 'waiting';
   }
@@ -235,7 +236,7 @@ export function createAudio(engine = {}, story = null) {
 
   function toggleMute() {
     setMuted(!muted);
-    try { engine?.toast?.(muted ? '♫ 声音已关闭 · M 开启' : '♪ 声音已开启 · M 静音', 1800); } catch { /* optional HUD */ }
+    try { engine?.toast?.(muted ? t('audio.mutedToast') : t('audio.unmutedToast'), 1800); } catch { /* optional HUD */ }
   }
 
   function cue(name) {
@@ -371,6 +372,7 @@ export function createAudio(engine = {}, story = null) {
   }
   try { unsubscribe = story?.subscribe?.(onStory); } catch { /* optional story */ }
   armGesture();
+  const unsubscribeLocale = onLocaleChange(renderIndicator);
 
   return {
     update, setMuted, isMuted: () => muted, cue,
@@ -389,6 +391,7 @@ export function createAudio(engine = {}, story = null) {
     dispose() {
       if (disposed) return;
       disposed = true;
+      unsubscribeLocale();
       host?.removeEventListener('pointerdown', unlock, true);
       host?.removeEventListener('keydown', unlock, true);
       try { if (typeof unsubscribe === 'function') unsubscribe(); } catch { /* optional subscription */ }

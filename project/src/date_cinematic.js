@@ -1,3 +1,4 @@
+import { t, onLocaleChange } from './date_i18n.mjs';
 // Integration: construct after cast/photo/storyUI; call update(dt, et) once per
 // frame BEFORE the camera section. Route handleKey before storyUI/photo/defaults.
 // The override only draws the current pose; it never advances the clock twice.
@@ -37,13 +38,19 @@ export function createCinematic(engine, story) {
     <div class="dcin-bar dcin-bar-bottom"></div>
     <div class="dcin-caption" role="status" aria-live="polite">
       <div class="dcin-caption-title"></div><div class="dcin-caption-subtitle"></div>
-    </div><div class="dcin-skip">按 Esc 跳过</div>
-    <div class="dcin-free-hint"><div class="dcin-free-title">自由镜头 · FREE CAMERA</div>
-      WASD 移动 · Q / E 升降 · Shift 加速<br>拖拽环顾 · 滚轮调速 · P 拍照 · C 返回</div>`;
+    </div><div class="dcin-skip">${t('cinematic.skip')}</div>
+    <div class="dcin-free-hint"><div class="dcin-free-title">${t('cinematic.freeTitle')}</div>
+      ${t('cinematic.freeHint')}</div>`;
   document.body.appendChild(root);
   const caption = root.querySelector('.dcin-caption');
   const title = root.querySelector('.dcin-caption-title');
   const subtitle = root.querySelector('.dcin-caption-subtitle');
+  const unsubscribeLocale = onLocaleChange(() => {
+    root.querySelector('.dcin-skip').textContent = t('cinematic.skip');
+    root.querySelector('.dcin-free-hint').innerHTML = `<div class="dcin-free-title">${t('cinematic.freeTitle')}</div>${t('cinematic.freeHint')}`;
+    const card = active?.kind === 'sequence' && active.spec.captions.find(c => active.elapsed >= c.start && active.elapsed <= c.end);
+    if (card) { title.textContent = card.title; subtitle.textContent = card.subtitle; }
+  });
 
   function on(target, event, handler, options) {
     target.addEventListener(event, handler, options);
@@ -301,6 +308,7 @@ export function createCinematic(engine, story) {
       if (queued) { queued.resolve(); queued = null; }
       if (active || free) finish();
       disposed = true;
+      unsubscribeLocale();
       unsubscribe?.();
       listeners.forEach(remove => remove());
       root.remove();
