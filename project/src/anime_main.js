@@ -13,6 +13,7 @@ import { createStory }   from './date_story.mjs';
 import { createStoryUI } from './date_story_ui.js';
 import { createCast }    from './date_cast.js';
 import { createPhoto }   from './date_photo.js';
+import { createAudio }   from './date_audio.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -651,9 +652,12 @@ const engine = {
     clearTimeout(toastTimer); toastTimer = setTimeout(() => { toastEl.style.opacity = '0'; }, ms);
   },
   companion: null,                                    // set below: { getPosition(), getHeadPosition(), root }
+  audio: null,                                        // set below: { cue(name), setMuted(), isMuted() }
 };
 
 const story   = createStory();
+const audio   = createAudio(engine, story);
+engine.audio = audio;
 const cast    = createCast(engine, story);
 engine.companion = cast.companion;
 const photo   = createPhoto(engine, story);
@@ -681,7 +685,7 @@ function openSight(i) {
 addEventListener('keydown', e => {
   if (e.repeat) return;
   const k = e.key.toLowerCase();
-  if (storyUI.handleKey(k, e) || photo.handleKey(k, e)) { e.preventDefault(); return; }
+  if (storyUI.handleKey(k, e) || photo.handleKey(k, e) || audio.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e') {
     if (nearestSight >= 0) {
       if (storyUI.interact(sights[nearestSight].id)) return;
@@ -763,6 +767,7 @@ function loop() {
 
   // ── Characters (avatar + companion) ──
   cast.update(dt, et);
+  audio.update(dt, et);
 
   // ── Spring-arm camera ──
   const idealX = player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch);
