@@ -7,6 +7,12 @@ import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
+// ── "Munich date" chapter modules (contract: project/DATE_CONTRACT.md) ──
+import { ROUTE, POIS, FOUNTAINS, SPAWN, BOUNDS, INTERACT_RADIUS } from './date_route.mjs';
+import { createStory }   from './date_story.mjs';
+import { createStoryUI } from './date_story_ui.js';
+import { createCast }    from './date_cast.js';
+import { createPhoto }   from './date_photo.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -24,8 +30,8 @@ const D = {
   colN:8, colH:9.2, colR:0.48,       // entrance columns [E]
   winW:1.55, winH:2.75, winHgf:3.8,  // upper / ground floor windows [E]
   winBay:4.1, gfH:5.0, ufH:6.0,      // bay spacing, floor heights [E]
-  fnH:8.20, fnR:5.0, fnX:35, fnY:-48,// fountain [C=confirmed]
-  plW:200, plD:80,                    // plaza [E from OSM]
+  fnH:8.20, fnR:5.0, fnX:35, fnY:48, // fountain [C=confirmed]; in front of the facade (+Z)
+  plW:200, plD:80,                    // plaza [E from OSM]; spans z ∈ [0, 80] in front of the facade
   roadX:112, roadW:33,               // Ludwigstraße [C]
 };
 
@@ -52,6 +58,7 @@ const bloom = new UnrealBloomPass(
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
 
+// ═════════ REGION: SCENE (owner: scene/rendering agent) — runs until "END REGION: SCENE" ═════════
 // ── TOON GRADIENT MAPS ───────────────────────────────────────────────────────
 function toonGrad(n) {                    // n evenly-spaced greyscale steps
   const d = new Uint8Array(n * 4);
@@ -180,11 +187,11 @@ scene.add(skySphere);
 // Base ground
 box([0,-0.15,0],[600,0.3,600], mat.plaza, true, false);
 
-// Plaza cobblestone
-box([0,0,-(D.plD*.5)], [D.plW, 0.06, D.plD], mat.plaza, true, false);
+// Plaza cobblestone (in front of the facade, toward +Z)
+box([0,0,D.plD*.5], [D.plW, 0.06, D.plD], mat.plaza, true, false);
 
 // Sidewalk strips
-box([0,0.04,-(D.plD+4)], [D.plW+40, 0.08, 8], mat.sidewalk, false, false);
+box([0,0.04,D.plD+4], [D.plW+40, 0.08, 8], mat.sidewalk, false, false);
 
 // Ludwigstraße — runs N-S east of building
 const roadCx = D.roadX + D.roadW*.5;
@@ -386,14 +393,15 @@ for (const sx of [-1, 1]) {
 }
 
 // ── TREES ────────────────────────────────────────────────────────────────────
+// Plaza is in front of the facade (+Z). Trees keep clear of the entrance axis, fountains and POIs.
 const treePts = [
   // Rows flanking plaza axis
-  ...[...Array(7)].map((_,i) => [-54+i*18, -16]),
-  ...[...Array(7)].map((_,i) => [-54+i*18, -52]),
-  ...[...Array(5)].map((_,i) => [-44+i*22, -72]),
+  ...[-54,-36,36,54].map(x => [x, 16]),
+  ...[-54,-18,18,54].map(x => [x, 58]),
+  ...[-44,-22,22,44].map(x => [x, 72]),
   // Lateral edges
-  ...[...Array(3)].map((_,i) => [-90, -20+i*22]),
-  ...[...Array(3)].map((_,i) => [ 90, -20+i*22]),
+  ...[...Array(3)].map((_,i) => [-90, 20+i*22]),
+  ...[...Array(3)].map((_,i) => [ 90, 20+i*22]),
 ];
 
 // InstancedMesh for trunks and crowns
@@ -434,17 +442,17 @@ treePts.forEach(([tx,tz], i) => {
 // ── STREET FURNITURE ─────────────────────────────────────────────────────────
 const benchXs = [-50,-30,-10,10,30,50];
 for (const bx of benchXs) {
-  box([bx, .42, -22], [2.2,.45,.6], mat.bench);
-  box([bx, .82, -22.2], [2.2,.45,.12], mat.bench, false, false);
+  box([bx, .42, 22], [2.2,.45,.6], mat.bench);
+  box([bx, .82, 22.2], [2.2,.45,.12], mat.bench, false, false);
 }
 // Lamps
 const lampXs = [-70,-50,-30,30,50,70];
 for (const lx of lampXs) {
-  cyl([lx, 3.5, -20], .09, 7, 8, mat.lamp);
-  cyl([lx, 7.2, -20], .28, .45, 8, mat.lampGlow);
+  cyl([lx, 3.5, 20], .09, 7, 8, mat.lamp);
+  cyl([lx, 7.2, 20], .28, .45, 8, mat.lampGlow);
   // Point light per lamp (subtle)
   const pl = new THREE.PointLight(0xFFD070, 8, 22, 2);
-  pl.position.set(lx, 7.2, -20);
+  pl.position.set(lx, 7.2, 20);
   scene.add(pl);
 }
 
@@ -462,7 +470,7 @@ scene.add(sakuraInst, sakuraDInst);
 const petals = Array.from({ length: PETAL_COUNT }, (_, i) => ({
   x: (Math.random()-.5)*220,
   y: Math.random()*28 + 3,
-  z: (Math.random()-.5)*120 - 20,
+  z: (Math.random()-.5)*120 + 40,
   vx: (Math.random()-.5)*.08,
   vy: -(Math.random()*.22+.10),
   vz: (Math.random()-.5)*.06,
@@ -475,28 +483,35 @@ const petals = Array.from({ length: PETAL_COUNT }, (_, i) => ({
 }));
 
 // ── SIGHTSEEING POINTS ────────────────────────────────────────────────────────
+// Positions come from date_route.mjs (POIS); `when` hides quest-only points outside their stage.
+const poiPos = id => new THREE.Vector3(POIS[id].x, 1, POIS[id].z);
 const sights = [
-  { pos: new THREE.Vector3(0, 1, 5),
+  { id:'entrance', pos: poiPos('entrance'),
     icon:'🏛', name:'LMU 主入口 · Haupteingang',
     text:'这座入口建于 1835–1840 年，由建筑师 Friedrich von Gärtner 设计，融合了罗马式圆拱风格（Rundbogenstil）。\n中央入口前的 8 根廊柱高约 9.2 米，是整个立面最具辨识度的标志。',
     src:'来源：LMU 官方导览 · lmu.de' },
-  { pos: new THREE.Vector3(0, 1, -55),
+  { id:'white_rose', pos: poiPos('white_rose'),
     icon:'✉', name:'白玫瑰纪念地 · Weiße Rose',
     text:'1943 年，大学生索菲·朔尔和汉斯·朔尔在此散发反纳粹传单。\n主楼前的广场以他们的名字命名：Geschwister-Scholl-Platz。',
     src:'来源：de.wikipedia.org/wiki/Weiße_Rose' },
-  { pos: new THREE.Vector3(35, 1, -46),
+  { id:'fountain', pos: poiPos('fountain'),
     icon:'⛲', name:'喷泉 · Brunnen',
     text:'广场上两座喷泉设计于 1842–1844 年，同样出自 Friedrich von Gärtner 之手。\n每根喷泉柱高 8.20 米，水盆直径约 10 米。',
     src:'来源：de.wikipedia.org/wiki/Geschwister-Scholl-Platz_(München)' },
-  { pos: new THREE.Vector3(0, 1, -75),
+  { id:'our_plaza', pos: poiPos('our_plaza'),
     icon:'💌', name:'我们的广场',
     text:'这里是我们的小世界。\n每一次散步，每一个清晨，每一次牵手，\n都留在了这条 Ludwigstraße 和这座主楼之间。',
     src:'来源：我们 ♡' },
+  { id:'memento', pos: poiPos('memento'),
+    icon:'🎀', name:'树下闪着光的东西',
+    text:'是 TA 的樱花发夹。',
+    src:'来源：我们 ♡',
+    when: () => story.getState().stage === 'find_memento' },
 ];
 
 // Sightseeing markers
 const markerGeo  = new THREE.SphereGeometry(.42, 14, 10);
-const markerMats = [0xE87050,0x80C8E8,0xE8C840,0xFF88AA].map(c=>
+const markerMats = [0xE87050,0x80C8E8,0xE8C840,0xFF88AA,0xFFD6F0].map(c=>
   new THREE.MeshToonMaterial({ color:c, gradientMap:G4, emissive:c, emissiveIntensity:.6 })
 );
 const markers = sights.map((s, i) => {
@@ -534,8 +549,10 @@ scene.add(skyLight);
 const ambLight = new THREE.AmbientLight(0xF0E8D8, 0.5);
 scene.add(ambLight);
 
+// ═════════ END REGION: SCENE ═════════
+
 // ── PLAYER ───────────────────────────────────────────────────────────────────
-const player = { pos: new THREE.Vector3(0, 0, 65), yaw: 0 };
+const player = { pos: new THREE.Vector3(SPAWN.x, 0, SPAWN.z), yaw: SPAWN.yaw };
 const keys   = {};
 const solids = [
   // Building main mass (rough AABB)
@@ -546,15 +563,18 @@ const solids = [
   { cx: (D.bW*.5+32), cz:-(D.bDepth+4), hw:52, hd:52 },
 ];
 function blocked(x, z) {
+  if (x < BOUNDS.minX || x > BOUNDS.maxX || z < BOUNDS.minZ || z > BOUNDS.maxZ) return true;
+  if (FOUNTAINS.some(f => Math.hypot(x - f.x, z - f.z) < f.r)) return true;
   return solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd);
 }
 addEventListener('keydown', e => { keys[e.key.toLowerCase()] = true; });
 addEventListener('keyup',   e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('blur',    () => { for (const k in keys) keys[k] = false; });   // no stuck keys after focus loss
 
 // ── CAMERA (spring-arm third-person) ─────────────────────────────────────────
 let pitch = .28, camDist = 14;
-let camPos  = new THREE.Vector3(0, 14, 80);
-let camTgt  = new THREE.Vector3(0,  2, 65);
+let camPos  = new THREE.Vector3(SPAWN.x, 14, SPAWN.z + 15);
+let camTgt  = new THREE.Vector3(SPAWN.x,  2, SPAWN.z);
 let drag = false, lastMX = 0, lastMY = 0;
 
 canvas.addEventListener('mousedown', e => { drag=true; lastMX=e.clientX; lastMY=e.clientY; });
@@ -589,19 +609,59 @@ canvas.addEventListener('touchmove', e => {
 const panel    = document.getElementById('panel');
 const promptEl = document.getElementById('prompt');
 const daysPopup = document.getElementById('days-popup');
-const photoOverlay = document.getElementById('photo-overlay');
-const photoBtn     = document.getElementById('photo-btn');
 
-let photoMode = false, nearestSight = -1;
+let nearestSight = -1;
 
 document.getElementById('panel-close').onclick = () => panel.classList.remove('open');
 document.getElementById('days-popup-close').onclick = () => daysPopup.classList.remove('visible');
-photoBtn.onclick = () => {
-  renderer.render(scene, camera);
-  const a = document.createElement('a');
-  a.download = `our-lmu-${new Date().toISOString().slice(0,10)}.png`;
-  a.href = renderer.domElement.toDataURL('image/png'); a.click();
+
+// ── ENGINE API (the only surface the chapter modules may use; see project/DATE_CONTRACT.md) ──
+const movementLocks = new Set();
+let toastEl = null, toastTimer = 0;
+const engine = {
+  THREE, scene, camera, renderer, composer, canvas, player, route: ROUTE,
+  blocked,                                            // (x, z) => true if the ground point is not walkable
+  toon: (color, steps = 4, opts = {}) =>              // house toon material (cel steps 3 or 4)
+    new THREE.MeshToonMaterial({ color, gradientMap: steps === 3 ? G3 : G4, ...opts }),
+  outline: (mesh, thickness = 0.03) => ol(mesh, thickness),
+  lock:   id => movementLocks.add(id),                // freeze player movement while any lock is held
+  unlock: id => movementLocks.delete(id),
+  isLocked: () => movementLocks.size > 0,
+  capture({ maxWidth = 0, type = 'image/png', quality = 0.92 } = {}) {
+    composer.render();                                // includes bloom; HTML HUD is not part of the canvas
+    const src = renderer.domElement;
+    if (!maxWidth || src.width <= maxWidth) return src.toDataURL(type, quality);
+    const out = document.createElement('canvas');
+    out.width = maxWidth; out.height = Math.round(src.height * maxWidth / src.width);
+    out.getContext('2d').drawImage(src, 0, 0, out.width, out.height);
+    return out.toDataURL(type, quality);
+  },
+  toast(text, ms = 2600) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.style.cssText = 'position:fixed;top:68px;left:50%;transform:translateX(-50%);padding:8px 20px;' +
+        'background:rgba(8,6,20,.85);border:1px solid rgba(220,185,90,.35);border-radius:18px;color:#F5D878;' +
+        'font:14px Nunito,sans-serif;z-index:30;pointer-events:none;transition:opacity .4s;opacity:0';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = text; toastEl.style.opacity = '1';
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { toastEl.style.opacity = '0'; }, ms);
+  },
+  companion: null,                                    // set below: { getPosition(), getHeadPosition(), root }
 };
+
+const story   = createStory();
+const cast    = createCast(engine, story);
+engine.companion = cast.companion;
+const photo   = createPhoto(engine, story);
+const storyUI = createStoryUI(engine, story);
+window.__lmu = { engine, story, cast, photo, storyUI };   // debug handle for the console / headless checks
+
+// ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
+const sceneHooks = {
+  update(dt, et) {},
+};
+// ═════════ END REGION: SCENE HOOKS ═════════
 
 function openSight(i) {
   const s = sights[i];
@@ -612,31 +672,25 @@ function openSight(i) {
   panel.classList.add('open');
 }
 
+// Key routing: story UI first (dialogue), then photo mode, then the default world actions.
+// Movement keys are tracked separately above and are frozen by engine.lock().
 addEventListener('keydown', e => {
+  if (e.repeat) return;
   const k = e.key.toLowerCase();
+  if (storyUI.handleKey(k, e) || photo.handleKey(k, e)) { e.preventDefault(); return; }
   if (k === 'e') {
-    if (nearestSight >= 0) { openSight(nearestSight); return; }
+    if (nearestSight >= 0) {
+      if (storyUI.interact(sights[nearestSight].id)) return;
+      openSight(nearestSight); return;
+    }
     // Check plaque
     if (player.pos.distanceTo(plaqueMesh.position) < 5) {
       daysPopup.classList.add('visible'); return;
     }
   }
-  if (k === 'p') {
-    photoMode = !photoMode;
-    photoOverlay.classList.toggle('active', photoMode);
-    photoBtn.classList.toggle('visible', photoMode);
-    document.getElementById('hud').classList.toggle('hidden', photoMode);
-  }
-  if (k === ' ' && photoMode) {
-    renderer.render(scene, camera);
-    const a = document.createElement('a');
-    a.download = `our-lmu-${new Date().toISOString().slice(0,10)}.png`;
-    a.href = renderer.domElement.toDataURL('image/png'); a.click();
-  }
   if (k === 'escape') {
     panel.classList.remove('open');
     daysPopup.classList.remove('visible');
-    if (photoMode) { photoMode=false; photoOverlay.classList.remove('active'); photoBtn.classList.remove('visible'); document.getElementById('hud').classList.remove('hidden'); }
   }
 });
 
@@ -666,7 +720,7 @@ function loop() {
     if (p.y < -.5) {
       p.y = 22 + Math.random()*12;
       p.x = (Math.random()-.5)*220;
-      p.z = (Math.random()-.5)*120 - 20;
+      p.z = (Math.random()-.5)*120 + 40;
     }
     dummy.position.set(p.x, p.y, p.z);
     dummy.rotation.set(p.rx, p.ry, p.rz);
@@ -679,6 +733,7 @@ function loop() {
 
   // ── Marker pulse ──
   markers.forEach((m, i) => {
+    m.visible = !sights[i].when || sights[i].when();
     m.scale.setScalar(1 + Math.sin(et*2 + i) * .08);
     m.position.y = sights[i].pos.y + Math.sin(et*1.5 + i) * .15;
   });
@@ -693,12 +748,17 @@ function loop() {
   if (keys.s||keys.arrowdown)  mz += 1;
   if (keys.a||keys.arrowleft)  mx -= 1;
   if (keys.d||keys.arrowright) mx += 1;
+  if (engine.isLocked()) { mx = 0; mz = 0; }
   const l = Math.hypot(mx,mz)||1; mx/=l; mz/=l;
+  // Camera sits at +(sin yaw, cos yaw) from the player, so forward is −(sin, cos) and right is (cos, −sin).
   const cy = Math.cos(player.yaw), sy = Math.sin(player.yaw);
-  const nx = player.pos.x + (mx*cy - mz*sy)*speed*dt;
-  const nz = player.pos.z + (mx*sy + mz*cy)*speed*dt;
+  const nx = player.pos.x + (mx*cy + mz*sy)*speed*dt;
+  const nz = player.pos.z + (mz*cy - mx*sy)*speed*dt;
   if (!blocked(nx, player.pos.z)) player.pos.x = nx;
   if (!blocked(player.pos.x, nz)) player.pos.z = nz;
+
+  // ── Characters (avatar + companion) ──
+  cast.update(dt, et);
 
   // ── Spring-arm camera ──
   const idealX = player.pos.x + Math.sin(player.yaw)*camDist*Math.cos(pitch);
@@ -723,15 +783,19 @@ function loop() {
 
   // ── Proximity: check nearest sightseeing point ──
   nearestSight = -1;
-  let bestDist = 6.5;
+  let bestDist = INTERACT_RADIUS;
   sights.forEach((s, i) => {
-    const d = new THREE.Vector2(player.pos.x - s.pos.x, player.pos.z - s.pos.z).length();
+    if (s.when && !s.when()) return;
+    const d = Math.hypot(player.pos.x - s.pos.x, player.pos.z - s.pos.z);
     if (d < bestDist) { bestDist=d; nearestSight=i; }
   });
   const plaqueDist = player.pos.distanceTo(plaqueMesh.position);
 
-  if (nearestSight >= 0) {
-    promptEl.innerHTML = `<kbd>E</kbd> ${sights[nearestSight].icon} ${sights[nearestSight].name}`;
+  if (engine.isLocked() || storyUI.isModalOpen() || photo.isActive()) {
+    promptEl.style.display = 'none';
+  } else if (nearestSight >= 0) {
+    const s = sights[nearestSight];
+    promptEl.innerHTML = `<kbd>E</kbd> ${storyUI.promptFor(s.id) ?? `${s.icon} ${s.name}`}`;
     promptEl.style.display = 'block';
   } else if (plaqueDist < 5) {
     promptEl.innerHTML = `<kbd>E</kbd> ✦ 查看纪念铭牌`;
@@ -739,6 +803,11 @@ function loop() {
   } else {
     promptEl.style.display = 'none';
   }
+
+  // ── Chapter modules + scene hooks ──
+  photo.update(dt, et);
+  storyUI.update(dt, et);
+  sceneHooks.update(dt, et);
 
   // ── Render ──
   composer.render();
