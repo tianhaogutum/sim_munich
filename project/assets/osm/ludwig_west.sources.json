@@ -1,0 +1,13 @@
+{
+  "query": "[out:json][timeout:45];(way[\"building\"](48.1464090157,11.5769838897,48.1493934424,11.5811578665);relation[\"building\"][\"type\"=\"multipolygon\"](48.1464090157,11.5769838897,48.1493934424,11.5811578665);way[\"highway\"](48.1464090157,11.5769838897,48.1493934424,11.5811578665);node[\"natural\"=\"tree\"](48.1464090157,11.5769838897,48.1493934424,11.5811578665);node[\"amenity\"~\"bench|bicycle_parking\"](48.1464090157,11.5769838897,48.1493934424,11.5811578665););out tags geom;",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "timestamp": "2026-11-09T10:00:03.353663+00:00",
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "supplemental_query": "[out:json][timeout:25];relation[\"building\"][\"type\"=\"multipolygon\"](48.14835,11.5769,48.1494,11.5799);out geom;",
+  "supplemental_timestamp": "2026-11-09T10:05:17.330367+00:00",
+  "trim": "Only elements used for western buildings, roads, trees and furniture; raw geometry/tags retained. Derived rings clipped to assigned sector.",
+  "data_file": "ludwig_west.json",
+  "osm_base_timestamp": "2026-11-09T09:59:02Z",
+  "derived_license": "ODbL; derived footprint coordinates retain OpenStreetMap attribution."
+}
