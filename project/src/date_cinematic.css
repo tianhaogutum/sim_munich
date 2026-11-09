@@ -1,0 +1,84 @@
+.dcin-root {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  color: #fff4df;
+  font-family: 'Cormorant Garamond', 'Klee One', Georgia, serif;
+}
+.dcin-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #090910;
+  transition: height 700ms cubic-bezier(.22, 1, .36, 1);
+}
+.dcin-bar-top { top: 0; }
+.dcin-bar-bottom { bottom: 0; }
+.dcin-playing .dcin-bar { height: 14%; }
+.dcin-caption {
+  position: absolute;
+  bottom: 21%;
+  left: 8%;
+  right: 8%;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  text-shadow: 0 2px 18px #100d1c, 0 1px 3px #100d1c;
+}
+.dcin-caption-title {
+  font-size: clamp(24px, 3.5vw, 46px);
+  font-weight: 400;
+  letter-spacing: .18em;
+  line-height: 1.6;
+}
+.dcin-caption-subtitle {
+  margin-top: 7px;
+  font-size: clamp(10px, 1.3vw, 15px);
+  letter-spacing: .26em;
+  color: #e7cd98;
+}
+.dcin-skip {
+  position: absolute;
+  bottom: 4.8%;
+  right: 5%;
+  opacity: 0;
+  font-family: 'Klee One', serif;
+  font-size: 12px;
+  letter-spacing: .13em;
+  transition: opacity 250ms;
+  color: #e4dac4;
+}
+.dcin-playing .dcin-skip { opacity: .85; }
+.dcin-free-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  padding: 11px 21px;
+  border: 1px solid #e7cd9859;
+  border-radius: 15px;
+  background: #100d1cd9;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  font: 12px/1.8 'Klee One', serif;
+  letter-spacing: .05em;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms, visibility 250ms;
+}
+.dcin-free .dcin-free-hint { opacity: 1; visibility: visible; }
+.dcin-free-title { color: #e7cd98; font-size: 15px; margin-bottom: 2px; }
+.dcin-free.dcin-photo .dcin-free-hint { opacity: 0; visibility: hidden; }
+@media (max-width: 600px) {
+  .dcin-playing .dcin-bar { height: 13%; }
+  .dcin-caption { bottom: 23%; left: 5%; right: 5%; }
+  .dcin-caption-title { letter-spacing: .08em; }
+  .dcin-caption-subtitle { letter-spacing: .12em; }
+  .dcin-free-hint { bottom: 15px; width: max-content; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dcin-bar, .dcin-skip, .dcin-free-hint { transition-duration: 0ms; }
+}
