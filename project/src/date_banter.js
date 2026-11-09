@@ -1,3 +1,4 @@
+import { t, onLocaleChange } from './date_i18n.mjs';
 // Ambient speech above the cast; owns only #date-banter-root and date_banter.css.
 // createBanter(engine, story) -> { update(dt, et), say(who, text, opts?), handleKey, dispose }
 // Construct after cast/storyUI, then update AFTER player, cast and camera updates.
@@ -49,7 +50,7 @@ export function createBanter(engine, story) {
     el.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
     label.className = 'db-speaker';
-    label.textContent = who === 'player' ? '我' : 'TA';
+    label.textContent = t(`speakers.${who}`);
     const content = document.createElement('div');
     content.className = 'db-content';
     const measure = document.createElement('span');
@@ -66,6 +67,25 @@ export function createBanter(engine, story) {
   const companion = speaker('companion'), player = speaker('player');
   const speakers = [companion, player];
 
+  const unsubscribeLocale = onLocaleChange(() => {
+    for (const s of speakers) {
+      s.el.querySelector('.db-speaker').textContent = t(`speakers.${s.who}`);
+      for (const item of [s.active, ...s.queue]) {
+        if (!item?.i18nKey) continue;
+        item.text = t(item.i18nKey);
+        item.reveals = [''];
+        for (const char of Array.from(item.text)) item.reveals.push(item.reveals.at(-1) + char);
+      }
+      if (s.active) {
+        s.measure.textContent = s.active.text;
+        s.shown = -1;
+        s.measurePending = true;
+        s.el.setAttribute('aria-label', t('banter.speakerLine', { speaker: t(`speakers.${s.who}`), text: s.active.text }));
+      }
+    }
+    needsMeasure = true;
+  });
+
   function resize() { width = innerWidth; height = innerHeight; needsMeasure = true; }
   addEventListener('resize', resize);
   // Font metrics may settle after the first bubble has already started.
@@ -79,7 +99,7 @@ export function createBanter(engine, story) {
     s.shown = -1;
     s.measure.textContent = item.text;
     s.text.textContent = '';
-    s.el.setAttribute('aria-label', `${s.who === 'player' ? '我' : 'TA'}：${item.text}`);
+    s.el.setAttribute('aria-label', t('banter.speakerLine', { speaker: t(`speakers.${s.who}`), text: item.text }));
     // The root can be hidden by a modal when a story reaction arrives.
     // Measure only after it is visible again, not while display:none returns zero.
     s.measurePending = true;
@@ -93,7 +113,7 @@ export function createBanter(engine, story) {
     // Precompute reveal frames once; the animation never allocates character arrays.
     const reveals = [''];
     for (const char of chars) reveals.push(reveals[reveals.length - 1] + char);
-    const item = { text: chars.join(''), reveals, priority: Number.isFinite(opts.priority) ? opts.priority : 1,
+    const item = { i18nKey: opts.i18nKey, text: chars.join(''), reveals, priority: Number.isFinite(opts.priority) ? opts.priority : 1,
       duration: clamp(Number.isFinite(opts.duration) ? opts.duration : 1.6 + .09 * chars.length, 1.6, 6),
       readyAt: speechClock + Math.max(0, Number.isFinite(opts.delay) ? opts.delay : 0) };
     if (!s.active && !s.queue.length && item.readyAt <= speechClock) { start(s, item); return true; }
@@ -111,7 +131,7 @@ export function createBanter(engine, story) {
     context.now = clock;
     context.stage = state.stage;
     const chosen = pickLine(BANTER_POOLS[name], context, history);
-    if (!chosen || !say(chosen.who, chosen.text, chosen)) return false;
+    if (!chosen || !say(chosen.who, chosen.text, { ...chosen, i18nKey: `banter.${chosen.id}` })) return false;
     history.set(chosen.id, clock);
     history.set(chosen.text, clock);
     if (canReply && chosen.reply && Math.random() < .4) {
@@ -285,6 +305,7 @@ export function createBanter(engine, story) {
   function dispose() {
     if (disposed) return;
     disposed = true;
+    unsubscribeLocale();
     unsubscribe?.();
     removeEventListener('resize', resize);
     sheet.removeEventListener('load', onSheetLoad);

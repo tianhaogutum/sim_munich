@@ -1,3 +1,4 @@
+import { t, onLocaleChange } from './date_i18n.mjs';
 // North-up navigation for the Munich date chapter. Only owns #date-map-root.
 // createMap(engine, story) -> { update(dt, et), handleKey(k, event), dispose() }
 import { objectiveFor } from './date_story.mjs';
@@ -9,12 +10,7 @@ const TREES = [
   [-44, 72], [-22, 72], [22, 72], [44, 72],
   [-90, 20], [-90, 42], [-90, 64], [90, 20], [90, 42], [90, 64],
 ];
-const VISIT_NAMES = {
-  entrance: ['LMU 主楼', 'Hauptgebäude'],
-  fountain: ['喷泉', 'Brunnen'],
-  white_rose: ['白玫瑰纪念地', 'Weiße Rose'],
-  our_plaza: ['我们的广场', 'Geschwister-Scholl-Platz'],
-};
+const VISIT_NAMES = { entrance: true, fountain: true, white_rose: true, our_plaza: true };
 const EMPTY_STATE = { stage: 'meet' };
 const CHEVRON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 15 7-7 7 7"/></svg>';
 
@@ -32,14 +28,14 @@ export function createMap(engine = {}, story = {}) {
   root.id = 'date-map-root';
   root.className = 'dm-root';
   root.innerHTML = `
-    <section class="dm-panel" aria-label="约会导航地图">
-      <div class="dm-heading"><span>散步地图</span><span class="dm-north">N ↑</span></div>
+    <section class="dm-panel" aria-label="${t('map.label')}">
+      <div class="dm-heading"><span>${t('map.title')}</span><span class="dm-north">N ↑</span></div>
       <div class="dm-objective"><span class="dm-bearing">${CHEVRON}</span><span class="dm-distance"></span></div>
-      <canvas class="dm-canvas" role="img" aria-label="北朝上的广场地图，金色箭头是你，粉色圆点是同伴"></canvas>
-      <button class="dm-toggle" type="button" aria-keyshortcuts="N" aria-pressed="false"><span class="dm-mode">附近</span><span><kbd>N</kbd> 全景</span></button>
+      <canvas class="dm-canvas" role="img" aria-label="${t('map.canvas')}"></canvas>
+      <button class="dm-toggle" type="button" aria-keyshortcuts="N" aria-pressed="false"><span class="dm-mode">${t('map.nearby')}</span><span><kbd>N</kbd> ${t('map.overview')}</span></button>
     </section>
     <div class="dm-edge" hidden aria-hidden="true"><span class="dm-edge-arrow">${CHEVRON}</span><span class="dm-edge-distance"></span></div>
-    <div class="dm-location" role="status" aria-live="polite" aria-atomic="true"><span class="dm-location-kicker">漫步 · MÜNCHEN</span><span class="dm-location-title"></span><span class="dm-location-subtitle"></span></div>`;
+    <div class="dm-location" role="status" aria-live="polite" aria-atomic="true"><span class="dm-location-kicker">${t('map.kicker')}</span><span class="dm-location-title"></span><span class="dm-location-subtitle"></span></div>`;
   (document.body ?? document.documentElement).appendChild(root);
 
   const panel = root.querySelector('.dm-panel');
@@ -66,6 +62,7 @@ export function createMap(engine = {}, story = {}) {
   let scale = 1, centerX = 0, centerZ = 0;
   let lastDistanceText = '', lastEdgeText = '';
   let resizePending = true;
+  let locationId = null;
 
   function syncState(next = story.getState?.() ?? EMPTY_STATE, forceReset = false) {
     if (forceReset || (next.stage === 'meet' && state?.stage !== 'meet')) {
@@ -89,14 +86,26 @@ export function createMap(engine = {}, story = {}) {
   const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(resize) : null;
   observer?.observe(canvas);
 
+  function localize() {
+    panel.setAttribute('aria-label', t('map.label'));
+    root.querySelector('.dm-heading > span').textContent = t('map.title');
+    root.querySelector('.dm-location-kicker').textContent = t('map.kicker');
+    modeText.textContent = t(overview ? 'map.overview' : 'map.nearby');
+    toggle.lastElementChild.innerHTML = `<kbd>N</kbd> ${t(overview ? 'map.follow' : 'map.overview')}`;
+    toggle.setAttribute('aria-pressed', String(overview));
+    canvas.setAttribute('aria-label', t('map.canvasMode', { mode: t(overview ? 'map.plazaOverview' : 'map.nearby') }));
+    if (locationId) {
+      locationTitle.textContent = t(`map.places.${locationId}`);
+      locationSubtitle.textContent = t(`map.subtitles.${locationId}`);
+    }
+    lastPaint = -1;
+    lastDistanceText = '';
+  }
+  const unsubscribeLocale = onLocaleChange(localize);
   function toggleMode() {
     if (disposed || hidden || engine.isPhotoMode?.()) return;
     overview = !overview;
-    modeText.textContent = overview ? '全景' : '附近';
-    toggle.lastElementChild.innerHTML = `<kbd>N</kbd> ${overview ? '跟随' : '全景'}`;
-    toggle.setAttribute('aria-pressed', String(overview));
-    canvas.setAttribute('aria-label', `${overview ? '广场全景' : '附近'}地图，北朝上，金色箭头是你，粉色圆点是同伴`);
-    lastPaint = -1;
+    localize();
   }
   toggle.addEventListener('click', toggleMode);
   // A map tap must not start the scene's mouse/touch camera gesture.
@@ -162,7 +171,7 @@ export function createMap(engine = {}, story = {}) {
     ctx.fillText('LMU', mapX(0), mapY(-11));
     if (overview) {
       ctx.fillStyle = '#b9b8a0'; ctx.font = '8px Nunito, sans-serif';
-      ctx.fillText('广场', mapX(-55), mapY(35));
+      ctx.fillText(t('map.plaza'), mapX(-55), mapY(35));
       ctx.save(); ctx.translate(mapX(137), mapY(47)); ctx.rotate(-Math.PI / 2);
       ctx.fillText('Ludwigstraße', 0, 0); ctx.restore();
     }
@@ -237,8 +246,9 @@ export function createMap(engine = {}, story = {}) {
     for (const [id, poi] of pois) {
       if (!VISIT_NAMES[id] || visited.has(id) || Math.hypot(p.x - poi.x, p.z - poi.z) > radius) continue;
       visited.add(id);
-      locationTitle.textContent = VISIT_NAMES[id][0];
-      locationSubtitle.textContent = VISIT_NAMES[id][1];
+      locationId = id;
+      locationTitle.textContent = t(`map.places.${id}`);
+      locationSubtitle.textContent = t(`map.subtitles.${id}`);
       visitAt = clock;
       locationActive = true;
       location.classList.add('dm-location-visible');
@@ -274,14 +284,17 @@ export function createMap(engine = {}, story = {}) {
       resizePending = false;
     }
     const yaw = Number.isFinite(engine.player.yaw) ? engine.player.yaw : 0;
-    let distance = 0, label = '自由漫步 · 北朝上';
+    let distance = 0, label = t('map.freeWalk');
     if (objective) {
       const dx = objective.x - p.x, dz = objective.z - p.z;
       distance = Math.hypot(dx, dz);
       const right = dx * Math.cos(yaw) - dz * Math.sin(yaw);
       const forward = -dx * Math.sin(yaw) - dz * Math.cos(yaw);
       bearing.style.transform = `rotate(${Math.atan2(right, forward)}rad)`;
-      label = `${objective.label ?? VISIT_NAMES[objectiveId]?.[0] ?? '目的地'} · ${distance <= (engine.route?.INTERACT_RADIUS ?? 6.5) ? '按 E' : `${Math.round(distance)} m`}`;
+      const place = t(`map.objectives.${objectiveId}`);
+      label = distance <= (engine.route?.INTERACT_RADIUS ?? 6.5)
+        ? t('map.objectiveInteract', { place, action: t('map.interact') })
+        : t('map.objectiveDistance', { place, distance: Math.round(distance) });
     }
     bearing.hidden = !objective;
     if (label !== lastDistanceText) { distanceText.textContent = label; distanceText.title = label; lastDistanceText = label; }
@@ -303,6 +316,7 @@ export function createMap(engine = {}, story = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
+      unsubscribeLocale();
       if (typeof unsubscribe === 'function') unsubscribe();
       observer?.disconnect();
       removeEventListener('resize', resize);

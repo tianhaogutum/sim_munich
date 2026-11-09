@@ -1,3 +1,4 @@
+import { t } from './date_i18n.mjs';
 // Side memories are deliberately independent of the chapter's quest collectibles.
 import { POIS, FOUNTAINS, BOUNDS } from './date_route.mjs';
 
@@ -5,23 +6,23 @@ export const COLLECT_VERSION = 1;
 export const COLLECT_STORAGE_KEY = 'lmu-date-collect-v1';
 export const VISIT_IDS = Object.freeze(['entrance', 'white_rose', 'fountain', 'our_plaza']);
 export const MEMORY_ITEMS = Object.freeze([
-  { id: 'crane', shape: 'crane', title: '把明天折成翅膀', icon: '◇', color: 0xf4d6dc, x: -22, z: 28, where: '主楼西侧的石径',
-    note: ['考试周，你把写废的演算纸折成一只纸鹤。', '它的翅膀上还留着没算完的积分。', '你说，明天再难，也要留一点位置给飞翔。'] },
-  { id: 'coffee', shape: 'coffee', title: '你的那一口奶泡', icon: '☕', color: 0xe4c8a2, x: 23, z: 27, where: '主楼东侧的树影下',
-    note: ['八点的课，七点五十才买到的两杯咖啡。', '你总把奶泡更厚的那杯推给我，自己喝苦的。', '后来我记住的不是课程表，是杯盖上你画的小太阳。'] },
-  { id: 'pretzel', shape: 'pretzel', title: '一半椒盐卷饼', icon: '∞', color: 0xd99444, x: -57, z: 44, where: '西喷泉外的长椅旁',
-    note: ['食堂关门了，我们分着最后一个椒盐卷饼。', '你认真挑走我那一半上太大的盐粒。', '慕尼黑的冬天很冷，可那天的晚饭一直是暖的。'] },
-  { id: 'ticket', shape: 'ticket', title: '坐过一站也没关系', icon: '▱', color: 0xb6d9d9, x: 57, z: 60, where: '东侧通往电车站的小径',
-    note: ['那次聊得太投入，电车载着我们坐过了站。', '你把车票夹进书里，说多走一站就多看一会儿晚霞。', '从那以后，我不再那么急着抵达。'] },
-  { id: 'petal', shape: 'petal', title: '借春天一小会儿', icon: '❀', color: 0xf2a6c6, x: -20, z: 67, where: '广场西侧的樱树下',
-    note: ['图书馆出来时，一片樱花落在你的笔记本上。', '我们用空果酱瓶装好它，摆在赶论文的窗边。', '春天不能延期，但那朵花陪我们熬过了最后一夜。'] },
-  { id: 'bell', shape: 'bell', title: '两声铃，就是我', icon: '♧', color: 0xe9ce77, x: 23, z: 76, where: '广场东南的自行车旁',
-    note: ['下课的人潮里，你总把车铃轻轻按两下。', '第一声是“我来了”，第二声是“慢慢走”。', '不用抬头，我也知道有人在等我一起回家。'] },
-  { id: 'leaf', shape: 'leaf', title: '夹在第十七页的秋天', icon: '✧', color: 0xd88855, x: -59, z: 77, where: '西南角的秋叶小径',
-    note: ['风把一片枫叶送到我们摊开的课本上。', '你说它像一只举起的手，替我们回答今天的最后一个问题。', '那页知识早忘了，这个一起偷笑的秋天还在。'] },
-  { id: 'letter', shape: 'letter', title: '没有寄出的地址', icon: '♡', color: 0xf2ddbb, x: 55, z: 28, where: '东侧安静的石墙边',
-    note: ['练德语书信的作业里，我悄悄写了你的名字。', '地址栏空着，因为明天就在主楼门口见。', '想说的话很长，最后只留下：路上小心，我等你。'] },
-].map(item => Object.freeze({ ...item, note: Object.freeze(item.note) })));
+  { id: 'crane', shape: 'crane', get title() { return t('collect.memories.crane.title'); }, icon: '◇', color: 0xf4d6dc, x: -22, z: 28, get where() { return t('collect.memories.crane.where'); },
+    get note() { return Object.freeze([t('collect.memories.crane.note0'), t('collect.memories.crane.note1'), t('collect.memories.crane.note2')]); } },
+  { id: 'coffee', shape: 'coffee', get title() { return t('collect.memories.coffee.title'); }, icon: '☕', color: 0xe4c8a2, x: 23, z: 27, get where() { return t('collect.memories.coffee.where'); },
+    get note() { return Object.freeze([t('collect.memories.coffee.note0'), t('collect.memories.coffee.note1'), t('collect.memories.coffee.note2')]); } },
+  { id: 'pretzel', shape: 'pretzel', get title() { return t('collect.memories.pretzel.title'); }, icon: '∞', color: 0xd99444, x: -57, z: 44, get where() { return t('collect.memories.pretzel.where'); },
+    get note() { return Object.freeze([t('collect.memories.pretzel.note0'), t('collect.memories.pretzel.note1'), t('collect.memories.pretzel.note2')]); } },
+  { id: 'ticket', shape: 'ticket', get title() { return t('collect.memories.ticket.title'); }, icon: '▱', color: 0xb6d9d9, x: 57, z: 60, get where() { return t('collect.memories.ticket.where'); },
+    get note() { return Object.freeze([t('collect.memories.ticket.note0'), t('collect.memories.ticket.note1'), t('collect.memories.ticket.note2')]); } },
+  { id: 'petal', shape: 'petal', get title() { return t('collect.memories.petal.title'); }, icon: '❀', color: 0xf2a6c6, x: -20, z: 67, get where() { return t('collect.memories.petal.where'); },
+    get note() { return Object.freeze([t('collect.memories.petal.note0'), t('collect.memories.petal.note1'), t('collect.memories.petal.note2')]); } },
+  { id: 'bell', shape: 'bell', get title() { return t('collect.memories.bell.title'); }, icon: '♧', color: 0xe9ce77, x: 23, z: 76, get where() { return t('collect.memories.bell.where'); },
+    get note() { return Object.freeze([t('collect.memories.bell.note0'), t('collect.memories.bell.note1'), t('collect.memories.bell.note2')]); } },
+  { id: 'leaf', shape: 'leaf', get title() { return t('collect.memories.leaf.title'); }, icon: '✧', color: 0xd88855, x: -59, z: 77, get where() { return t('collect.memories.leaf.where'); },
+    get note() { return Object.freeze([t('collect.memories.leaf.note0'), t('collect.memories.leaf.note1'), t('collect.memories.leaf.note2')]); } },
+  { id: 'letter', shape: 'letter', get title() { return t('collect.memories.letter.title'); }, icon: '♡', color: 0xf2ddbb, x: 55, z: 28, get where() { return t('collect.memories.letter.where'); },
+    get note() { return Object.freeze([t('collect.memories.letter.note0'), t('collect.memories.letter.note1'), t('collect.memories.letter.note2')]); } },
+].map(item => Object.freeze(item)));
 
 const finite = value => typeof value === 'number' && Number.isFinite(value);
 const nonnegative = (value, max = 1e9) => finite(value) ? Math.min(max, Math.max(0, value)) : 0;
@@ -54,15 +55,15 @@ export function initialCollectState() {
 }
 
 export const ACHIEVEMENTS = Object.freeze([
-  { id: 'first_memory', icon: '◇', title: '拾起一小段温柔', detail: '找到第一段回忆', test: s => s.fragmentsFound >= 1 },
-  { id: 'all_memories', icon: '❀', title: '把今天好好收藏', detail: '收集全部 8 段回忆', test: s => s.fragmentsFound >= MEMORY_ITEMS.length },
-  { id: 'walk', icon: '♧', title: '和你多走一会儿', detail: '累计步行 500 米', test: s => s.distanceWalked >= 500 },
-  { id: 'fountain', icon: '≈', title: '听完一首水声', detail: '在喷泉旁停留 30 秒', test: s => s.fountainSeconds >= 30 },
-  { id: 'explorer', icon: '✧', title: '我们的校园地图', detail: '走访主入口、白玫瑰、喷泉与我们的广场', test: s => VISIT_IDS.every(id => s.visited?.[id]) },
-  { id: 'conversation', icon: '♡', title: '认真听你说', detail: '做出一次对话选择', test: s => s.dialogueChoices >= 1 },
-  { id: 'album', icon: '▣', title: '三张照片，一个我们', detail: '完成三张约会照片', test: s => s.photosCredited >= 3 },
-  { id: 'date', icon: '✦', title: '刚刚好的约会', detail: '在 15 分钟内完成约会', test: s => finite(s.completedInSeconds) && s.completedInSeconds >= 0 && s.completedInSeconds <= 900 },
-  { id: 'golden', icon: '☀', title: '把金色时刻留下', detail: '在明信片或结局阶段拍一张照片', test: s => s.goldenHourPhoto === true },
+  { id: 'first_memory', icon: '◇', get title() { return t('collect.achievementNames.first_memory'); }, get detail() { return t('collect.achievementDetails.first_memory'); }, test: s => s.fragmentsFound >= 1 },
+  { id: 'all_memories', icon: '❀', get title() { return t('collect.achievementNames.all_memories'); }, get detail() { return t('collect.achievementDetails.all_memories'); }, test: s => s.fragmentsFound >= MEMORY_ITEMS.length },
+  { id: 'walk', icon: '♧', get title() { return t('collect.achievementNames.walk'); }, get detail() { return t('collect.achievementDetails.walk'); }, test: s => s.distanceWalked >= 500 },
+  { id: 'fountain', icon: '≈', get title() { return t('collect.achievementNames.fountain'); }, get detail() { return t('collect.achievementDetails.fountain'); }, test: s => s.fountainSeconds >= 30 },
+  { id: 'explorer', icon: '✧', get title() { return t('collect.achievementNames.explorer'); }, get detail() { return t('collect.achievementDetails.explorer'); }, test: s => VISIT_IDS.every(id => s.visited?.[id]) },
+  { id: 'conversation', icon: '♡', get title() { return t('collect.achievementNames.conversation'); }, get detail() { return t('collect.achievementDetails.conversation'); }, test: s => s.dialogueChoices >= 1 },
+  { id: 'album', icon: '▣', get title() { return t('collect.achievementNames.album'); }, get detail() { return t('collect.achievementDetails.album'); }, test: s => s.photosCredited >= 3 },
+  { id: 'date', icon: '✦', get title() { return t('collect.achievementNames.date'); }, get detail() { return t('collect.achievementDetails.date'); }, test: s => finite(s.completedInSeconds) && s.completedInSeconds >= 0 && s.completedInSeconds <= 900 },
+  { id: 'golden', icon: '☀', get title() { return t('collect.achievementNames.golden'); }, get detail() { return t('collect.achievementDetails.golden'); }, test: s => s.goldenHourPhoto === true },
 ]);
 
 export function achievementIds(stats = {}) {
