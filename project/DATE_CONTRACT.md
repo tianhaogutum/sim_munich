@@ -25,6 +25,8 @@ keys, and calls each module's `update(dt, et)` every frame. Modules only receive
 | `toon(color, steps = 4, opts)` | house cel-shaded material; `steps` 3 or 4 |
 | `outline(mesh, thickness)` | house ink outline (inverted hull), returns the mesh |
 | `lock(id)`, `unlock(id)`, `isLocked()` | freeze player movement while any lock is held |
+| `isPhotoMode()` | true while the photo overlay is open |
+| `days` | days together (the "在一起第 N 天" counter) |
 | `capture({ maxWidth, type, quality })` | renders the composer (bloom included) and returns a data URL |
 | `toast(text, ms)` | short centered notice |
 | `companion` | `{ getPosition(), getHeadPosition(), root }` from the cast module |
