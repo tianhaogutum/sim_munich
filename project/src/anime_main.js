@@ -14,6 +14,7 @@ import { createStoryUI } from './date_story_ui.js';
 import { createCast }    from './date_cast.js';
 import { createPhoto }   from './date_photo.js';
 import { createAudio }   from './date_audio.js';
+import { createInput }   from './date_input.js';
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -663,7 +664,8 @@ engine.companion = cast.companion;
 const photo   = createPhoto(engine, story);
 photoModule = photo;
 const storyUI = createStoryUI(engine, story);
-window.__lmu = { engine, story, cast, photo, storyUI };   // debug handle for the console / headless checks
+const input   = createInput(engine, story);
+window.__lmu = { engine, story, cast, photo, storyUI, audio, input };   // debug handle for the console / headless checks
 
 // ═════════ REGION: SCENE HOOKS (owner: scene/rendering agent) — per-frame visuals that may read story state ═════════
 const sceneHooks = {
@@ -750,6 +752,7 @@ function loop() {
   plaqueMesh.material.emissiveIntensity = .2 + Math.sin(et*1.8)*.15;
 
   // ── Player movement ──
+  input.update(dt);                                   // touch / gamepad → synthetic keys
   let speed = keys.shift ? 8.5 : 4.2;
   let mx=0, mz=0;
   if (keys.w||keys.arrowup)    mz -= 1;
