@@ -1,0 +1,29 @@
+{
+  "STAGES": ["meet", "fountain_talk", "find_memento", "photos", "postcard", "done"],
+  "POIS": {
+    "entrance": { "x": 4, "z": 16, "label": "LMU 主入口" },
+    "white_rose": { "x": -4, "z": 18, "label": "白玫瑰纪念地" },
+    "fountain": { "x": -5.9, "z": 38, "label": "喷泉" },
+    "our_plaza": { "x": -16, "z": 53, "label": "我们的广场" },
+    "memento": { "x": -29, "z": 23, "label": "纪念物" }
+  },
+  "INTERACT_RADIUS": 6.5,
+  "FOUNTAINS": [
+    { "x": -8.359394400264932, "z": 45.63130378085752, "r": 6.1 },
+    { "x": -24.193591199885475, "z": 97.88746481646685, "r": 6.1 }
+  ],
+  "COMPANION": {
+    "waitAt": { "x": 6.5, "z": 20, "yaw": -0.31 },
+    "followDistance": 2.2,
+    "catchUpDistance": 28,
+    "fountainSeat": { "x": -3.1, "z": 38.9 }
+  },
+  "PHOTO_TARGETS": [
+    { "id": "facade", "label": "主楼与拱廊", "target": { "x": 2, "y": 11.5, "z": 13.8 }, "minDist": 22, "maxDist": 75 },
+    { "id": "fountain", "label": "喷泉", "target": { "x": -8.359394400264932, "y": 4.5, "z": 45.63130378085752 }, "minDist": 7, "maxDist": 32 },
+    { "id": "couple", "label": "我们的合影", "target": "companion", "minDist": 2, "maxDist": 9 }
+  ],
+  "SPAWN": { "x": -52, "z": 24, "yaw": -1.4288992721907328 },
+  "BOUNDS": { "minX": -520, "maxX": 520, "minZ": -320, "maxZ": 420 },
+  "CORE_BOUNDS": { "minX": -145, "maxX": 125, "minZ": -145, "maxZ": 170 }
+}
