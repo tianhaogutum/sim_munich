@@ -130,19 +130,13 @@ export function createBlock(engine) {
   flatPolygon(lib.outer,'roof',21,.70,lib.inner);
   flatPolygon(BUILDINGS[0].outer,'limestone',.08,.28);
 
-  // Paving is constrained to the owned sector (no Ludwigstraße asphalt).
-  box('paving',identity,-210,.04,132,115,.08,64);
-  box('paving',identity,-365,.045,106,181,.09,12);
-  // Library approach runs alongside its angled front, reaching the straight sector edge.
-  const south=lib.outer[8],north=lib.outer[10];
-  flatPolygon([{x:south.x,z:100},{x:north.x,z:100},north,south],'paving',.09,.04);
-  for(let x=-264;x<=-156;x+=5) box('pavingLine',identity,x,.091,132,.055,.014,62);
-  for(let z=103;z<164;z+=5) box('pavingLine',identity,-210,.093,z,114,.014,.055);
-  for(let x=-447;x<-290;x+=6) {
-    const p=localPoint(LIBRARY_FRAME,(x+365),-.55);
-    // Subtle paving courses in front of the library, clamped above the sector edge.
-    if(p.z>102) box('pavingLine',identity,p.x,.145,(100+p.z)/2,.055,.015,p.z-100);
-  }
+  // Small facade-relative forecourts only. No road asphalt and no world-space
+  // anchor constants: paving follows the same geographic frame as each building.
+  box('paving',church,0,.04,-3.5,89,.08,7);
+  for(let u=-42;u<=42;u+=4) box('pavingLine',church,u,.09,-3.5,.045,.014,6.8);
+  for(let v=-6;v<0;v+=2) box('pavingLine',church,0,.091,v,88,.014,.045);
+  box('paving',library,0,.045,-5.3,152,.09,10.6);
+  for(let u=-74;u<75;u+=5) box('pavingLine',library,u,.10,-5.3,.045,.014,10.4);
 
   // ST. LUDWIG: nave, aisles, transept and eastern apse follow the surveyed basilica.
   box('limestone',church,0,19,34,27,30,55);
@@ -368,7 +362,7 @@ export function createBlock(engine) {
     windowBays:27,towerHeight:71,scholarCount:4,
     meshCount:group.children.length,
     drawCallBudget:group.children.length+2,
-    placementOffset:{x:0,z:145},
+    placement: 'date_geo.toWorld (unshifted)',
   };
   engine.scene.add(group);
   let disposed=false;

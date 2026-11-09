@@ -1,9 +1,12 @@
 // Survey data distilled from assets/osm/ludwigskirche.json; no THREE dependency.
-import { ringToWorld, pointInPolygon, polygonBounds } from './date_geo.mjs';
-export const SECTOR = Object.freeze({ minX: -480, maxX: -60, minZ: 100, maxZ: 300 });
-// The requested sector excludes the surveyed historic buildings. Keep this explicit,
-// reversible registration local to this block; never silently change date_geo.
-export const PLACEMENT_OFFSET = Object.freeze({ x: 0, z: 145 });
+import { toWorld, ringToWorld, pointInPolygon, polygonBounds } from './date_geo.mjs';
+import { CORE_BOUNDS } from './date_route.mjs';
+// Exact surveyed footprints take priority over the conflicting z >= 55 strip.
+// Geographic extent is fixed; its game-space bounds follow a shared recalibration.
+const extent = ringToWorld([[11.57935,48.146409015681805],[11.58439,48.150207376960225]]);
+const bounds = polygonBounds(extent);
+export const SECTOR = Object.freeze({ minX:bounds.cx-bounds.hw,maxX:bounds.cx+bounds.hw,
+  minZ:bounds.cz-bounds.hd,maxZ:bounds.cz+bounds.hd });
 export const SURVEY_BUILDINGS = [
   {
     "id": "st-ludwig",
@@ -352,7 +355,7 @@ export const SURVEY_BUILDINGS = [
   }
 ];
 export function placeRing(ring) {
-  return ringToWorld(ring).map(p => ({ x: p.x + PLACEMENT_OFFSET.x, z: p.z + PLACEMENT_OFFSET.z }));
+  return ringToWorld(ring);
 }
 export const BUILDINGS = SURVEY_BUILDINGS.map(b => ({ ...b,
   outer: placeRing(b.ring), inner: b.holes.map(placeRing),
@@ -375,16 +378,23 @@ export function localRect(frame, u, v, width, depth) {
 }
 // Photo-measured annexes/arcade piers: the supplementary Overpass request failed
 // three times. Distinguish estimates from the two surveyed landmark footprints.
+const overlapsCore = ring => {
+  const b=polygonBounds(ring);
+  return b.cx+b.hw>CORE_BOUNDS.minX && b.cx-b.hw<CORE_BOUNDS.maxX &&
+    b.cz+b.hd>CORE_BOUNDS.minZ && b.cz-b.hd<CORE_BOUNDS.maxZ;
+};
 export const ANNEXES = [-1,1].map(sign => ({ id: sign < 0 ? 'gaertner-house' : 'parish-house',
   u: sign*52, v: 11.5, width: 21, depth: 23,
-  outer: localRect(CHURCH_FRAME, sign*52, 11.5, 21, 23), inner: [] }));
+  outer: localRect(CHURCH_FRAME, sign*52, 11.5, 21, 23), inner: [] })).filter(a => !overlapsCore(a.outer));
 export const ARCADE_PIERS = [-1,1].flatMap(sign => Array.from({length:6}, (_,i) => ({
   id: `arcade-${sign}-${i}`, outer: localRect(CHURCH_FRAME, sign*(23.8+i*3.54), 1.1, 0.85, 2.2), inner: []
 })));
 // Only the north wing of Ludwigstrasse 14 reaches this sector. Three archive
 // Overpass attempts failed (502 + two timeouts): the wing is a photo/map estimate.
-// Clip it visibly at the ownership edge rather than inventing the whole building.
-export const ARCHIVE_FRAME = Object.freeze({ x:-446, z:104,
+// Clip it at the geographic southern ownership edge, not at a fixed game origin.
+// Photo/map-estimated geographic anchor, not a per-block game-space offset.
+const archiveAnchor=toWorld(48.14671668,11.57979786);
+export const ARCHIVE_FRAME = Object.freeze({ ...archiveAnchor,
   ux:CHURCH_FRAME.ux, uz:CHURCH_FRAME.uz });
 function clipAt(ring, axis, boundary, sign) {
   const out=[];
@@ -401,7 +411,7 @@ function clipAt(ring, axis, boundary, sign) {
 }
 export const ARCHIVE_FRAGMENT = { id:'hauptstaatsarchiv-north-wing-estimate',
   source:'photo/map estimate after three failed archive Overpass attempts',
-  outer:clipAt(clipAt(localRect(ARCHIVE_FRAME,-13,36.5,26,73),'x',-479.8,1),'z',100.2,1),inner:[] };
+  outer:clipAt(localRect(ARCHIVE_FRAME,-13,36.5,26,73),'x',toWorld(48.1464109964,11.58035).x,1),inner:[] };
 export const FOOTPRINTS = [...BUILDINGS, ...ANNEXES, ARCHIVE_FRAGMENT, ...ARCADE_PIERS];
 export function isBuildingPoint(x, z) { return FOOTPRINTS.some(b => containsBuilding(b, x, z)); }
 export const CHURCH_VIEW = localPoint(CHURCH_FRAME, 0, -15);
@@ -430,3 +440,9 @@ export const SURVEY_BOUNDS = SURVEY_BUILDINGS.map(b => ({ id:b.id, ...polygonBou
 
 // Two surveyed rear-garden stair runs; exact endpoints and tagged counts.
 export const GARDEN_STEPS = [{"id": 533428482, "count": 4, "ring": [[11.5819913, 48.1470364], [11.5820028, 48.1470359]]}, {"id": 533428487, "count": 12, "ring": [[11.5817836, 48.1470778], [11.5817883, 48.1470925]]}];
+
+// Street-agent coordination only: computed intersection polygons, no road mesh.
+export const STREET_OVERLAPS = FOOTPRINTS.map(b => ({id:b.id,
+  outer:clipAt(clipAt(clipAt(b.outer,'z',55,1),'z',105,-1),'x',-150,-1),
+  inner:b.inner.map(h=>clipAt(clipAt(clipAt(h,'z',55,1),'z',105,-1),'x',-150,-1)).filter(h=>h.length>=3),
+})).filter(b=>b.outer.length>=3);
