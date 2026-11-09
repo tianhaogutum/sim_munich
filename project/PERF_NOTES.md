@@ -137,12 +137,12 @@ Do not initially gate on absolute software-rendered frame time. Keep budget and 
 +sakuraInst.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 17, 40), 150);
 +scene.add(sakuraInst);
 +const petalMotionQuery = matchMedia('(prefers-reduced-motion: reduce)');
- 
+
  // ── SIGHTSEEING POINTS ────────────────────────────────────────────────────────
  // Positions come from date_route.mjs (POIS); `when` hides quest-only points outside their stage.
 @@ -724,24 +759,7 @@
    const et  = clock.elapsedTime;
- 
+
    // ── Sakura animation ──
 -  petals.forEach((p, i) => {
 -    p.x += p.vx + Math.sin(et*.4 + p.phase) * .018;
@@ -163,7 +163,7 @@ Do not initially gate on absolute software-rendered frame time. Keep budget and 
 -  sakuraInst.instanceMatrix.needsUpdate  = true;
 -  sakuraDInst.instanceMatrix.needsUpdate = true;
 +  petalTime.value = petalMotionQuery.matches ? 0 : et;
- 
+
    // ── Marker pulse ──
    markers.forEach((m, i) => {
 ```
@@ -635,4 +635,3 @@ None (only explicitly supplied thresholds are enforced).
 ## Browser diagnostics
 
 No console errors or exceptions.
-
