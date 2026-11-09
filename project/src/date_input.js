@@ -1,3 +1,4 @@
+import { t, onLocaleChange } from './date_i18n.mjs';
 // Touch + standard-mapping gamepad adapter for the existing keyboard-driven entry.
 // Wiring: const input = createInput(engine, story); then input.update(dt) each frame.
 // No scene, story, shared HUD, or entry-point mutations are made here.
@@ -35,15 +36,15 @@ export function createInput(engine, story) {
   root.className = 'di-root';
   root.hidden = !isTouch();
   root.setAttribute('role', 'group');
-  root.setAttribute('aria-label', '触屏游戏控制');
+  root.setAttribute('aria-label', t('input.controls'));
   root.innerHTML = `
     <div class="di-look" aria-hidden="true">
-      <span class="di-look-hint di-hint">拖动转身 · 双指缩放</span>
+      <span class="di-look-hint di-hint">${t('input.look')}</span>
     </div>
     <button class="di-hud-toggle" type="button" aria-pressed="false"
-      title="隐藏或显示触屏控制的 HUD 提示">隐藏 HUD 提示</button>
+      title="${t('input.hudHint')}">${t('input.hideHints')}</button>
     <div class="di-movement">
-      <div class="di-joystick" role="group" aria-label="移动摇杆：推至边缘奔跑">
+      <div class="di-joystick" role="group" aria-label="${t('input.joystick')}">
         <span class="di-stick-ring"></span>
         <span class="di-stick-mark di-stick-up">▲</span>
         <span class="di-stick-mark di-stick-right">›</span>
@@ -51,14 +52,14 @@ export function createInput(engine, story) {
         <span class="di-stick-mark di-stick-left">‹</span>
         <span class="di-stick-knob"></span>
       </div>
-      <span class="di-move-hint di-hint">移动 · 推远奔跑</span>
+      <span class="di-move-hint di-hint">${t('input.move')}</span>
     </div>
     <div class="di-actions">
       <div class="di-context di-hint" aria-live="polite"></div>
-      <button class="di-button di-interact" data-di-action="interact" type="button">互动</button>
-      <button class="di-button di-photo" data-di-action="photo" type="button">拍照</button>
-      <button class="di-button di-shutter" data-di-action="shutter" type="button" hidden>快门</button>
-      <button class="di-button di-back" data-di-action="back" type="button">返回</button>
+      <button class="di-button di-interact" data-di-action="interact" type="button">${t('input.interact')}</button>
+      <button class="di-button di-photo" data-di-action="photo" type="button">${t('input.photo')}</button>
+      <button class="di-button di-shutter" data-di-action="shutter" type="button" hidden>${t('input.shutter')}</button>
+      <button class="di-button di-back" data-di-action="back" type="button">${t('input.back')}</button>
     </div>`;
   document.body.appendChild(root);
 
@@ -187,6 +188,19 @@ export function createInput(engine, story) {
     syncMovement();
   }
 
+  function localize() {
+    root.setAttribute('aria-label', t('input.controls'));
+    root.querySelector('.di-look-hint').textContent = t('input.look');
+    hudToggle.title = t('input.hudHint');
+    hudToggle.textContent = t(root.classList.contains('di-hints-hidden') ? 'input.showHints' : 'input.hideHints');
+    joystick.setAttribute('aria-label', t('input.joystick'));
+    root.querySelector('.di-move-hint').textContent = t('input.move');
+    shutter.textContent = t('input.shutter');
+    root.querySelector('.di-back').textContent = t('input.back');
+    updateUI();
+  }
+  const unsubscribeLocale = onLocaleChange(localize);
+
   function updateUI() {
     if (disposed) return;
     const active = isTouch();
@@ -201,13 +215,13 @@ export function createInput(engine, story) {
     look.hidden = isLocked && !isPhoto;
     photo.hidden = isLocked && !isPhoto;
     shutter.hidden = !isPhoto;
-    interact.textContent = isLocked ? '确认' : '互动';
-    interact.setAttribute('aria-label', isLocked ? '确认对话' : '互动');
-    photo.textContent = isPhoto ? '收起相机' : '拍照';
+    interact.textContent = isLocked ? t('input.confirm') : t('input.interact');
+    interact.setAttribute('aria-label', isLocked ? t('input.confirmDialogue') : t('input.interact'));
+    photo.textContent = isPhoto ? t('input.closeCamera') : t('input.photo');
     if (!active) return;
     const prompt = document.getElementById('prompt');
     const visible = prompt && !prompt.hidden && getComputedStyle(prompt).display !== 'none';
-    const text = isLocked ? '轻触确认继续' : visible
+    const text = isLocked ? t('input.continue') : visible
       ? prompt.textContent.replace(/^\s*E\s*/i, '').trim() : '';
     if (context.textContent !== text) context.textContent = text;
   }
@@ -291,7 +305,7 @@ export function createInput(engine, story) {
   });
   on(hudToggle, 'click', () => {
     const hidden = root.classList.toggle('di-hints-hidden');
-    hudToggle.textContent = hidden ? '显示 HUD 提示' : '隐藏 HUD 提示';
+    hudToggle.textContent = hidden ? t('input.showHints') : t('input.hideHints');
     hudToggle.setAttribute('aria-pressed', String(hidden));
   });
 
@@ -365,6 +379,7 @@ export function createInput(engine, story) {
       suspended = true;
       reset();
       disposed = true;
+      unsubscribeLocale();
       listeners.forEach(remove => remove());
       root.remove();
       if (ownsStylesheet) stylesheet.remove();

@@ -1,3 +1,4 @@
+import { t } from './date_i18n.mjs';
 // Pure camera geometry and shot data. No THREE, DOM, clock, or mutable global state.
 import { SPAWN, FOUNTAINS } from './date_route.mjs';
 
@@ -105,14 +106,14 @@ export const SEQUENCES = {
   intro: {
     duration: 14, leadIn: 0, handoff: 1,
     captions: [
-      { start: 0.65, end: 4.3, title: '慕尼黑 · 路德维希大街', subtitle: 'MÜNCHEN · LUDWIGSTRASSE' },
-      { start: 4.8, end: 8.1, title: 'LMU 主楼', subtitle: 'LUDWIG-MAXIMILIANS-UNIVERSITÄT' },
-      { start: 10.2, end: 12.95, title: '我们的 LMU', subtitle: 'A LITTLE CHAPTER OF US' },
+      { start: 0.65, end: 4.3, get title() { return t('cinematic.introStreet'); }, get subtitle() { return t('cinematic.introStreetSub'); } },
+      { start: 4.8, end: 8.1, get title() { return t('cinematic.introBuilding'); }, get subtitle() { return t('cinematic.introBuildingSub'); } },
+      { start: 10.2, end: 12.95, get title() { return t('cinematic.introUs'); }, get subtitle() { return t('cinematic.introUsSub'); } },
     ],
   },
   ending: {
     duration: 12, leadIn: 0.8, handoff: 1,
-    captions: [{ start: 5.2, end: 10.5, title: '把今天，留在我们之间', subtitle: 'UNTIL OUR NEXT CHAPTER' }],
+    captions: [{ start: 5.2, end: 10.5, get title() { return t('cinematic.ending'); }, get subtitle() { return t('cinematic.endingSub'); } }],
   },
   fountain: { duration: 5, leadIn: 0.65, handoff: 1, captions: [] },
 };

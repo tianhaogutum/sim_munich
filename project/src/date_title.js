@@ -1,12 +1,12 @@
+import { t, setLocale, getLocale, onLocaleChange, locales } from './date_i18n.mjs';
 // Title, pause, and preferences. Owner: title/menu agent.
 // Integrate after story/photo/storyUI; route handleKey FIRST and call update each frame.
-import { objectiveFor } from './date_story.mjs';
 
 const SETTINGS_KEY = 'lmu-date-settings';
 const DEFAULTS = { quality: 'high', volume: 75, muted: false, sensitivity: 1, subtitleSpeed: 1 };
 const CHAPTERS = [
-  ['meet', '初次见面'], ['fountain_talk', '喷泉私语'], ['find_memento', '寻找发夹'],
-  ['photos', '定格此刻'], ['postcard', '我们的明信片'],
+  ['meet', 'title.chapters.meet'], ['fountain_talk', 'title.chapters.fountain_talk'], ['find_memento', 'title.chapters.find_memento'],
+  ['photos', 'title.chapters.photos'], ['postcard', 'title.chapters.postcard'],
 ];
 const clamp = (value, min, max, fallback) => Number.isFinite(Number(value))
   ? Math.max(min, Math.min(max, Number(value))) : fallback;
@@ -111,7 +111,7 @@ export function createTitle(engine, story) {
 
   const button = (action, label, extra = '') =>
     `<button type="button" class="dt-button ${extra}" data-dt-action="${action}">${label}</button>`;
-  const back = () => button('back', '<span aria-hidden="true">←</span> 返回', 'dt-back');
+  const back = () => button('back', `<span aria-hidden="true">←</span> ${t('title.back')}`, 'dt-back');
   const heading = (eyebrow, title, description = '') =>
     `<p class="dt-eyebrow">${eyebrow}</p><h2 class="dt-heading" id="dt-heading">${title}</h2>` +
     (description ? `<p class="dt-description">${description}</p>` : '');
@@ -122,62 +122,63 @@ export function createTitle(engine, story) {
     root.dataset.screen = screen;
     if (screen === 'title') {
       surface.innerHTML = `<section class="dt-title" role="dialog" aria-modal="true" aria-labelledby="dt-heading">
-        <p class="dt-eyebrow"><span class="dt-star" aria-hidden="true">✦</span> A LITTLE LOVE LETTER TO MUNICH</p>
-        <p class="dt-chapter">CHAPTER 01 <span></span> 与你，一起</p>
-        <h1 class="dt-logo" id="dt-heading"><span>我们的</span> <em>LMU</em></h1>
-        <p class="dt-subtitle">慕尼黑 <span aria-hidden="true">·</span> 约会篇</p>
-        <p class="dt-intro">把平凡的一天，<br>过成只属于我们的纪念。</p>
-        <nav class="dt-menu" aria-label="主菜单">
-          ${button('start', '开始约会 <span aria-hidden="true">↗</span>', 'dt-primary dt-start')}
-          ${hasProgress() ? button('continue', '继续 <span class="dt-button-note">赴我们的约</span>', 'dt-continue') : ''}
-          <div class="dt-menu-pair">${button('help', '操作说明')}${button('credits', '制作名单')}</div>
+        <p class="dt-eyebrow"><span class="dt-star" aria-hidden="true">✦</span> ${t('title.eyebrow')}</p>
+        <p class="dt-chapter">${t('title.chapter')} <span></span> ${t('title.together')}</p>
+        <h1 class="dt-logo" id="dt-heading"><span>${t('title.our')}</span> <em>LMU</em></h1>
+        <p class="dt-subtitle">${t('title.subtitle')} <span aria-hidden="true">·</span> ${t('title.dateChapter')}</p>
+        <p class="dt-intro">${t('title.intro')}</p>
+        <nav class="dt-menu" aria-label="${t('title.mainMenu')}">
+          ${button('start', `${t('title.start')} <span aria-hidden="true">↗</span>`, 'dt-primary dt-start')}
+          ${hasProgress() ? button('continue', `${t('title.continue')} <span class="dt-button-note">${t('title.continueNote')}</span>`, 'dt-continue') : ''}
+          <div class="dt-menu-pair">${button('help', t('title.help'))}${button('credits', t('title.credits'))}</div>${button('settings', t('title.settings'))}
         </nav>
-        <p class="dt-keyhint"><kbd>↑</kbd> <kbd>↓</kbd> 选择 <span>·</span> <kbd>Enter</kbd> 出发</p>
+        <p class="dt-keyhint"><kbd>↑</kbd> <kbd>↓</kbd> ${t('title.choose')} <span>·</span> <kbd>Enter</kbd> ${t('title.go')}</p>
       </section>
-      <div class="dt-scene-note" aria-hidden="true"><span>48°09′ N &nbsp; 11°35′ E</span><i></i><strong>München, mit dir.</strong><small>有你在的地方，就是风景。</small></div>
-      <footer class="dt-footer"><span>我们的 LMU</span><span>A DAY TO REMEMBER &nbsp; ♡</span></footer>`;
+      <div class="dt-scene-note" aria-hidden="true"><span>48°09′ N &nbsp; 11°35′ E</span><i></i><strong>${t('title.sceneSignature')}</strong><small>${t('title.sceneNote')}</small></div>
+      <footer class="dt-footer"><span>${t('title.name')}</span><span>${t('title.footer')} &nbsp; ♡</span></footer>`;
     } else if (screen === 'pause') {
-      surface.innerHTML = card(heading('A MOMENT, TOGETHER', '让时间慢一点', '风景会等我们，故事也是。') +
-        '<div class="dt-progress"><p class="dt-section-label">此刻的约定</p><p class="dt-objective"></p><ol class="dt-dots" aria-label="约会进度"></ol></div>' +
-        `<nav class="dt-menu" aria-label="暂停菜单">${button('continue', '继续约会 <span aria-hidden="true">↗</span>', 'dt-primary dt-continue')}` +
-        `<div class="dt-menu-pair">${button('help', '操作说明')}${button('settings', '设置')}</div>` +
-        `${button('restart', '重新开始', 'dt-restart')}${button('title', '返回标题', 'dt-subtle')}</nav>` +
-        '<p class="dt-keyhint"><kbd>Esc</kbd> 回到你身边</p>');
+      surface.innerHTML = card(heading(t('title.pauseEyebrow'), t('title.pauseTitle'), t('title.pauseDescription')) +
+        `<div class="dt-progress"><p class="dt-section-label">${t('title.currentPromise')}</p><p class="dt-objective"></p><ol class="dt-dots" aria-label="${t('title.progress')}"></ol></div>` +
+        `<nav class="dt-menu" aria-label="${t('title.pauseMenu')}">${button('continue', `${t('title.resume')} <span aria-hidden="true">↗</span>`, 'dt-primary dt-continue')}` +
+        `<div class="dt-menu-pair">${button('help', t('title.help'))}${button('settings', t('title.settings'))}</div>` +
+        `${button('restart', t('title.restart'), 'dt-restart')}${button('title', t('title.toTitle'), 'dt-subtle')}</nav>` +
+        `<p class="dt-keyhint"><kbd>Esc</kbd> ${t('title.escapeHint')}</p>`);
       renderProgress();
     } else if (screen === 'settings') {
-      const segments = (key, choices) => `<div class="dt-segments" role="group" aria-label="${key === 'quality' ? '画质' : '字幕速度'}">` +
+      const segments = (key, choices) => `<div class="dt-segments" role="group" aria-label="${key === 'quality' ? t('title.quality') : t('title.subtitleSpeed')}">` +
         choices.map(([value, label]) => `<button type="button" class="dt-segment" data-dt-setting="${key}" data-dt-value="${value}" aria-pressed="${settings[key] === value}">${label}</button>`).join('') + '</div>';
-      surface.innerHTML = card(heading('MAKE YOURSELF AT HOME', '偏爱，随你', '调成你最舒服的样子。设置会自动保存。') +
+      surface.innerHTML = card(heading(t('title.settingsEyebrow'), t('title.settingsTitle'), t('title.settingsDescription')) +
         `<div class="dt-settings">
-          <div class="dt-setting"><div><h3>画质</h3><p>光影与画面细腻程度</p></div>${segments('quality', [['low', '低'], ['medium', '中'], ['high', '高']])}</div>
-          <div class="dt-setting dt-setting-volume"><div><label for="dt-volume">音量</label><p>让城市轻轻唱歌</p></div><div class="dt-range-wrap"><input class="dt-range" id="dt-volume" data-dt-range="volume" type="range" min="0" max="100" step="5" value="${settings.volume}"/><output for="dt-volume">${settings.volume}%</output></div></div>
-          <div class="dt-setting"><div><h3>静音</h3><p>也可以静静地陪伴</p></div><button type="button" class="dt-toggle" data-dt-setting="muted" aria-pressed="${settings.muted}"><span aria-hidden="true"></span><b>${settings.muted ? '已静音' : '声音开启'}</b></button></div>
-          <div class="dt-setting"><div><label for="dt-sensitivity">镜头灵敏度</label><p>慢慢看，或轻快转身</p></div><div class="dt-range-wrap"><input class="dt-range" id="dt-sensitivity" data-dt-range="sensitivity" type="range" min="0.5" max="2" step="0.1" value="${settings.sensitivity}"/><output for="dt-sensitivity">${settings.sensitivity.toFixed(1)}×</output></div></div>
-          <div class="dt-setting"><div><h3>字幕速度</h3><p>以你的节奏读这段故事</p></div>${segments('subtitleSpeed', [[0.5, '慢'], [1, '标准'], [2, '快']])}</div>
+          <div class="dt-setting"><div><h3>${t('title.language')}</h3><p>${t('title.languageDescription')}</p></div><div class="dt-segments" role="group" aria-label="${t('title.language')}">${locales.map(code => `<button type="button" class="dt-segment" data-dt-locale="${code}" aria-pressed="${getLocale() === code}">${{ zh: t('title.locales.zh'), en: t('title.locales.en'), de: t('title.locales.de') }[code]}</button>`).join('')}</div></div>
+          <div class="dt-setting"><div><h3>${t('title.quality')}</h3><p>${t('title.qualityDescription')}</p></div>${segments('quality', [['low', t('title.low')], ['medium', t('title.medium')], ['high', t('title.high')]])}</div>
+          <div class="dt-setting dt-setting-volume"><div><label for="dt-volume">${t('title.volume')}</label><p>${t('title.volumeDescription')}</p></div><div class="dt-range-wrap"><input class="dt-range" id="dt-volume" data-dt-range="volume" type="range" min="0" max="100" step="5" value="${settings.volume}"/><output for="dt-volume">${settings.volume}%</output></div></div>
+          <div class="dt-setting"><div><h3>${t('title.mute')}</h3><p>${t('title.muteDescription')}</p></div><button type="button" class="dt-toggle" data-dt-setting="muted" aria-pressed="${settings.muted}"><span aria-hidden="true"></span><b>${settings.muted ? t('title.muted') : t('title.soundOn')}</b></button></div>
+          <div class="dt-setting"><div><label for="dt-sensitivity">${t('title.sensitivity')}</label><p>${t('title.sensitivityDescription')}</p></div><div class="dt-range-wrap"><input class="dt-range" id="dt-sensitivity" data-dt-range="sensitivity" type="range" min="0.5" max="2" step="0.1" value="${settings.sensitivity}"/><output for="dt-sensitivity">${settings.sensitivity.toFixed(1)}×</output></div></div>
+          <div class="dt-setting"><div><h3>${t('title.subtitleSpeed')}</h3><p>${t('title.subtitleDescription')}</p></div>${segments('subtitleSpeed', [[0.5, t('title.slow')], [1, t('title.normal')], [2, t('title.fast')]])}</div>
         </div>${back()}`);
     } else if (screen === 'help') {
       const controls = [
-        ['W A S D', '漫步校园'], ['Shift', '按住小跑'], ['鼠标拖动', '环顾四周'], ['滚轮', '拉近 / 拉远镜头'],
-        ['E', '互动 / 与 TA 交谈'], ['P', '进入 / 退出拍照'], ['Space', '按下快门'], ['Esc', '返回 / 暂停'],
-        ['N', '展开 / 收起小地图'], ['M', '静音 / 恢复声音'],
+        ['W A S D', t('title.walk')], ['Shift', t('title.run')], [t('title.mouseDrag'), t('title.look')], [t('title.wheel'), t('title.zoom')],
+        ['E', t('title.talk')], ['P', t('title.photo')], ['Space', t('title.shutter')], ['Esc', t('title.pause')],
+        ['N', t('title.map')], ['M', t('title.audio')],
       ];
-      surface.innerHTML = card(heading('A SMALL GUIDE TO OUR DAY', '一起，慢慢探索', '不必赶路，记得看看身边的 TA。') +
+      surface.innerHTML = card(heading(t('title.helpEyebrow'), t('title.helpTitle'), t('title.helpDescription')) +
         `<dl class="dt-controls">${controls.map(([key, text]) => `<div><dt><kbd>${key}</kbd></dt><dd>${text}</dd></div>`).join('')}</dl>` +
-        '<p class="dt-touch-note"><span aria-hidden="true">◇</span> 触屏：单指拖动环顾；移动与互动请使用可用的屏幕控件或外接键盘。</p>' + back());
+        `<p class="dt-touch-note"><span aria-hidden="true">◇</span> ${t('title.touchNote')}</p>` + back());
     } else if (screen === 'credits') {
-      surface.innerHTML = card(heading('MADE WITH A LITTLE LOVE', '把喜欢，写进风景', '献给一起走过的路，和还没说完的话。') +
-        `<div class="dt-credits" tabindex="0" aria-label="制作名单，可滚动">
-          <p class="dt-credit-heart" aria-hidden="true">♡</p><p class="dt-credit-name">我们 ♡</p><p>创意 · 故事 · 世界 · 陪伴</p>
-          <div class="dt-credit-rule"></div><h3>让世界亮起来</h3><p>three.js r160</p><p>WebGL · 光影与每一个小小瞬间</p>
-          <h3>让文字有温度</h3><p>Cormorant Garamond · Klee One · Nunito</p><p>通过 Google Fonts 提供</p>
-          <h3>灵感来自</h3><p>慕尼黑 · 路德维希–马克西米利安大学</p><p>喷泉、晚风，以及想和你分享的日常</p>
-          <div class="dt-credit-rule"></div><p class="dt-credit-ending">谢谢你，成为这段故事的一部分。</p><p class="dt-credit-signature">München, mit dir.</p>
+      surface.innerHTML = card(heading(t('title.creditsEyebrow'), t('title.creditsTitle'), t('title.creditsDescription')) +
+        `<div class="dt-credits" tabindex="0" aria-label="${t('title.creditsAria')}">
+          <p class="dt-credit-heart" aria-hidden="true">♡</p><p class="dt-credit-name">${t('title.us')}</p><p>${t('title.roles')}</p>
+          <div class="dt-credit-rule"></div><h3>${t('title.worldTitle')}</h3><p>three.js r160</p><p>${t('title.worldTech')}</p>
+          <h3>${t('title.textTitle')}</h3><p>Cormorant Garamond · Klee One · Nunito</p><p>${t('title.fonts')}</p>
+          <h3>${t('title.inspirationTitle')}</h3><p>${t('title.inspirationPlace')}</p><p>${t('title.inspiration')}</p>
+          <div class="dt-credit-rule"></div><p class="dt-credit-ending">${t('title.thanks')}</p><p class="dt-credit-signature">${t('title.sceneSignature')}</p>
         </div>${back()}`);
     } else if (screen === 'confirm') {
-      surface.innerHTML = card(heading('ONE MORE FIRST HELLO', '再赴一次初见？', '重新开始会替换当前约会进度与照片记录。') +
-        '<p class="dt-confirm-copy">从主楼前的那句「你好」开始，<br>再一起走过这一天。</p>' +
-        `<nav class="dt-menu" aria-label="确认重新开始">${button('cancel', '留在这段故事', 'dt-primary')}` +
-        `${button('confirm-restart', '确认重新开始', 'dt-confirm-restart')}</nav>`);
+      surface.innerHTML = card(heading(t('title.restartEyebrow'), t('title.restartTitle'), t('title.restartDescription')) +
+        `<p class="dt-confirm-copy">${t('title.restartCopy')}</p>` +
+        `<nav class="dt-menu" aria-label="${t('title.confirmRestart')}">${button('cancel', t('title.stay'), 'dt-primary')}` +
+        `${button('confirm-restart', t('title.confirmRestart'), 'dt-confirm-restart')}</nav>`);
     }
   }
 
@@ -185,11 +186,13 @@ export function createTitle(engine, story) {
     if (screen !== 'pause') return;
     const state = story.getState();
     const objective = surface.querySelector('.dt-objective');
-    if (objective) objective.textContent = objectiveFor(state).text;
+    if (objective) objective.textContent = state.stage === 'photos'
+      ? t('story.objectives.photosProgress', { count: Object.values(state.photos ?? {}).filter(Boolean).length, total: Object.keys(state.photos ?? {}).length })
+      : t(`story.objectives.${state.stage}`);
     const current = state.stage === 'done' ? CHAPTERS.length : CHAPTERS.findIndex(([id]) => id === state.stage);
     const dots = surface.querySelector('.dt-dots');
     if (dots) dots.innerHTML = CHAPTERS.map(([, label], i) =>
-      `<li class="${i < current ? 'dt-complete' : i === current ? 'dt-current' : ''}"${i === current ? ' aria-current="step"' : ''}><span aria-hidden="true">${i < current ? '✓' : i + 1}</span><small>${label}</small></li>`).join('');
+      `<li class="${i < current ? 'dt-complete' : i === current ? 'dt-current' : ''}"${i === current ? ' aria-current="step"' : ''}><span aria-hidden="true">${i < current ? '✓' : i + 1}</span><small>${t(label)}</small></li>`).join('');
   }
 
   function focusables() {
@@ -274,14 +277,18 @@ export function createTitle(engine, story) {
   surface.addEventListener('click', event => {
     const target = event.target.closest('button');
     if (!target || busy) return;
-    if (target.dataset.dtAction) act(target.dataset.dtAction);
+    if (target.dataset.dtLocale) {
+      const code = target.dataset.dtLocale;
+      setLocale(code);
+      surface.querySelector(`[data-dt-locale="${code}"]`)?.focus({ preventScroll: true });
+    } else if (target.dataset.dtAction) act(target.dataset.dtAction);
     else if (target.dataset.dtSetting) {
       const key = target.dataset.dtSetting;
       const value = key === 'muted' ? !settings.muted : key === 'quality' ? target.dataset.dtValue : Number(target.dataset.dtValue);
       changeSetting(key, value);
       if (key === 'muted') {
         target.setAttribute('aria-pressed', String(value));
-        target.querySelector('b').textContent = value ? '已静音' : '声音开启';
+        target.querySelector('b').textContent = value ? t('title.muted') : t('title.soundOn');
       } else {
         for (const option of surface.querySelectorAll(`[data-dt-setting="${key}"]`)) {
           option.setAttribute('aria-pressed', String(option === target));
@@ -342,6 +349,13 @@ export function createTitle(engine, story) {
     return true;
   }
 
+  function localize() {
+    document.documentElement.lang = getLocale() === 'zh' ? 'zh-CN' : getLocale();
+    if (screen) render();
+  }
+  // This controller shares the page lifetime; there is no public dispose contract.
+  onLocaleChange(localize);
+  localize();
   applyQuality();
   applyAudio();
   const params = new URLSearchParams(location.search);

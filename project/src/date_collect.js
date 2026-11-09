@@ -1,3 +1,4 @@
+import { t, getLocale, onLocaleChange } from './date_i18n.mjs';
 // Optional plaza memories. No entry-point side effects: construct after storyUI,
 // route handleKey after storyUI/photo, and call update after player movement.
 import {
@@ -10,7 +11,7 @@ import { POIS, FOUNTAINS } from './date_route.mjs';
 let currentCollect = null;
 const attempt = (fn, fallback = null) => { try { return fn(); } catch { return fallback; } };
 const clockText = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
-const dateText = value => attempt(() => new Intl.DateTimeFormat('zh-CN', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(value), '今天');
+const dateText = value => attempt(() => new Intl.DateTimeFormat(getLocale() === 'zh' ? 'zh-CN' : getLocale(), { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(value), t('collect.today'));
 
 export function createCollect(engine = {}, story = {}) {
   currentCollect?.dispose();
@@ -24,6 +25,7 @@ export function createCollect(engine = {}, story = {}) {
   const objects = [];
   const listeners = [];
   let root, panel, content, launcher, toast, badge;
+  let lastPickup = null, lastAchievement = null;
   const state = () => attempt(() => story.getState?.(), {}) ?? {};
   const photoMode = () => !!attempt(() => engine.isPhotoMode?.(), false);
   const locked = () => !!attempt(() => engine.isLocked?.(), false);
@@ -76,7 +78,7 @@ export function createCollect(engine = {}, story = {}) {
   function render() {
     if (!hasDOM || disposed) return;
     const stats = getStats();
-    launcher.textContent = `▤ 回忆手记 ${stats.fragmentsFound}/8`;
+    launcher.textContent = t('collect.launcher', { count: stats.fragmentsFound });
     if (!opened) return;
     root.querySelectorAll('.dc-tab').forEach(node => {
       const selected = node.dataset.tab === tab;
@@ -86,19 +88,19 @@ export function createCollect(engine = {}, story = {}) {
     content.replaceChildren();
     if (tab === 'achievements') {
       const summary = element('div', 'dc-stats');
-      for (const [value, label] of [[`${Math.round(stats.distanceWalked)} m`, '一起走过'], [clockText(stats.runSeconds), '约会时长'], [`${stats.photosCredited}/3`, '照片'], [stats.dialogueChoices, '对话选择']]) {
+      for (const [value, label] of [[`${Math.round(stats.distanceWalked)} m`, t('collect.walked')], [clockText(stats.runSeconds), t('collect.duration')], [`${stats.photosCredited}/3`, t('collect.photos')], [stats.dialogueChoices, t('collect.choices')]]) {
         const cell = element('div', 'dc-stat');
         cell.append(element('strong', '', value), element('span', '', label));
         summary.append(cell);
       }
-      const heading = element('div', 'dc-section-label', `小小成就 · ${saved.achievements.length}/${ACHIEVEMENTS.length}`);
+      const heading = element('div', 'dc-section-label', t('collect.achievements', { count: saved.achievements.length, total: ACHIEVEMENTS.length }));
       const list = element('div', 'dc-achievements');
       for (const achievement of ACHIEVEMENTS) {
         const earned = saved.achievements.includes(achievement.id);
         const row = element('div', `dc-achievement${earned ? ' dc-earned' : ''}`);
         const copy = element('div', 'dc-achievement-copy');
         copy.append(element('strong', '', achievement.title), element('span', '', achievement.detail));
-        row.append(element('span', 'dc-badge-icon', earned ? achievement.icon : '◇'), copy, element('span', 'dc-check', earned ? '已点亮' : '未点亮'));
+        row.append(element('span', 'dc-badge-icon', earned ? achievement.icon : '◇'), copy, element('span', 'dc-check', earned ? t('collect.earned') : t('collect.unearned')));
         list.append(row);
       }
       content.append(summary, heading, list);
@@ -106,25 +108,25 @@ export function createCollect(engine = {}, story = {}) {
     }
     const spread = element('div', 'dc-spread');
     const list = element('nav', 'dc-index');
-    list.setAttribute('aria-label', '八段回忆目录');
-    list.append(element('div', 'dc-section-label', `拾光目录 · ${stats.fragmentsFound}/8`));
+    list.setAttribute('aria-label', t('collect.indexAria'));
+    list.append(element('div', 'dc-section-label', t('collect.index', { count: stats.fragmentsFound })));
     MEMORY_ITEMS.forEach((item, i) => {
       const found = saved.found[item.id];
       const node = button('', `dc-memory${i === page ? ' dc-selected' : ''}${found ? ' dc-found' : ''}`, () => selectPage(i));
       node.setAttribute('aria-current', i === page ? 'page' : 'false');
-      node.setAttribute('aria-label', `${i + 1}. ${found ? item.title : '尚未拾起的回忆'}`);
-      node.append(element('span', 'dc-memory-icon', item.icon), element('span', 'dc-memory-title', found ? item.title : '尚未拾起的回忆'), element('small', '', String(i + 1).padStart(2, '0')));
+      node.setAttribute('aria-label', `${i + 1}. ${found ? item.title : t('collect.unknownMemory')}`);
+      node.append(element('span', 'dc-memory-icon', item.icon), element('span', 'dc-memory-title', found ? item.title : t('collect.unknownMemory')), element('small', '', String(i + 1).padStart(2, '0')));
       list.append(node);
     });
     const item = MEMORY_ITEMS[page], found = saved.found[item.id];
     const leaf = element('article', 'dc-page');
-    leaf.append(element('div', 'dc-page-eyebrow', 'MUNICH, WITH YOU'), element('div', `dc-page-symbol${found ? '' : ' dc-locked'}`, item.icon), element('h3', '', found ? item.title : '故事还在路上'));
+    leaf.append(element('div', 'dc-page-eyebrow', t('collect.pageEyebrow')), element('div', `dc-page-symbol${found ? '' : ' dc-locked'}`, item.icon), element('h3', '', found ? item.title : t('collect.unknownTitle')));
     const note = element('div', 'dc-note');
-    (found ? item.note : ['广场上藏着一些小小的日常。', '走近发光的物件，就能拾起一段属于我们的回忆。', '不必赶路，慢慢找就好。']).forEach(line => note.append(element('p', '', line)));
+    (found ? item.note : [t('collect.unknownNote0'), t('collect.unknownNote1'), t('collect.unknownNote2')]).forEach(line => note.append(element('p', '', line)));
     leaf.append(note);
-    leaf.append(element('div', 'dc-found-at', found ? `${item.where}\n${dateText(found.foundAt)} · 相遇后 ${clockText(found.elapsedSeconds)}` : '未发现 · 去广场散散步吧'));
+    leaf.append(element('div', 'dc-found-at', found ? t('collect.foundAt', { where: item.where, date: dateText(found.foundAt), time: clockText(found.elapsedSeconds) }) : t('collect.notFound')));
     const paging = element('div', 'dc-paging');
-    paging.append(button('← 上一页', 'dc-page-button', () => selectPage(page - 1)), element('span', '', `${String(page + 1).padStart(2, '0')} / 08`), button('下一页 →', 'dc-page-button', () => selectPage(page + 1)));
+    paging.append(button(t('collect.previous'), 'dc-page-button', () => selectPage(page - 1)), element('span', '', `${String(page + 1).padStart(2, '0')} / 08`), button(t('collect.next'), 'dc-page-button', () => selectPage(page + 1)));
     leaf.append(paging);
     spread.append(list, leaf);
     content.append(spread);
@@ -140,8 +142,8 @@ export function createCollect(engine = {}, story = {}) {
     }
     root = element('div', 'dc-root');
     root.id = 'date-collect-root';
-    launcher = button('▤ 回忆手记 0/8', 'dc-launcher', () => setOpen(!opened), '打开回忆手记，快捷键 J');
-    launcher.title = 'J · 回忆与成就';
+    launcher = button(t('collect.launcher', { count: 0 }), 'dc-launcher', () => setOpen(!opened), t('collect.openAria'));
+    launcher.title = t('collect.launcherTitle');
     panel = element('section', 'dc-overlay');
     panel.hidden = true;
     panel.setAttribute('role', 'dialog');
@@ -150,20 +152,20 @@ export function createCollect(engine = {}, story = {}) {
     const notebook = element('div', 'dc-notebook');
     const header = element('header', 'dc-header');
     const titles = element('div', '');
-    const title = element('h2', '', '我们的拾光手记');
+    const title = element('h2', '', t('collect.journalTitle'));
     title.id = 'dc-journal-title';
-    titles.append(element('div', 'dc-eyebrow', 'THE LITTLE THINGS WE KEEP'), title);
-    header.append(titles, button('×', 'dc-close', () => setOpen(false), '合上手记'));
+    titles.append(element('div', 'dc-eyebrow', t('collect.eyebrow')), title);
+    header.append(titles, button('×', 'dc-close', () => setOpen(false), t('collect.close')));
     const tabs = element('div', 'dc-tabs');
     tabs.setAttribute('role', 'tablist');
-    [['memories', '拾光 · 回忆'], ['achievements', '足迹 · 成就']].forEach(([id, text]) => {
+    [['memories', t('collect.memoriesTab')], ['achievements', t('collect.achievementsTab')]].forEach(([id, text]) => {
       const node = button(text, 'dc-tab', () => { tab = id; render(); });
       node.dataset.tab = id;
       node.setAttribute('role', 'tab');
       tabs.append(node);
     });
     content = element('div', 'dc-content');
-    const footer = element('footer', 'dc-footer', 'J / Esc 合上 · ← → 翻页 · ↑ ↓ 切换回忆 / 成就');
+    const footer = element('footer', 'dc-footer', t('collect.footer'));
     notebook.append(header, tabs, content, footer);
     panel.append(notebook);
     listen(panel, 'click', event => { if (event.target === panel) setOpen(false); });
@@ -186,6 +188,31 @@ export function createCollect(engine = {}, story = {}) {
       }
     });
   }
+
+  function localize() {
+    if (!root || disposed) return;
+    launcher.setAttribute('aria-label', t('collect.openAria'));
+    launcher.title = t('collect.launcherTitle');
+    root.querySelector('#dc-journal-title').textContent = t('collect.journalTitle');
+    root.querySelector('.dc-eyebrow').textContent = t('collect.eyebrow');
+    root.querySelector('.dc-close').setAttribute('aria-label', t('collect.close'));
+    for (const node of root.querySelectorAll('.dc-tab')) {
+      node.textContent = t(node.dataset.tab === 'memories' ? 'collect.memoriesTab' : 'collect.achievementsTab');
+    }
+    root.querySelector('.dc-footer').textContent = t('collect.footer');
+    if (lastPickup && toast && !toast.hidden) {
+      toast.replaceChildren(element('div', 'dc-toast-eyebrow', t('collect.pickupHeading', { count: getStats().fragmentsFound })), element('h3', '', `${lastPickup.icon} ${lastPickup.title}`));
+      lastPickup.note.forEach(line => toast.append(element('p', '', line)));
+      toast.append(element('small', '', t('collect.savedHint')));
+    }
+    if (lastAchievement && badge && !badge.hidden) {
+      const { achievement, extraCount } = lastAchievement;
+      const extra = extraCount > 0 ? t('collect.achievementExtra', { count: extraCount }) : '';
+      badge.textContent = t('collect.achievementToast', { icon: achievement.icon, title: achievement.title, extra });
+    }
+    render();
+  }
+  const unsubscribeLocale = onLocaleChange(localize);
 
   function createObject(item, placement) {
     const T = engine.THREE;
@@ -297,12 +324,13 @@ export function createCollect(engine = {}, story = {}) {
     if (saved.found[object.item.id]) return;
     saved.found[object.item.id] = { foundAt: Date.now(), elapsedSeconds: saved.elapsedSeconds };
     object.pop = 0;
-    notify(`✦ 拾起回忆：${object.item.title} · ${getStats().fragmentsFound}/8`, 3400);
+    lastPickup = object.item;
+    notify(t('collect.pickup', { title: object.item.title, count: getStats().fragmentsFound }), 3400);
     attempt(() => engine.audio?.cue?.('collect'));
     if (toast) {
-      toast.replaceChildren(element('div', 'dc-toast-eyebrow', `拾起一段回忆 · ${getStats().fragmentsFound}/8`), element('h3', '', `${object.item.icon} ${object.item.title}`));
+      toast.replaceChildren(element('div', 'dc-toast-eyebrow', t('collect.pickupHeading', { count: getStats().fragmentsFound })), element('h3', '', `${object.item.icon} ${object.item.title}`));
       object.item.note.forEach(line => toast.append(element('p', '', line)));
-      toast.append(element('small', '', '已收进手记 · 按 J 重读'));
+      toast.append(element('small', '', t('collect.savedHint')));
       toast.hidden = false;
       toastIn = 10;
     }
@@ -315,11 +343,12 @@ export function createCollect(engine = {}, story = {}) {
     if (!fresh.length) return;
     saved.achievements.push(...fresh);
     const achievement = ACHIEVEMENTS.find(a => a.id === fresh[0]);
+    lastAchievement = { achievement, extraCount: fresh.length - 1 };
     if (badge) {
-      badge.textContent = `${achievement.icon} 成就点亮 · ${achievement.title}${fresh.length > 1 ? `（+${fresh.length - 1}）` : ''}`;
+      badge.textContent = t('collect.achievementToast', { icon: achievement.icon, title: achievement.title, extra: fresh.length > 1 ? t('collect.achievementExtra', { count: fresh.length - 1 }) : '' });
       badge.hidden = false;
       badgeIn = 5;
-    } else notify(`${achievement.icon} 成就点亮 · ${achievement.title}`, 3000);
+    } else notify(t('collect.achievementToast', { icon: achievement.icon, title: achievement.title, extra: '' }), 3000);
     render();
     persist();
   }
@@ -436,6 +465,7 @@ export function createCollect(engine = {}, story = {}) {
       setOpen(false);
       persist();
       disposed = true;
+      unsubscribeLocale();
       attempt(() => unsubscribe?.());
       listeners.forEach(fn => fn());
       root?.remove();
