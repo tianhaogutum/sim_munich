@@ -39,6 +39,8 @@ export const PHOTO_TARGETS = [
 ];
 
 export const SPAWN = { x: 0, z: 92, yaw: 0 };
-export const BOUNDS = { minX: -150, maxX: 150, minZ: -4, maxZ: 118 };
+// World limits. The playable core is the plaza; blocks built from OSM data extend it (see date_geo.mjs).
+export const BOUNDS = { minX: -520, maxX: 520, minZ: -320, maxZ: 420 };
+export const CORE_BOUNDS = { minX: -150, maxX: 150, minZ: -4, maxZ: 118 };   // the original plaza limits
 
-export const ROUTE = { STAGES, POIS, INTERACT_RADIUS, FOUNTAINS, COMPANION, PHOTO_TARGETS, SPAWN, BOUNDS };
+export const ROUTE = { STAGES, POIS, INTERACT_RADIUS, FOUNTAINS, COMPANION, PHOTO_TARGETS, SPAWN, BOUNDS, CORE_BOUNDS };
