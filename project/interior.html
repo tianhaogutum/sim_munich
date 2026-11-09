@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我们的 LMU · Chapter 03 · 光落下的地方</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&family=Klee+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./src/interior.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<canvas id="c" aria-label="LMU 中庭三维漫步"></canvas>
+<div id="loading" role="status">走进光落下的地方…</div>
+<div id="hud">
+  <div id="status-panel">
+    <div class="title">我们的 LMU</div>
+    <span><kbd>WASD</kbd> 移动 &nbsp;<kbd>Shift</kbd> 奔跑</span><br>
+    <span><kbd>拖拽</kbd> 环顾 &nbsp;<kbd>滚轮</kbd> 缩放</span><br>
+    <span><kbd>E</kbd> 互动 &nbsp;<kbd>P</kbd> 拍照 &nbsp;<kbd>C</kbd> 自由镜头</span>
+    <div id="floor-indicator">1F · 中庭</div>
+  </div>
+  <div id="days-counter">✦ 在一起第 <span id="days-num">0</span> 天 ✦</div>
+  <div id="chapter-label"><span>CHAPTER 03</span><br>光落下的地方 <em>Lichthof</em></div>
+  <div id="interior-objectives" aria-label="中庭探索进度"><div class="objective-title">一起，慢慢看 <span id="visit-count">0 / 5</span></div><ul id="sight-list"></ul><p id="objective-note">走近光点，按 E 留下一段记忆</p></div>
+  <button id="prompt" type="button" hidden></button>
+  <a id="return-link" href="./index.html">← 回到广场</a>
+  <div id="interior-caption">暖光穿过玻璃，故事在这里停留。</div>
+</div>
+<section id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+  <button id="panel-close" type="button" aria-label="关闭">×</button>
+  <div id="panel-icon"></div><div id="panel-kicker"></div>
+  <h1 id="panel-title"></h1><p id="panel-text"></p><p id="panel-source"></p>
+  <button id="panel-done" type="button">把这一刻记住 · Enter</button>
+</section>
+<div id="photo-overlay" hidden><div class="letterbox-top"></div><div class="letterbox-bot"></div><div class="photo-corner tl"></div><div class="photo-corner tr"></div><div class="photo-corner bl"></div><div class="photo-corner br"></div><div id="photo-hint">光落下的地方 · Space 拍摄 · P / Esc 返回</div></div>
+<button id="photo-btn" type="button" hidden>◉ 拍下这一刻</button>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="./src/interior_main.js"></script>
+</body>
+</html>
