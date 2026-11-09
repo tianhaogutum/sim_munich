@@ -634,8 +634,30 @@ const hud      = document.getElementById('hud');
 
 let nearestSight = -1;
 
-document.getElementById('panel-close').onclick = () => panel.classList.remove('open');
-document.getElementById('days-popup-close').onclick = () => daysPopup.classList.remove('visible');
+// Info panels: inert while closed, lock the world while open, return keyboard focus on close (a11y audit #2).
+let panelReturnFocus = null;
+function openPanel(el, className, closeId) {
+  panelReturnFocus = document.activeElement;
+  engine.lock('info-panel');
+  el.inert = false;
+  el.classList.add(className);
+  document.getElementById(closeId).focus({ preventScroll: true });
+}
+function closePanels() {
+  panel.classList.remove('open'); panel.inert = true;
+  daysPopup.classList.remove('visible'); daysPopup.inert = true;
+  engine.unlock('info-panel');
+  panelReturnFocus?.focus?.({ preventScroll: true });
+  panelReturnFocus = null;
+}
+document.getElementById('panel-close').onclick = closePanels;
+document.getElementById('days-popup-close').onclick = closePanels;
+let previousPromptHTML = '';
+function setPromptHTML(html) {                        // avoid re-parsing identical prompt HTML every frame
+  if (html === previousPromptHTML) return;
+  previousPromptHTML = html;
+  promptEl.innerHTML = html;
+}
 
 // ── ENGINE API (the only surface the chapter modules may use; see project/DATE_CONTRACT.md) ──
 const movementLocks = new Set();
@@ -667,6 +689,7 @@ const engine = {
   toast(text, ms = 2600) {
     if (!toastEl) {
       toastEl = document.createElement('div');
+      toastEl.setAttribute('role', 'status'); toastEl.setAttribute('aria-live', 'polite'); toastEl.setAttribute('aria-atomic', 'true');
       toastEl.style.cssText = 'position:fixed;top:68px;left:50%;transform:translateX(-50%);padding:8px 20px;' +
         'background:rgba(8,6,20,.85);border:1px solid rgba(220,185,90,.35);border-radius:18px;color:#F5D878;' +
         'font:14px Nunito,sans-serif;z-index:30;pointer-events:none;transition:opacity .4s;opacity:0';
@@ -710,7 +733,7 @@ function openSight(i) {
   document.getElementById('panel-title').textContent = s.name;
   document.getElementById('panel-text').textContent  = s.text;
   document.getElementById('panel-source').textContent = s.src;
-  panel.classList.add('open');
+  openPanel(panel, 'open', 'panel-close');
 }
 
 // Key routing: story UI first (dialogue), then photo mode, then the default world actions.
@@ -719,7 +742,7 @@ addEventListener('keydown', e => {
   if (editingKey(e)) return;
   const k = e.key.toLowerCase();
   if (title.handleKey(k, e)) { e.preventDefault(); return; }       // title / pause menu owns everything while open
-  if (e.repeat) {                                                   // ignore auto-repeat, but keep native defaults suppressed
+  if (e.repeat && !['q','r','pageup','pagedown','+','=','-'].includes(k)) {   // ignore auto-repeat (camera keys excepted)
     if ([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) e.preventDefault();
     return;
   }
@@ -731,12 +754,19 @@ addEventListener('keydown', e => {
     }
     // Check plaque
     if (player.pos.distanceTo(plaqueMesh.position) < 5) {
-      daysPopup.classList.add('visible'); return;
+      openPanel(daysPopup, 'visible', 'days-popup-close'); return;
     }
   }
-  if (k === 'escape') {
-    panel.classList.remove('open');
-    daysPopup.classList.remove('visible');
+  if (k === 'escape') closePanels();
+  // Keyboard camera (a11y): Q/R orbit, PageUp/PageDown pitch, +/- zoom. Avoids WASD and module keys.
+  if (!engine.isLocked() && ['q','r','pageup','pagedown','+','=','-'].includes(k)) {
+    if (k === 'q') player.yaw += .12;
+    if (k === 'r') player.yaw -= .12;
+    if (k === 'pageup') pitch = Math.min(1.15, pitch + .08);
+    if (k === 'pagedown') pitch = Math.max(.08, pitch - .08);
+    if (k === '+' || k === '=') camDist = Math.max(5, camDist - 1);
+    if (k === '-') camDist = Math.min(22, camDist + 1);
+    e.preventDefault();
   }
 });
 
@@ -854,10 +884,10 @@ function loop() {
     promptEl.style.display = 'none';
   } else if (nearestSight >= 0) {
     const s = sights[nearestSight];
-    promptEl.innerHTML = `<kbd>E</kbd> ${storyUI.promptFor(s.id) ?? `${s.icon} ${s.name}`}`;
+    setPromptHTML(`<kbd>E</kbd> ${storyUI.promptFor(s.id) ?? `${s.icon} ${s.name}`}`);
     promptEl.style.display = 'block';
   } else if (plaqueDist < 5) {
-    promptEl.innerHTML = `<kbd>E</kbd> ✦ 查看纪念铭牌`;
+    setPromptHTML(`<kbd>E</kbd> ✦ 查看纪念铭牌`);
     promptEl.style.display = 'block';
   } else {
     promptEl.style.display = 'none';
