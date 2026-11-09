@@ -27,6 +27,9 @@ keys, and calls each module's `update(dt, et)` every frame. Modules only receive
 | `lock(id)`, `unlock(id)`, `isLocked()` | freeze player movement while any lock is held |
 | `isPhotoMode()` | true while the photo overlay is open |
 | `days` | days together (the "在一起第 N 天" counter) |
+| `audio` | `{ cue(name), setMuted(bool), isMuted() }` (may be null) |
+| `cameraOverride` | assign `(dt, et) => void` to drive `camera` yourself (cinematics, free cam); set back to null to release |
+| `getCameraTarget()` | the Vector3 the default camera looks at |
 | `capture({ maxWidth, type, quality })` | renders the composer (bloom included) and returns a data URL |
 | `toast(text, ms)` | short centered notice |
 | `companion` | `{ getPosition(), getHeadPosition(), root }` from the cast module |
