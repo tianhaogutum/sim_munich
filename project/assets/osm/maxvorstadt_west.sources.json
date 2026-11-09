@@ -1,0 +1,23 @@
+{
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "retrieved_at": "2026-11-09T10:02:36Z",
+  "endpoint": "https://www.openstreetmap.org/api/0.6/map?bbox=11.57631,48.14939,11.57995,48.15211",
+  "query": "[out:json][timeout:35];(way[building](48.1493934,11.5763106,48.1521066,11.5799461);way[highway](48.1493934,11.5763106,48.1521066,11.5799461);node[natural=tree](48.1493934,11.5763106,48.1521066,11.5799461);node[amenity=bicycle_parking](48.1493934,11.5763106,48.1521066,11.5799461););out body geom;",
+  "deviation": "Overpass POST attempts: primary 502, kumi timeout, primary timeout; GET retries timeout/406. Official OSM map API succeeded. XML elements selected by same tags and converted to JSON without altering node coordinates, node refs, way IDs or tags. No hand-estimated building footprints.",
+  "reference_photos": [
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Schellingstr._9_Muenchen-4.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0",
+      "use": "Viewed only; peach/sage palette, arched windows, pale surrounds. No image shipped."
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Amalienstr._53_Muenchen-2.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0",
+      "use": "Viewed only; five-storey neo-Renaissance window rhythm, pale surrounds, metal balconies and dormers. No image shipped."
+    }
+  ],
+  "downloaded_images": []
+}
