@@ -84,6 +84,7 @@ export default {
     "continueNote": "Our day awaits",
     "help": "How to play",
     "credits": "Credits",
+    "chapter2": "Chapter 2 · A walk in the English Garden",
     "settings": "Settings",
     "choose": "Choose",
     "go": "Let's go",

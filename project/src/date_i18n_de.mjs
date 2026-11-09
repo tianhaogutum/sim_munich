@@ -84,6 +84,7 @@ export default {
     "continueNote": "Unser Tag wartet",
     "help": "Steuerung",
     "credits": "Mitwirkende",
+    "chapter2": "Kapitel 2 · Spaziergang im Englischen Garten",
     "settings": "Einstellungen",
     "choose": "Wählen",
     "go": "Los geht’s",
