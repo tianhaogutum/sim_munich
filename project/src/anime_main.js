@@ -7,6 +7,26 @@ import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass }      from 'three/addons/postprocessing/ShaderPass.js';
+import { FXAAShader }      from 'three/addons/shaders/FXAAShader.js';
+import { addAnimeArchitectureDetail } from './anime_architecture_detail.js';
+import { addAnimeEnvironmentDetail } from './anime_environment_detail.js';
+
+// Static capture contract: ?render=facade|plaza|garden. No RAF or gameplay.
+const requestedRender = new URLSearchParams(location.search).get('render');
+const renderMode = ['facade', 'plaza', 'garden'].includes(requestedRender) ? requestedRender : null;
+const STILL_TIME = 12;
+let randomSeed = 0x4c4d55;
+const random = () => {
+  if (!renderMode) return Math.random();
+  randomSeed = (Math.imul(randomSeed, 1664525) + 1013904223) >>> 0;
+  return randomSeed / 4294967296;
+};
+if (renderMode) {
+  for (const id of ['hud', 'panel', 'days-popup', 'photo-overlay', 'photo-btn']) {
+    document.getElementById(id).style.display = 'none';
+  }
+}
 
 // ── PERSONAL CONFIG ─────────────────────────────────────────────────────────
 const START_DATE    = new Date('2024-03-15');   // ← 改成你们在一起的日期
@@ -24,33 +44,74 @@ const D = {
   colN:8, colH:9.2, colR:0.48,       // entrance columns [E]
   winW:1.55, winH:2.75, winHgf:3.8,  // upper / ground floor windows [E]
   winBay:4.1, gfH:5.0, ufH:6.0,      // bay spacing, floor heights [E]
-  fnH:8.20, fnR:5.0, fnX:35, fnY:-48,// fountain [C=confirmed]
+  fnH:8.20, fnR:5.0, fnX:35, fnZ:48,// fountain [C=confirmed]
   plW:200, plD:80,                    // plaza [E from OSM]
   roadX:112, roadW:33,               // Ludwigstraße [C]
 };
 
 // ── RENDERER ────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('c');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+// Postprocessing uses its own antialiasing. Bound render-target memory on
+// Retina/4K screens while retaining detail on ordinary laptop displays.
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:false });
+function renderPixelRatio() {
+  if (renderMode) {
+    return Math.min(2, Math.sqrt(4_000_000 / Math.max(1, innerWidth * innerHeight)));
+  }
+  return Math.min(window.devicePixelRatio || 1, 1.75,
+    Math.sqrt(3_000_000 / Math.max(1, innerWidth * innerHeight)));
+}
+renderer.setPixelRatio(renderPixelRatio());
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace   = THREE.SRGBColorSpace;
 renderer.toneMapping        = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.2;
+renderer.toneMappingExposure = 1.04;
 
 const scene  = new THREE.Scene();
+// Distant streets dissolve into the same pale blue used at the sky horizon.
+scene.fog = new THREE.Fog(0xc6d9df, 190, 500);
+const sunDirection = new THREE.Vector3(-105, 105, 85).normalize();
 const camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, 0.5, 900);
 
 // ── POST-PROCESSING ──────────────────────────────────────────────────────────
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(
-  new THREE.Vector2(innerWidth, innerHeight), 0.5, 0.7, 0.80
+  new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.45, 1.15
 );
 composer.addPass(bloom);
+// Grade in linear space; OutputPass alone handles tone mapping and sRGB.
+const grade = new ShaderPass({
+  uniforms: { tDiffuse: { value: null } },
+  vertexShader: `varying vec2 vUv;
+    void main() { vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: `uniform sampler2D tDiffuse; varying vec2 vUv;
+    void main() {
+      vec4 texel = texture2D(tDiffuse, vUv);
+      vec3 color = texel.rgb;
+      float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+      float shade = 1.0 - smoothstep(0.08, 0.8, luma);
+      color *= mix(vec3(1.025, 1.0, 0.975), vec3(0.96, 0.985, 1.04), shade);
+      color = mix(vec3(luma), color, 1.045);
+      vec2 edge = vUv * (1.0 - vUv);
+      float vignette = 1.0 - 0.075 * (1.0 - pow(16.0 * edge.x * edge.y, 0.35));
+      gl_FragColor = vec4(max(color * vignette, vec3(0.0)), texel.a);
+    }`,
+});
+composer.addPass(grade);
 composer.addPass(new OutputPass());
+// FXAA acts on the final display colors, including outlines and bloom edges.
+const antialias = new ShaderPass(FXAAShader);
+composer.addPass(antialias);
+function updateAntialiasResolution() {
+  const ratio = renderer.getPixelRatio();
+  antialias.uniforms.resolution.value.set(
+    1 / Math.max(1, innerWidth * ratio), 1 / Math.max(1, innerHeight * ratio));
+}
+updateAntialiasResolution();
 
 // ── TOON GRADIENT MAPS ───────────────────────────────────────────────────────
 function toonGrad(n) {                    // n evenly-spaced greyscale steps
@@ -72,23 +133,23 @@ const T  = (c, g=G4) => new THREE.MeshToonMaterial({ color:c, gradientMap:g });
 const TB = (c, g=G4) => new THREE.MeshToonMaterial({ color:c, gradientMap:g, side:THREE.DoubleSide });
 
 const mat = {
-  facade:   T(0xF2E6C0),
-  facade2:  T(0xE6D4A4),
-  column:   T(0xFCF4E4),
-  roof:     T(0x352816),
-  parapet:  T(0xDACCA0),
-  winGlass: new THREE.MeshToonMaterial({ color:0x7ABEE0, gradientMap:G4,
-              transparent:true, opacity:.78, emissive:0x1A3850, emissiveIntensity:.35 }),
+  facade:   T(0xe7dfce),
+  facade2:  T(0xd9ccb4),
+  column:   T(0xf3ecdd),
+  roof:     T(0x5c5b56),
+  parapet:  T(0xcbbfa7),
+  winGlass: new THREE.MeshStandardMaterial({ color:0x3d7187, roughness:.28, metalness:.22,
+              emissive:0x172d3b, emissiveIntensity:.22 }),
   winFrame: T(0xC4AC6A),
   door:     T(0x2A1808),
-  steps:    T(0xBAAE8C),
-  plaza:    T(0xC6BA9A),
+  steps:    T(0xb5aa92),
+  plaza:    T(0xbcb39e),
   road:     T(0x3E4246),
   roadMk:   T(0xC0BAA8),
   sidewalk: T(0xA8A494),
-  fountain: T(0x8888A8),
-  water:    new THREE.MeshToonMaterial({ color:0x48B8E4, gradientMap:G3,
-              transparent:true, opacity:.70, emissive:0x082838, emissiveIntensity:.5 }),
+  fountain: T(0x8a9293),
+  water:    new THREE.MeshToonMaterial({ color:0x5ca7af, gradientMap:G3,
+              transparent:true, opacity:.86, emissive:0x102b31, emissiveIntensity:.25 }),
   trunk:    T(0x7A5420, G3),
   foliageA: T(0x48C438, G3),
   foliageB: T(0x38A828, G3),
@@ -146,34 +207,63 @@ function archGeo(w, h, segs=10) {
 }
 
 // ── SKY DOME ─────────────────────────────────────────────────────────────────
-// Custom anime gradient sky: deep azure at zenith → warm peach at horizon
+// A single background draw: layered painted clouds, a warm sun disc and
+// atmospheric horizon. No transparent cloud sorting or large texture downloads.
 const skySphere = new THREE.Mesh(
   new THREE.SphereGeometry(700, 32, 16),
   new THREE.ShaderMaterial({
     side: THREE.BackSide,
+    depthWrite: false,
     uniforms: {
-      topCol:  { value: new THREE.Color(0x1A3280) },
-      midCol:  { value: new THREE.Color(0x4A90E8) },
-      horCol:  { value: new THREE.Color(0xFFD8A8) },
-      fogCol:  { value: new THREE.Color(0xC0D8F0) },
+      topCol: { value: new THREE.Color(0x397dbb) },
+      midCol: { value: new THREE.Color(0x87b5d3) },
+      horCol: { value: new THREE.Color(0xf3dfca) },
+      fogCol: { value: new THREE.Color(0xc6d9df) },
+      sunDir: { value: sunDirection },
+      time: { value: 0 },
     },
-    vertexShader: `varying float vY; varying vec3 vPos;
-      void main(){ vY=normalize(position).y; vPos=position;
-        gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+    vertexShader: `varying vec3 vDirection;
+      void main() { vDirection = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: `
-      uniform vec3 topCol,midCol,horCol,fogCol;
-      varying float vY;
-      void main(){
-        float t  = smoothstep(0.0,  0.7, vY);
-        float h  = smoothstep(-0.1, 0.25, vY);
-        float f  = smoothstep(0.0,  0.12, vY);
-        vec3 col = mix(horCol, midCol, h);
-        col      = mix(col, topCol, t*t);
-        col      = mix(fogCol, col, f);
-        gl_FragColor = vec4(col, 1.0);
+      uniform vec3 topCol, midCol, horCol, fogCol, sunDir;
+      uniform float time;
+      varying vec3 vDirection;
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float noise(vec2 p) {
+        vec2 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x),
+                   mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+      }
+      void main() {
+        vec3 direction = normalize(vDirection);
+        float height = direction.y;
+        vec3 color = mix(horCol, midCol, smoothstep(0.0, 0.28, height));
+        color = mix(color, topCol, smoothstep(0.2, 0.95, height));
+        color = mix(fogCol, color, smoothstep(-0.04, 0.12, height));
+        float sunFacing = max(dot(direction, sunDir), 0.0);
+        color += vec3(1.0, 0.69, 0.36) * pow(sunFacing, 24.0) * 0.22;
+        // Broad, gently drifting shapes with distinct cream and blue-grey bands.
+        if (height > 0.025) {
+          vec2 p = direction.xz / (height + 0.28) * 3.6;
+          p += vec2(time * 0.006, time * 0.002);
+          float cloud = noise(p) * 0.62 + noise(p * 2.1) * 0.26
+                      + noise(p * 4.3) * 0.12;
+          float coverage = smoothstep(0.55, 0.64, cloud)
+                         * smoothstep(0.025, 0.18, height);
+          vec3 cloudColor = mix(vec3(0.51, 0.63, 0.73), vec3(0.95, 0.91, 0.82),
+                               smoothstep(0.58, 0.72, cloud));
+          color = mix(color, cloudColor, coverage * 0.92);
+        }
+        float disc = smoothstep(0.99955, 0.9998, sunFacing);
+        color = mix(color, vec3(3.2, 2.5, 1.6), disc);
+        gl_FragColor = vec4(color, 1.0);
       }`,
   })
 );
+skySphere.renderOrder = -100;
+skySphere.frustumCulled = false;
 scene.add(skySphere);
 
 // ── GROUND + ROADS ───────────────────────────────────────────────────────────
@@ -181,10 +271,10 @@ scene.add(skySphere);
 box([0,-0.15,0],[600,0.3,600], mat.plaza, true, false);
 
 // Plaza cobblestone
-box([0,0,-(D.plD*.5)], [D.plW, 0.06, D.plD], mat.plaza, true, false);
+box([0,0,D.plD*.5], [D.plW, 0.06, D.plD], mat.plaza, true, false);
 
 // Sidewalk strips
-box([0,0.04,-(D.plD+4)], [D.plW+40, 0.08, 8], mat.sidewalk, false, false);
+box([0,0.04,D.plD+4], [D.plW+40, 0.08, 8], mat.sidewalk, false, false);
 
 // Ludwigstraße — runs N-S east of building
 const roadCx = D.roadX + D.roadW*.5;
@@ -197,18 +287,8 @@ box([roadCx - D.roadW*.5+2.5, .065, 0], [2.2, .03, 300], mat.sidewalk, false, fa
 box([roadCx + D.roadW*.5-2.5, .065, 0], [2.2, .03, 300], mat.sidewalk, false, false);
 
 // ── LMU MAIN BUILDING ────────────────────────────────────────────────────────
-// Coordinate convention:
-//   +X = East,  +Y = North (into building), +Z = Up
-//   Main facade is at Y=0, facing -Y (south, toward plaza)
-//   Plaza is south of building (negative Z in viewer space = -Y in world)
-//   NB: Three.js default camera looks toward -Z; we orient plaza along -Y here.
-//
-// Actually: standard Three.js setup — let's use X/Z for ground plane, Y for up.
-// Buildings face -Z (south), plaza is toward -Z, player starts at Z > 0.
-// Let me restate:
-//   +X = East, +Z = South (toward plaza = toward viewer), +Y = Up
-//   Facade face at Z=0, building extends north (Z < 0).
-//   Player starts around Z = 80 (south of building).
+// X/Z ground plane, Y up. The facade faces +Z; the building extends -Z.
+// Public plaza, approach and starting player are all in front, at positive Z.
 
 function buildingBox(pos, sz, m) { return box(pos, sz, m, true, true); }
 
@@ -225,21 +305,36 @@ buildingBox([ EX, D.bH*.5, -(D.bDepth*.5 - D.eProj*.5)], [D.eW, D.bH, D.bDepth+D
 // Central risalit (taller, projects furthest forward)
 buildingBox([0, D.cH*.5, -(D.bDepth*.5 - D.cProj*.5)], [D.cW, D.cH, D.bDepth+D.cProj], mat.facade2);
 
-// Belt cornice (separates ground floor from upper)
-const bcZ = -(D.bDepth*.5 - D.cProj*.5);
-box([0, D.gfH+0.28, bcZ], [D.bW, 0.56, D.bDepth+D.cProj+0.1], mat.parapet, false, false);
+// Cornices follow each facade plane instead of bridging empty space.
+for (const sign of [-1, 1]) {
+  for (const [x, width, front] of [[sign * 43, 50, 0], [sign * EX, D.eW, D.eProj]]) {
+    box([x, D.gfH+.28, front+.12], [width, .56, .42], mat.parapet, false, false);
+    box([x, D.bH+.38, front+.12], [width+.4, .76, .65], mat.parapet, false, false);
+  }
+}
+box([0, D.bH+1.2, -D.bDepth*.6], [D.bW+1, 1.6, D.bDepth*.55], mat.parapet, false, false);
+box([0, D.cH+.38, D.cProj+.18], [D.cW+2, .76, 1.1], mat.parapet, false, false);
+// True triangular tympanum, with shallow extruded stone depth.
+const pedimentShape = new THREE.Shape();
+pedimentShape.moveTo(-19, 0); pedimentShape.lineTo(19, 0);
+pedimentShape.lineTo(0, 6); pedimentShape.closePath();
+const pediment = new THREE.Mesh(new THREE.ExtrudeGeometry(pedimentShape,
+  { depth:.85, bevelEnabled:false }), mat.facade2);
+pediment.position.set(0, D.cH+.76, D.cProj-.3);
+pediment.castShadow = pediment.receiveShadow = true;
+scene.add(pediment);
 
-// Cornice + parapet on wings
-box([0, D.bH+0.38, -(D.bDepth*.5)], [D.bW+2, 0.76, D.bDepth+.4], mat.parapet, false, false);
-box([0, D.bH+0.76+0.8, -(D.bDepth*.5)], [D.bW+2, 1.6, D.bDepth*.55], mat.parapet, false, false);
-
-// Central pediment
-box([0, D.cH+0.38, -(D.bDepth*.5-D.cProj*.5)], [D.cW+2, 0.76, D.bDepth*.4+D.cProj], mat.parapet, false, false);
-box([0, D.cH+3.5,  .3], [D.cW*.78, 5.5, 1.0], mat.facade2, true, true);  // pediment triangle (approx)
-
-// Roof planes
-box([0, D.bH+2.7, -(D.bDepth*.65)], [D.bW, 0.28, D.bDepth*.4], mat.roof, false, false);
-box([0, D.cH+2.0, -(D.bDepth*.4)],  [D.cW, 0.28, D.bDepth*.5], mat.roof, false, false);
+// Roofs meet the parapets; the central roof follows the triangular pediment.
+box([0, D.bH+2.14, -(D.bDepth*.65)], [D.bW, 0.28, D.bDepth*.4], mat.roof, false, false);
+box([0, D.cH+.38, -(D.bDepth-D.cProj)*.5],
+  [D.cW,.76,D.bDepth+D.cProj],mat.facade2,true,false);
+const centralRoof = new THREE.Mesh(new THREE.ExtrudeGeometry(pedimentShape,
+  { depth:D.bDepth+D.cProj-.3, bevelEnabled:false }),mat.roof);
+centralRoof.position.set(0,D.cH+.76,-D.bDepth);
+centralRoof.castShadow = centralRoof.receiveShadow = true;
+scene.add(centralRoof);
+box([0,D.cH+6.83,-(D.bDepth-D.cProj)*.5],
+  [.22,.14,D.bDepth+D.cProj],mat.roof,false,false);
 
 // ── COLUMNS (entrance colonnade) ─────────────────────────────────────────────
 const colSpan  = D.cW * 0.74;
@@ -264,15 +359,15 @@ const entZ = D.cProj + 0.1;
 // Door arch (using ShapeGeometry flat panel on facade)
 const entGeo = archGeo(7.0, 10.0, 12);
 const entMesh = new THREE.Mesh(entGeo, mat.door);
-entMesh.rotation.x = -Math.PI*.5;   // lay in XZ plane, normal = -Z (faces south)
-entMesh.rotation.z =  Math.PI;      // flip so arch opens upward
-entMesh.position.set(0, 0, entZ + 0.1);
+// ShapeGeometry already faces +Z and its arch rises along +Y.
+entMesh.position.set(0, 1.6, entZ + 0.1);
 scene.add(entMesh); ol(entMesh, 0.04);
 
 // Entrance steps (4 steps)
 for (let s = 0; s < 5; s++) {
   const sw = 16 + s*3;
-  box([0, s*.32+.16, entZ + s*1.1 + 0.6], [sw, .32, 1.1], mat.steps);
+  const height = (5-s)*.32;
+  box([0, height*.5, entZ + s*1.1 + 0.6], [sw, height, 1.1], mat.steps);
 }
 
 // ── WINDOWS (InstancedMesh) ──────────────────────────────────────────────────
@@ -280,45 +375,24 @@ const wGeo = archGeo(D.winW, D.winH, 8);
 const wGeoGF = archGeo(D.winW*1.35, D.winHgf, 8);
 const dummy = new THREE.Object3D();
 
-// Rotation to place arch window on south-facing facade (Z plane)
-// ShapeGeo is in XY plane (normal = +Z).
-// We want normal = -Z (south-facing). Rotate Y by PI.
-const WIN_ROT_X = 0;
-const WIN_ROT_Y = Math.PI;   // flip to face -Z
-const WIN_ROT_Z = 0;
-
-// Collect all window positions
-const winPositions = [];  // {x, z_sill, isCentral}
-const gfPositions  = [];
-
-// Left and right wing windows
-const wingSegs = [
-  { xFrom: -(D.bW*.5), xTo: -(D.cW*.5), dir: 1 },
-  { xFrom:  (D.cW*.5), xTo:  (D.bW*.5), dir: 1 },
-];
-for (const seg of wingSegs) {
-  let x = seg.xFrom + D.winBay*.5 + (seg.dir === 1 ? D.eW + 2 : 0);
-  const xEnd = seg.xTo - D.eW - 2;
-  while (x < xEnd - .5) {
-    // Upper floors: 3 rows
-    for (let row = 0; row < 3; row++) {
-      const zSill = D.gfH + 0.6 + row * D.ufH;
-      winPositions.push({ x, zSill });
-    }
-    // Ground floor: every other bay
-    if (Math.round(x / D.winBay) % 2 === 0) {
-      gfPositions.push({ x, zSill: 0.9 });
-    }
-    x += D.winBay;
+// Shared facade records also drive the ledges and mullions in the detail module.
+const winPositions = [], gfPositions = [];
+for (const sign of [-1, 1]) {
+  for (let bay = 0; bay < 11; bay++) {
+    const x = sign * (21.5 + bay * D.winBay);
+    for (let row = 0; row < 3; row++) winPositions.push({ x, zSill:5.9+row*6, facadeZ:.08 });
+    gfPositions.push({ x, zSill:.9, facadeZ:.08 });
   }
-}
-// Central section: flanking entrance (skip entrance zone)
-for (const sx of [-1, 1]) {
-  for (let bay = 0; bay < 2; bay++) {
-    const wx = sx * (D.winBay * (bay + 1.5));
+  for (const offset of [-3.6, 0, 3.6]) {
+    const x = sign * EX + offset;
+    for (let row = 0; row < 3; row++) winPositions.push({ x, zSill:5.9+row*6, facadeZ:D.eProj+.08 });
+    gfPositions.push({ x, zSill:.9, facadeZ:D.eProj+.08 });
+  }
+  for (let bay = 0; bay < 3; bay++) {
+    const x = sign * (5.8 + bay * 4.2);
     for (let row = 0; row < 3; row++) {
-      const zSill = D.gfH + 0.6 + row * D.ufH;
-      winPositions.push({ x: wx, zSill, ctr: true });
+      if (row === 0 && bay === 0) continue; // Keep the tall portal clear.
+      winPositions.push({ x, zSill:6+row*6, facadeZ:D.cProj+.08 });
     }
   }
 }
@@ -330,15 +404,14 @@ const winMeshGlass = new THREE.InstancedMesh(wGeo, mat.winGlass, winCount);
 winMeshFrame.castShadow = false;
 winMeshGlass.castShadow = false;
 
-winPositions.forEach(({ x, zSill, ctr }, i) => {
-  const facadeZ = ctr ? D.cProj + 0.06 : 0.08;
+winPositions.forEach(({ x, zSill, facadeZ }, i) => {
   dummy.position.set(x, zSill, facadeZ);
-  dummy.rotation.set(WIN_ROT_X, WIN_ROT_Y, WIN_ROT_Z);
+  dummy.rotation.set(0, 0, 0);
   dummy.scale.set(1, 1, 0.14);
   dummy.updateMatrix();
   winMeshFrame.setMatrixAt(i, dummy.matrix);
 
-  dummy.position.set(x, zSill, facadeZ + 0.08);
+  dummy.position.set(x, zSill+.13, facadeZ + 0.08);
   dummy.scale.set(0.88, 0.88, 0.08);
   dummy.updateMatrix();
   winMeshGlass.setMatrixAt(i, dummy.matrix);
@@ -352,13 +425,13 @@ const gfCount = gfPositions.length;
 if (gfCount > 0) {
   const gfFrame = new THREE.InstancedMesh(wGeoGF, mat.winFrame, gfCount);
   const gfGlass = new THREE.InstancedMesh(wGeoGF, mat.winGlass, gfCount);
-  gfPositions.forEach(({ x, zSill }, i) => {
-    dummy.position.set(x, zSill, 0.08);
-    dummy.rotation.set(0, Math.PI, 0);
+  gfPositions.forEach(({ x, zSill, facadeZ }, i) => {
+    dummy.position.set(x, zSill, facadeZ);
+    dummy.rotation.set(0, 0, 0);
     dummy.scale.set(1, 1, 0.18);
     dummy.updateMatrix();
     gfFrame.setMatrixAt(i, dummy.matrix);
-    dummy.position.set(x, zSill, 0.15);
+    dummy.position.set(x, zSill+.15, facadeZ+.08);
     dummy.scale.set(0.86, 0.86, 0.1);
     dummy.updateMatrix();
     gfGlass.setMatrixAt(i, dummy.matrix);
@@ -369,32 +442,39 @@ if (gfCount > 0) {
 }
 
 // ── ADJACENT BUILDINGS ────────────────────────────────────────────────────────
-for (const sx of [-1,1]) {
-  const ax = sx * (D.bW*.5 + 32);
-  buildingBox([ax, 16, -(D.bDepth*.5+4)], [48, 32, 40], mat.adjacent);
-  buildingBox([ax+sx*52, 12, -(D.bDepth*.5+6)], [36, 24, 44], mat.adjacent);
+const contextBuildings = [-1, 1].flatMap(side => [
+  { x:side*112, z:-15, width:48, height:24, depth:40 },
+  { x:side*164, z:-17, width:36, height:21, depth:44 },
+]);
+for (const building of contextBuildings) {
+  const { x, z, width, height, depth } = building;
+  buildingBox([x, height/2, z], [width, height, depth], mat.adjacent);
 }
 
 // ── FOUNTAINS ────────────────────────────────────────────────────────────────
+const bowlProfile = [[.38,0],[.5,.25],[.85,.55],[1.35,.85],[1.8,1.1],
+  [1.8,1.15],[1.68,1.15],[1.26,.94],[.74,.65],[.38,.45]];
+const bowlGeometry = new THREE.LatheGeometry(bowlProfile.map(p => new THREE.Vector2(...p)),48);
 for (const sx of [-1, 1]) {
-  const fx = sx * D.fnX, fz = D.fnY;
+  const fx = sx * D.fnX, fz = D.fnZ;
   cyl([fx, .45, fz], D.fnR,   .9,  28, mat.fountain);   // basin
-  cyl([fx, .9,  fz], D.fnR-.4, .05, 28, mat.water);      // water surface
-  cyl([fx, D.fnH*.5, fz], .38, D.fnH, 16, mat.fountain); // shaft [C: 8.20m]
-  cyl([fx, D.fnH+.45, fz], 1.8, .9,  20, mat.fountain);  // top bowl
+  cyl([fx, .9,  fz], D.fnR-.4, .05, 48, mat.water, false, false);      // water surface
+  cyl([fx, 4.15, fz], .32, 6.5, 24, mat.fountain, true, false);
+  cyl([fx, 1.16, fz], .64, .48, 24, mat.fountain, true, false);
+  cyl([fx, 1.5, fz], .46, .25, 24, mat.fountain, true, false);
+  cyl([fx, 7.35, fz], .5, .24, 24, mat.fountain, true, false);
+  const bowl = new THREE.Mesh(bowlGeometry,mat.fountain);
+  bowl.position.set(fx,7.5,fz);
+  bowl.castShadow = bowl.receiveShadow = true;
+  scene.add(bowl);
+  cyl([fx, 8.57, fz], 1.65, .025, 48, mat.water, false, false);
   cyl([fx, D.fnH+.95, fz], .2,  .5,  12, mat.fountain);  // finial
 }
 
 // ── TREES ────────────────────────────────────────────────────────────────────
-const treePts = [
-  // Rows flanking plaza axis
-  ...[...Array(7)].map((_,i) => [-54+i*18, -16]),
-  ...[...Array(7)].map((_,i) => [-54+i*18, -52]),
-  ...[...Array(5)].map((_,i) => [-44+i*22, -72]),
-  // Lateral edges
-  ...[...Array(3)].map((_,i) => [-90, -20+i*22]),
-  ...[...Array(3)].map((_,i) => [ 90, -20+i*22]),
-];
+const treePts = [-1, 1].flatMap(sign => [
+  ...[16, 38, 62].map(z => [sign*84, z]), [sign*68, 82],
+]);
 
 // InstancedMesh for trunks and crowns
 const trunkGeo  = new THREE.CylinderGeometry(.38,.48,5.5,8);
@@ -404,17 +484,20 @@ const crownGeoB = new THREE.SphereGeometry(3.0,10,7);
 const trunkInst  = new THREE.InstancedMesh(trunkGeo,  mat.trunk,   treePts.length);
 const crownInstA = new THREE.InstancedMesh(crownGeoA, mat.foliageA, treePts.length);
 const crownInstB = new THREE.InstancedMesh(crownGeoB, mat.foliageB, treePts.length);
+trunkInst.name = 'base-tree-trunks';
+crownInstA.name = 'base-tree-crown-a';
+crownInstB.name = 'base-tree-crown-b';
 [trunkInst,crownInstA,crownInstB].forEach(m => { m.castShadow=true; scene.add(m); });
 
 const crownOffsets = treePts.map((_,i) => ({
-  ox:(Math.random()-.5)*1.2, oz:(Math.random()-.5)*1.2,
+  ox:(random()-.5)*1.2, oz:(random()-.5)*1.2,
   h:4.5+(i%4)*.5, r:4.0+(i%3)*.4,
 }));
 
 treePts.forEach(([tx,tz], i) => {
   const { ox, oz, h } = crownOffsets[i];
   dummy.position.set(tx, 2.75, tz);
-  dummy.rotation.set(0, Math.random()*Math.PI*2, 0);
+  dummy.rotation.set(0, random()*Math.PI*2, 0);
   dummy.scale.setScalar(1);
   dummy.updateMatrix();
   trunkInst.setMatrixAt(i, dummy.matrix);
@@ -432,63 +515,86 @@ treePts.forEach(([tx,tz], i) => {
 [trunkInst,crownInstA,crownInstB].forEach(m=>m.instanceMatrix.needsUpdate=true);
 
 // ── STREET FURNITURE ─────────────────────────────────────────────────────────
-const benchXs = [-50,-30,-10,10,30,50];
-for (const bx of benchXs) {
-  box([bx, .42, -22], [2.2,.45,.6], mat.bench);
-  box([bx, .82, -22.2], [2.2,.45,.12], mat.bench, false, false);
+const benchXs = [-64,-40,-22,22,40,64];
+const benchWood = new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),mat.bench,benchXs.length*6);
+const benchIron = new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),mat.lamp,benchXs.length*4);
+benchXs.forEach((x,index) => {
+  for (let slat=0; slat<3; slat++) {
+    dummy.position.set(x,.5,21.78+slat*.23);
+    dummy.rotation.set(0,0,0); dummy.scale.set(2.4,.09,.18); dummy.updateMatrix();
+    benchWood.setMatrixAt(index*6+slat,dummy.matrix);
+    dummy.position.set(x,.76+slat*.18,21.66);
+    dummy.scale.set(2.4,.12,.08); dummy.updateMatrix();
+    benchWood.setMatrixAt(index*6+3+slat,dummy.matrix);
+  }
+  for (let side=0; side<2; side++) {
+    dummy.position.set(x+(side-.5)*1.8,.26,22);
+    dummy.scale.set(.10,.48,.62); dummy.updateMatrix();
+    benchIron.setMatrixAt(index*4+side*2,dummy.matrix);
+    dummy.position.set(x+(side-.5)*1.8,.72,21.65);
+    dummy.scale.set(.08,.8,.08); dummy.updateMatrix();
+    benchIron.setMatrixAt(index*4+side*2+1,dummy.matrix);
+  }
+});
+for (const mesh of [benchWood,benchIron]) {
+  mesh.instanceMatrix.needsUpdate=true; mesh.castShadow=mesh.receiveShadow=true;
+  mesh.computeBoundingSphere(); scene.add(mesh);
 }
 // Lamps
 const lampXs = [-70,-50,-30,30,50,70];
 for (const lx of lampXs) {
-  cyl([lx, 3.5, -20], .09, 7, 8, mat.lamp);
-  cyl([lx, 7.2, -20], .28, .45, 8, mat.lampGlow);
-  // Point light per lamp (subtle)
-  const pl = new THREE.PointLight(0xFFD070, 8, 22, 2);
-  pl.position.set(lx, 7.2, -20);
-  scene.add(pl);
+  cyl([lx, 3.5, 20], .09, 7, 8, mat.lamp);
+  cyl([lx, 7.2, 20], .28, .45, 8, mat.lampGlow);
+  // Emissive lanterns catch bloom; daylight needs no six extra per-pixel lights.
 }
 
 // ── SAKURA PARTICLE SYSTEM ───────────────────────────────────────────────────
-const PETAL_COUNT = 680;
+const PETAL_COUNT = 420;
+const DARK_PETAL_COUNT = Math.floor(PETAL_COUNT * .3);
 const petalShape = new THREE.Shape();
 petalShape.ellipse(0, 0, .28, .16, 0, Math.PI*2, false, 0);
 const petalGeoBase = new THREE.ShapeGeometry(petalShape, 6);
-const sakuraInst = new THREE.InstancedMesh(petalGeoBase, mat.sakura, PETAL_COUNT);
-const sakuraDInst = new THREE.InstancedMesh(petalGeoBase, mat.sakuraD, Math.floor(PETAL_COUNT*.3));
+const sakuraInst = new THREE.InstancedMesh(petalGeoBase, mat.sakura, PETAL_COUNT - DARK_PETAL_COUNT);
+const sakuraDInst = new THREE.InstancedMesh(petalGeoBase, mat.sakuraD, DARK_PETAL_COUNT);
 sakuraInst.castShadow = false;
 sakuraDInst.castShadow = false;
 scene.add(sakuraInst, sakuraDInst);
+// Animated matrices leave the initial bounds; these small batches stay visible.
+for (const mesh of [sakuraInst, sakuraDInst]) {
+  mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  mesh.frustumCulled = false;
+}
 
 const petals = Array.from({ length: PETAL_COUNT }, (_, i) => ({
-  x: (Math.random()-.5)*220,
-  y: Math.random()*28 + 3,
-  z: (Math.random()-.5)*120 - 20,
-  vx: (Math.random()-.5)*.08,
-  vy: -(Math.random()*.22+.10),
-  vz: (Math.random()-.5)*.06,
-  rx: Math.random()*Math.PI*2,
-  ry: Math.random()*Math.PI*2,
-  rz: Math.random()*Math.PI*2,
-  vrx: Math.random()*.025, vry: Math.random()*.018, vrz: Math.random()*.012,
-  phase: Math.random()*Math.PI*2,
-  dark: i < PETAL_COUNT*.3,
+  x: (random()-.5)*220,
+  y: random()*28 + 3,
+  z: random()*90 + 5,
+  vx: (random()-.5)*.08,
+  vy: -(random()*.22+.10),
+  vz: (random()-.5)*.06,
+  rx: random()*Math.PI*2,
+  ry: random()*Math.PI*2,
+  rz: random()*Math.PI*2,
+  vrx: random()*.025, vry: random()*.018, vrz: random()*.012,
+  phase: random()*Math.PI*2,
+  dark: i < DARK_PETAL_COUNT,
 }));
 
 // ── SIGHTSEEING POINTS ────────────────────────────────────────────────────────
 const sights = [
-  { pos: new THREE.Vector3(0, 1, 5),
+  { pos: new THREE.Vector3(0, 1, 10),
     icon:'🏛', name:'LMU 主入口 · Haupteingang',
     text:'这座入口建于 1835–1840 年，由建筑师 Friedrich von Gärtner 设计，融合了罗马式圆拱风格（Rundbogenstil）。\n中央入口前的 8 根廊柱高约 9.2 米，是整个立面最具辨识度的标志。',
     src:'来源：LMU 官方导览 · lmu.de' },
-  { pos: new THREE.Vector3(0, 1, -55),
+  { pos: new THREE.Vector3(0, 1, 55),
     icon:'✉', name:'白玫瑰纪念地 · Weiße Rose',
     text:'1943 年，大学生索菲·朔尔和汉斯·朔尔在此散发反纳粹传单。\n主楼前的广场以他们的名字命名：Geschwister-Scholl-Platz。',
     src:'来源：de.wikipedia.org/wiki/Weiße_Rose' },
-  { pos: new THREE.Vector3(35, 1, -46),
+  { pos: new THREE.Vector3(35, 1, 55),
     icon:'⛲', name:'喷泉 · Brunnen',
     text:'广场上两座喷泉设计于 1842–1844 年，同样出自 Friedrich von Gärtner 之手。\n每根喷泉柱高 8.20 米，水盆直径约 10 米。',
     src:'来源：de.wikipedia.org/wiki/Geschwister-Scholl-Platz_(München)' },
-  { pos: new THREE.Vector3(0, 1, -75),
+  { pos: new THREE.Vector3(0, 1, 75),
     icon:'💌', name:'我们的广场',
     text:'这里是我们的小世界。\n每一次散步，每一个清晨，每一次牵手，\n都留在了这条 Ludwigstraße 和这座主楼之间。',
     src:'来源：我们 ♡' },
@@ -511,28 +617,40 @@ const plaqueMesh = new THREE.Mesh(
   new THREE.BoxGeometry(2.5, 1.2, .15),
   new THREE.MeshToonMaterial({ color:0xE8D0A0, gradientMap:G4, emissive:0xF0C060, emissiveIntensity:.25 })
 );
-plaqueMesh.position.set(10, .8, 5.5);
+plaqueMesh.position.set(17, .8, 8.8);
 scene.add(plaqueMesh);
 
 // ── LIGHTING ─────────────────────────────────────────────────────────────────
-// Anime-style: warm directional + cool sky fill + ambient
-const sun = new THREE.DirectionalLight(0xFFF4E0, 3.8);
-sun.position.set(-60, 80, 60);
+// Warm key and cool sky fill preserve readable cel bands without chalky whites.
+const sun = new THREE.DirectionalLight(0xffe7c3, 2.65);
+sun.target.position.set(0, 0, -5);
+sun.position.copy(sunDirection).multiplyScalar(175).add(sun.target.position);
 sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.left   = -130;
-sun.shadow.camera.right  =  130;
-sun.shadow.camera.top    =  100;
-sun.shadow.camera.bottom = -20;
-sun.shadow.camera.far    =  350;
-sun.shadow.bias          = -0.0005;
-scene.add(sun);
+const shadowResolution = renderMode ? 4096 : 2048;
+sun.shadow.mapSize.set(shadowResolution, shadowResolution);
+// Cover both the entrance foreground and the planted plaza in front of it.
+sun.shadow.camera.left = -145;
+sun.shadow.camera.right = 145;
+sun.shadow.camera.top = 120;
+sun.shadow.camera.bottom = -120;
+sun.shadow.camera.near = 10;
+sun.shadow.camera.far = 360;
+// Offset enough for this broad orthographic map to avoid facade self-shadow bands.
+sun.shadow.bias = -0.00055;
+sun.shadow.normalBias = 0.20;
+scene.add(sun, sun.target);
+scene.add(new THREE.HemisphereLight(0xaacbdf, 0xb4a58b, .8));
+scene.add(new THREE.AmbientLight(0xffeee1, 0.12));
 
-const skyLight = new THREE.HemisphereLight(0x8AB8F0, 0xC8B890, 1.2);
-scene.add(skyLight);
-
-const ambLight = new THREE.AmbientLight(0xF0E8D8, 0.5);
-scene.add(ambLight);
+// Detail modules own their meshes/materials; both run after the base scene exists.
+// Their update hook is optional and always receives seconds (elapsed, delta).
+const sceneDetails = [
+  addAnimeArchitectureDetail({ THREE, scene, materials:mat, contextBuildings, windows: [
+    ...winPositions.map(p => ({ ...p, width:D.winW, height:D.winH })),
+    ...gfPositions.map(p => ({ ...p, width:D.winW*1.35, height:D.winHgf })),
+  ] }),
+  addAnimeEnvironmentDetail({ THREE, scene }),
+].filter(Boolean);
 
 // ── PLAYER ───────────────────────────────────────────────────────────────────
 const player = { pos: new THREE.Vector3(0, 0, 65), yaw: 0 };
@@ -548,8 +666,8 @@ const solids = [
 function blocked(x, z) {
   return solids.some(s => Math.abs(x-s.cx) < s.hw && Math.abs(z-s.cz) < s.hd);
 }
-addEventListener('keydown', e => { keys[e.key.toLowerCase()] = true; });
-addEventListener('keyup',   e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('keydown', e => { if (!renderMode) keys[e.key.toLowerCase()] = true; });
+addEventListener('keyup',   e => { if (!renderMode) keys[e.key.toLowerCase()] = false; });
 
 // ── CAMERA (spring-arm third-person) ─────────────────────────────────────────
 let pitch = .28, camDist = 14;
@@ -557,22 +675,24 @@ let camPos  = new THREE.Vector3(0, 14, 80);
 let camTgt  = new THREE.Vector3(0,  2, 65);
 let drag = false, lastMX = 0, lastMY = 0;
 
-canvas.addEventListener('mousedown', e => { drag=true; lastMX=e.clientX; lastMY=e.clientY; });
+canvas.addEventListener('mousedown', e => { if (renderMode) return; drag=true; lastMX=e.clientX; lastMY=e.clientY; });
 addEventListener('mouseup',   () => drag = false);
 addEventListener('mousemove', e => {
-  if (!drag) return;
+  if (renderMode || !drag) return;
   player.yaw -= (e.clientX - lastMX) * .004;
   pitch = Math.max(.08, Math.min(1.15, pitch + (e.clientY - lastMY) * .004));
   lastMX = e.clientX; lastMY = e.clientY;
 });
-addEventListener('wheel', e => camDist = Math.max(5, Math.min(22, camDist + e.deltaY*.012)));
+addEventListener('wheel', e => { if (!renderMode) camDist = Math.max(5, Math.min(22, camDist + e.deltaY*.012)); });
 
 // Touch support
 let touches = {};
 canvas.addEventListener('touchstart', e => {
+  if (renderMode) return;
   [...e.changedTouches].forEach(t => { touches[t.identifier] = { x:t.clientX, y:t.clientY }; });
 });
 canvas.addEventListener('touchmove', e => {
+  if (renderMode) return;
   e.preventDefault();
   if (e.touches.length === 1) {
     const t = e.touches[0];
@@ -597,7 +717,7 @@ let photoMode = false, nearestSight = -1;
 document.getElementById('panel-close').onclick = () => panel.classList.remove('open');
 document.getElementById('days-popup-close').onclick = () => daysPopup.classList.remove('visible');
 photoBtn.onclick = () => {
-  renderer.render(scene, camera);
+  composer.render(0);
   const a = document.createElement('a');
   a.download = `our-lmu-${new Date().toISOString().slice(0,10)}.png`;
   a.href = renderer.domElement.toDataURL('image/png'); a.click();
@@ -613,6 +733,7 @@ function openSight(i) {
 }
 
 addEventListener('keydown', e => {
+  if (renderMode) return;
   const k = e.key.toLowerCase();
   if (k === 'e') {
     if (nearestSight >= 0) { openSight(nearestSight); return; }
@@ -628,7 +749,7 @@ addEventListener('keydown', e => {
     document.getElementById('hud').classList.toggle('hidden', photoMode);
   }
   if (k === ' ' && photoMode) {
-    renderer.render(scene, camera);
+    composer.render(0);
     const a = document.createElement('a');
     a.download = `our-lmu-${new Date().toISOString().slice(0,10)}.png`;
     a.href = renderer.domElement.toDataURL('image/png'); a.click();
@@ -644,35 +765,43 @@ addEventListener('keydown', e => {
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(renderPixelRatio());
   renderer.setSize(innerWidth, innerHeight);
+  composer.setPixelRatio(renderer.getPixelRatio());
   composer.setSize(innerWidth, innerHeight);
+  updateAntialiasResolution();
+  if (renderMode) renderStill();
 });
 
 // ── ANIMATION LOOP ────────────────────────────────────────────────────────────
-const clock = new THREE.Clock();
+const clock = new THREE.Clock(false);
+let rafId = null, pageActive = true;
+let elapsed = 0;
 const compassNeedle = document.getElementById('compass-needle');
 
-function loop() {
-  requestAnimationFrame(loop);
-  const dt  = Math.min(clock.getDelta(), .05);
-  const et  = clock.elapsedTime;
+function updateAtmosphere(et, dt) {
+
+  for (const detail of sceneDetails) detail.update?.(et, dt);
+  skySphere.material.uniforms.time.value = et;
 
   // ── Sakura animation ──
+  const petalStep = dt * 60;
+  dummy.scale.setScalar(1);
   petals.forEach((p, i) => {
-    p.x += p.vx + Math.sin(et*.4 + p.phase) * .018;
-    p.y += p.vy;
-    p.z += p.vz + Math.cos(et*.3 + p.phase) * .012;
-    p.rx += p.vrx; p.ry += p.vry; p.rz += p.vrz;
+    p.x += (p.vx + Math.sin(et*.4 + p.phase) * .018) * petalStep;
+    p.y += p.vy * petalStep;
+    p.z += (p.vz + Math.cos(et*.3 + p.phase) * .012) * petalStep;
+    p.rx += p.vrx * petalStep; p.ry += p.vry * petalStep; p.rz += p.vrz * petalStep;
     if (p.y < -.5) {
-      p.y = 22 + Math.random()*12;
-      p.x = (Math.random()-.5)*220;
-      p.z = (Math.random()-.5)*120 - 20;
+      p.y = 22 + random()*12;
+      p.x = (random()-.5)*220;
+      p.z = random()*90 + 5;
     }
     dummy.position.set(p.x, p.y, p.z);
     dummy.rotation.set(p.rx, p.ry, p.rz);
     dummy.updateMatrix();
-    if (p.dark) sakuraDInst.setMatrixAt(i % Math.floor(PETAL_COUNT*.3), dummy.matrix);
-    else        sakuraInst.setMatrixAt(i, dummy.matrix);
+    if (p.dark) sakuraDInst.setMatrixAt(i, dummy.matrix);
+    else        sakuraInst.setMatrixAt(i - DARK_PETAL_COUNT, dummy.matrix);
   });
   sakuraInst.instanceMatrix.needsUpdate  = true;
   sakuraDInst.instanceMatrix.needsUpdate = true;
@@ -685,6 +814,15 @@ function loop() {
 
   // ── Plaque glow ──
   plaqueMesh.material.emissiveIntensity = .2 + Math.sin(et*1.8)*.15;
+
+}
+
+function loop() {
+  rafId = null;
+  if (renderMode || document.hidden || !pageActive) return;
+  const dt = Math.min(clock.getDelta(), .05);
+  elapsed += dt;
+  updateAtmosphere(elapsed, dt);
 
   // ── Player movement ──
   let speed = keys.shift ? 8.5 : 4.2;
@@ -741,7 +879,54 @@ function loop() {
   }
 
   // ── Render ──
-  composer.render();
+  composer.render(dt);
+  rafId = requestAnimationFrame(loop);
 }
 
-loop();
+// One establishing view and two closer studies of the square and its planting.
+function renderStill() {
+  const presets = {
+    facade: { eye:[0, 21, 128], target:[0, 12, 4], fov:48 },
+    plaza: { eye:[53, 11, 89], target:[6, 12, 12], fov:49 },
+    garden: { eye:[-62, 3.8, 69], target:[-24, 9, 14], fov:52 },
+  };
+  const preset = presets[renderMode];
+  camera.fov = preset.fov;
+  camera.updateProjectionMatrix();
+  const target = new THREE.Vector3(...preset.target);
+  const offset = new THREE.Vector3(...preset.eye).sub(target);
+  // Narrower windows dolly back instead of clipping the end pavilions.
+  offset.multiplyScalar(Math.max(1, 1.78 / camera.aspect));
+  camera.position.copy(target).add(offset);
+  camera.lookAt(target);
+  updateAtmosphere(STILL_TIME, 0);
+  skySphere.position.copy(camera.position);
+  composer.render(0);
+}
+function clearInput() {
+  for (const key of Object.keys(keys)) delete keys[key];
+  drag = false;
+  touches = {};
+}
+function stopLoop() {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+  rafId = null;
+  clock.stop();
+  clearInput();
+}
+function startLoop() {
+  if (renderMode || document.hidden || !pageActive || rafId !== null) return;
+  clock.start();
+  rafId = requestAnimationFrame(loop);
+}
+addEventListener('blur', clearInput);
+addEventListener('pagehide', () => { pageActive = false; stopLoop(); });
+addEventListener('pageshow', () => { pageActive = true; startLoop(); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopLoop();
+  else startLoop();
+});
+if (renderMode) {
+  markers.forEach(marker => { marker.visible = false; });
+  renderStill();
+} else startLoop();
