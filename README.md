@@ -3,7 +3,7 @@
 A browser sightseeing game with two connected experiences:
 
 - **LMU date chapter:** an anime cast with a dog, dialogue choices, a keepsake hunt, three validated photography objectives, a persistent album and an exportable ending postcard.
-- **Munich city exploration:** streamed OpenStreetMap streets and 3D building footprints across a broad Munich play area, 133 destinations, 25 district navigation anchors and 17 discovery trails.
+- **Munich city exploration:** streamed OpenStreetMap streets and 3D building footprints across a broad Munich play area, 133 destinations, 25 district navigation anchors and 17 discovery trails. Every destination has a map marker; three city contracts add ordered observation tasks and collectible stamps.
 
 ## Run
 
@@ -21,13 +21,16 @@ Open [the LMU chapter](http://localhost:8100/) or [city exploration](http://loca
 | WASD / arrows | Walk | Walk relative to map bearing |
 | Shift | Run | Run |
 | Mouse drag / wheel | Orbit / zoom | Inspect map / zoom |
-| E | Talk, collect or inspect | — |
+| E | Talk, collect or inspect | Read and confirm the current city contract objective |
 | P | Camera mode; Space takes a photo into the album | Export city screenshot |
 | G | District atlas, safe fast travel, local real-photo comparisons | Destination list |
 | F | — | Follow the characters |
 | N / J / C | Minimap overview / journal / free camera | — |
 | M | Toggle sound | — |
+| K / V | — | City contracts / walking direction guide |
 | Esc | Close active modal or pause | Close destination list |
+
+City walking guidance shows straight-line distance and direction, not a verified pedestrian route. City dialogs pause movement and clear held keys when closing.
 
 Touch controls are available on both pages. LMU settings include graphics quality, sound, camera sensitivity and dialogue speed. Progress is local to this browser; storage denial does not prevent playing.
 
@@ -47,6 +50,7 @@ node project/tools/playthrough.mjs http://localhost:8100/
 node project/tools/world_walkthrough.mjs http://localhost:8100/
 node project/tools/photo_validation.mjs http://localhost:8100/
 node project/tools/city_validation.mjs http://localhost:8100/
+node project/tools/city_features_validation.mjs http://localhost:8100/
 ```
 
 Browser checks launch temporary Chrome profiles and keep downloads out of the user's Downloads directory. Performance results depend on the actual graphics backend; headless Chrome does not necessarily use software rendering.

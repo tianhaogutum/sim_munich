@@ -1,0 +1,21 @@
+.city-landmark-east-prompt {
+  position: absolute;
+  bottom: max(152px, calc(env(safe-area-inset-bottom) + 132px));
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(88vw, 390px);
+  padding: 10px 16px;
+  border: 1px solid #ddbc67;
+  border-radius: 18px;
+  background: #222b30ee;
+  color: #fff1bf;
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 12;
+}
+.city-landmark-east-prompt[hidden] { display: none; }
+.city-landmark-east-prompt:focus-visible { outline: 3px solid #fff1bf; outline-offset: 3px; }
+.city-landmark-east-panel { line-height: 1.65; overflow-wrap: anywhere; }
+.city-landmark-east-panel a { display: block; color: inherit; text-decoration: underline; margin: 10px 0; }
+.city-landmark-east-panel h3 { font-size: 1em; margin-top: 22px; }

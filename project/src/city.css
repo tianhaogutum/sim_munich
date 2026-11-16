@@ -12,3 +12,16 @@
 @media(max-height:520px){.ci-header{padding:8px 12px;width:310px;top:8px;left:8px}.ci-header h1{font-size:17px}.ci-header p{display:none}.ci-kicker{font-size:8px}.ci-status{margin-top:3px;font-size:9px}.ci-toolbar{top:8px;right:8px;left:auto;width:calc(100vw - 340px)}.ci-toolbar button,.ci-toolbar a{min-height:33px!important;font-size:10px!important;padding:5px!important}.ci-atlas{top:57px;right:8px;bottom:35px;left:auto;width:280px;padding:10px;gap:5px}.ci-atlas h2{font-size:14px}.ci-tabs button{min-height:29px!important}input.ci-search,.ci-search input{padding:7px}.ci-place-list button{padding:7px!important}.ci-progress{left:165px;right:auto;bottom:39px;width:200px;padding:8px;max-height:145px;overflow:auto}.ci-progress-count{font-size:11px}.ci-trails{gap:3px;margin-top:4px}.ci-trails button{min-height:25px!important;padding:3px 5px!important;font-size:9px!important}.ci-hint{bottom:8px;left:8px;font-size:9px;padding:5px 8px}.ci-touch{bottom:37px;left:8px;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(3,40px);gap:3px}.ci-touch button{min-height:40px;min-width:40px}.maplibregl-ctrl-top-right{top:55px!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 .ci-trail-select{width:100%;border:1px solid #c3c7ad44;background:#173034;color:var(--ci-ink);padding:8px;border-radius:7px;font:12px Nunito,system-ui,sans-serif;pointer-events:auto;min-height:36px}.ci-trail-status{font-size:11px;color:#d8d2bb;line-height:1.5}.ci-trails label{font-size:11px;color:var(--ci-muted)}
+
+/* Keep tool rows on one line so extra game features cannot cover the atlas. */
+.ci-toolbar{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.ci-toolbar button,.ci-toolbar a{flex-shrink:0;white-space:nowrap}
+.ci-place-card{color:#213b3c;font:13px/1.6 system-ui,sans-serif;max-height:50dvh;overflow:auto;padding:6px}
+.ci-place-card h3{margin:0 0 8px}.ci-place-card small,.ci-place-card a{display:block;margin:10px 0}
+.ci-place-card button{border:1px solid #b7c6b8;background:#eef3e5;color:#213b3c;border-radius:6px;padding:9px;margin:4px}
+@media(min-width:601px){.ci-header{width:360px}.ci-toolbar{left:404px;right:22px;width:auto}}
+@media(max-width:600px){.ci-toolbar button,.ci-toolbar a{flex:0 0 auto!important}.ci-atlas{bottom:205px}}
+body .cm-hud{top:auto;bottom:220px;right:22px;width:290px}
+body:has(.ci-atlas:not(.closed)) .cm-hud,body:has(.cn-navigator:not([hidden])) .cm-hud{display:none}
+@media(max-width:600px){body .cm-hud{right:10px;bottom:220px;width:calc(100% - 20px)}body .cn-navigator{max-height:calc(100dvh - 405px)}}
+@media(max-height:520px){body .cm-hud{right:10px;bottom:42px;width:240px}.ci-toolbar{left:340px;right:8px}}

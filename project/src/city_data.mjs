@@ -89,12 +89,12 @@ export function registerCityResearch(pack){
  const district=CITY_DISTRICTS.find(d=>d.name===pack.district);if(!district)fail();
  const ids=new Set(CITY_PLACES.map(p=>p.id)),routeIds=new Set(CITY_TRAILS.map(t=>t.id));
  const additions=pack.places.map(p=>{
-  if(!point(p)||!text(p.id)||!p.id.startsWith(`${pack.id}-`)||ids.has(p.id)||!text(p.name)||!text(p.description)||!https(p.source)||p.accuracy!=='approximate outdoor navigation point')fail();
+  if(!point(p)||!text(p.id)||!p.id.startsWith(`${pack.id}-`)||ids.has(p.id)||!text(p.name)||!text(p.description)||!https(p.source)||p.accuracy!=='approximate outdoor navigation point'||(p.arrivalRadius!==undefined&&(!Number.isFinite(p.arrivalRadius)||p.arrivalRadius<5||p.arrivalRadius>65)))fail();
   ids.add(p.id);return Object.freeze({...p,district:district.id,researchPack:pack.id,coordinateStatus:p.accuracy,mapSource:`https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=18/${p.lat}/${p.lon}`});
  });
  const routes=pack.routes.map(r=>{
   if(!text(r.id)||routeIds.has(r.id)||!text(r.name)||!Array.isArray(r.stops)||!r.stops.length||r.stops.some(id=>!ids.has(id)))fail();
-  routeIds.add(r.id);return Object.freeze({id:r.id,name:r.name,description:r.description??'',places:Object.freeze([...r.stops]),researchPack:pack.id});
+  routeIds.add(r.id);return Object.freeze({...r,id:r.id,name:r.name,description:r.description??'',stops:Object.freeze([...r.stops]),places:Object.freeze([...r.stops]),researchPack:pack.id});
  });
  for(const b of pack.buildings)if(!point(b)||!text(b.name)||!https(b.photoPage)||!https(b.source)||!text(b.author)||!text(b.license)||!Array.isArray(b.features)||!b.features.every(text))fail();
  const copy=JSON.parse(JSON.stringify(pack));

@@ -29,7 +29,7 @@ export function installSession05Places(map, { Popup, onTravel, document:doc = gl
   'circle-color':'#e8c687','circle-stroke-color':'#213b3c','circle-stroke-width':2,
  }});
  map.addLayer({id:'session05-place-labels',type:'symbol',source,minzoom:16,layout:{
-  'text-field':['get','name'],'text-size':12,'text-anchor':'top','text-offset':[0,1],
+  'text-field':['get','name'],'text-font':['Noto Sans Regular'],'text-size':12,'text-anchor':'top','text-offset':[0,1],
  },paint:{'text-color':'#213b3c','text-halo-color':'#fff5dc','text-halo-width':2}});
  let popup;
  function showPlace(id) {

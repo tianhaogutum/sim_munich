@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "id": "session17",
+  "district": "Obergiesing-Fasangarten",
+  "places": [
+    {
+      "id": "session17-heilig-kreuz-giesing",
+      "name": "Heilig Kreuz Giesing · 吉兴圣十字堂",
+      "lon": 11.5777818,
+      "lat": 48.1161943,
+      "district": "Obergiesing-Fasangarten",
+      "type": "historic-building",
+      "description": "Giesinger Berg 上的教堂是吉兴天际线的显著节点，适合从街区近处辨认高塔。",
+      "source": "https://www.muenchen.de/stadtteile/obergiesing-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "由南侧铺装步道观察高塔与坡地的关系，不进入附属私用空间。",
+      "arrivalRadius": 30,
+      "access": "外部访客步道；教堂室内按公告开放，礼拜时请保持安静。",
+      "coordinateSource": "https://www.openstreetmap.org/node/1147256041",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 1147256041，位于 footway 道路 23963004，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-tela-post",
+      "name": "TeLa-Post am Tegernseer Platz · 特拉邮局外广场",
+      "lon": 11.5797558,
+      "lat": 48.1153653,
+      "district": "Obergiesing-Fasangarten",
+      "type": "historic-building",
+      "description": "Tegernseer Platz 的现代主义邮局建筑；简洁白色体量与邻近早期城市住宅形成对比。",
+      "source": "https://entdecken.muenchen.de/station/21-8/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从广场步道观察横向窗列与简洁立面，留意电车与人行区的边界。",
+      "arrivalRadius": 30,
+      "access": "公共广场外观观察；不以邮局营业或进入商业空间作为探索条件。",
+      "coordinateSource": "https://www.openstreetmap.org/node/1670410508",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 1670410508，位于 footway 道路 163968236，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-ostfriedhof",
+      "name": "Ostfriedhof · 东墓园林荫步道",
+      "lon": 11.5902837,
+      "lat": 48.1198016,
+      "district": "Obergiesing-Fasangarten",
+      "type": "park",
+      "description": "仍在使用的城市墓园，密集树木和主路形成安静的纪念景观。",
+      "source": "https://stadt.muenchen.de/service/info/ostfriedhof/10309496/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿园内正式步道观察林荫与纪念空间，避免穿越墓穴之间的小径。",
+      "arrivalRadius": 35,
+      "access": "仅在墓园开放时间进入；遵守现场告示，尊重葬礼及悼念者。",
+      "coordinateSource": "https://www.openstreetmap.org/node/539549377",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 539549377，位于 footway 道路 43070404，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-weissenseepark",
+      "name": "Weißenseepark · 魏森湖公园",
+      "lon": 11.5868485,
+      "lat": 48.1080888,
+      "district": "Obergiesing-Fasangarten",
+      "type": "park",
+      "description": "与 Katzenbuckel 相接的绿地是吉兴重要的邻里休闲空间，连接草地、树木与活动场地。",
+      "source": "https://entdecken.muenchen.de/station/21-4/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿 Mankeiweg 观察公园如何嵌入住宅街区，在步道上完成探索。",
+      "arrivalRadius": 35,
+      "access": "公共公园；不进入围栏内设施或施工区域。",
+      "coordinateSource": "https://www.openstreetmap.org/node/359533380",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 359533380，位于 path 道路 32035252，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-giesinger-gruenspitz",
+      "name": "Giesinger Grünspitz · 吉兴绿色街角",
+      "lon": 11.5770656,
+      "lat": 48.1134622,
+      "district": "Obergiesing-Fasangarten",
+      "type": "square",
+      "description": "市建设局更新的三角形公共绿地，保留树荫、会面与社区活动功能。",
+      "source": "https://lhm.muenchen.swm.de/infos/umgestaltung-giesinger-gruenspitz.html",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿园内砾石步道寻找栗树与座椅，不进入围起的社区种植区。",
+      "arrivalRadius": 35,
+      "access": "公共休憩空间；围栏内社区花园不属于探索必经区域。",
+      "coordinateSource": "https://www.openstreetmap.org/node/10137230770",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 10137230770，位于 footway 道路 1107913285，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-kulmbacher-platz",
+      "name": "Kulmbacher Platz · 库尔姆巴赫广场",
+      "lon": 11.6097627,
+      "lat": 48.0878152,
+      "district": "Obergiesing-Fasangarten",
+      "type": "square",
+      "description": "Fasangarten 的社区广场，市门户介绍这里的历史赎罪石，是东南住宅区的步行停留点。",
+      "source": "https://www.muenchen.de/stadtteile/obergiesing-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿广场铺装步道寻找纪念石，比较这里与中心吉兴街口的不同节奏。",
+      "arrivalRadius": 35,
+      "access": "公共广场；从步道观察纪念物，不踏入邻接私人住宅用地。",
+      "coordinateSource": "https://www.openstreetmap.org/node/604683511",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 604683511，位于 footway 道路 47497115，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-giesinger-bahnhof",
+      "name": "Kulturzentrum Giesinger Bahnhof · 吉兴车站文化中心",
+      "lon": 11.5962576,
+      "lat": 48.1104317,
+      "district": "Obergiesing-Fasangarten",
+      "type": "culture",
+      "description": "历史车站建筑中的街区文化中心，前方公共广场连接交通与邻里生活。",
+      "source": "https://giesinger-bahnhof.de/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "由北侧广场辨认文化中心入口与车站外观，避开铁轨及站台边缘。",
+      "arrivalRadius": 30,
+      "access": "广场免费可达；室内按活动、开门时间或票务条件进入。",
+      "coordinateSource": "https://www.openstreetmap.org/node/3386284410",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 3386284410，位于 footway 道路 331556860，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session17-lutherkirche",
+      "name": "Lutherkirche Giesing · 吉兴路德教堂街侧",
+      "lon": 11.5767511,
+      "lat": 48.1152955,
+      "district": "Obergiesing-Fasangarten",
+      "type": "historic-building",
+      "description": "Martin-Luther-Straße 的新教教堂，与附近圣十字堂形成两种宗教建筑轮廓。",
+      "source": "https://www.lutherkirche-muenchen.de/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "留在街侧人行道观察教堂入口方向与塔楼，比较两座教堂的体量。",
+      "arrivalRadius": 30,
+      "access": "教堂正在内部整修，官网预计至2027年5月；本点只需街侧观察，勿进入工地。",
+      "coordinateSource": "https://www.openstreetmap.org/node/2508887208",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 2508887208，位于 path 道路 243492048，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    }
+  ],
+  "buildings": [],
+  "routes": [
+    {
+      "id": "session17-giesing-core",
+      "name": "吉兴：教堂、街角与现代建筑",
+      "stops": [
+        "session17-giesinger-gruenspitz",
+        "session17-lutherkirche",
+        "session17-heilig-kreuz-giesing",
+        "session17-tela-post",
+        "session17-ostfriedhof"
+      ],
+      "description": "从公共绿色街角开始，比较两座教堂与特拉邮局的建筑轮廓，最后进入开放时段内的东墓园。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 1428,
+      "distanceKind": "straight-line segments"
+    },
+    {
+      "id": "session17-giesing-fasangarten",
+      "name": "从邻里公园到法桑花园社区",
+      "stops": [
+        "session17-giesinger-gruenspitz",
+        "session17-weissenseepark",
+        "session17-giesinger-bahnhof",
+        "session17-kulmbacher-platz"
+      ],
+      "description": "连接吉兴休闲绿地、历史车站文化中心与较远的 Fasangarten 社区广场；车站至广场一段较长，可按体力分段探索。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 4394,
+      "distanceKind": "straight-line segments"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/obergiesing-wissenswertes-tipps-und-infos",
+      "title": "慕尼黑城市门户：Obergiesing"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/1147256041",
+      "title": "Heilig Kreuz Giesing · 吉兴圣十字堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/23963004",
+      "title": "Heilig Kreuz Giesing · 吉兴圣十字堂：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://entdecken.muenchen.de/station/21-8/",
+      "title": "慕尼黑市探索平台：TeLa-Post"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/1670410508",
+      "title": "TeLa-Post am Tegernseer Platz · 特拉邮局外广场：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/163968236",
+      "title": "TeLa-Post am Tegernseer Platz · 特拉邮局外广场：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://stadt.muenchen.de/service/info/ostfriedhof/10309496/",
+      "title": "慕尼黑市政府：Ostfriedhof"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/539549377",
+      "title": "Ostfriedhof · 东墓园林荫步道：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/43070404",
+      "title": "Ostfriedhof · 东墓园林荫步道：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://entdecken.muenchen.de/station/21-4/",
+      "title": "慕尼黑市探索平台：Weißenseepark"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/359533380",
+      "title": "Weißenseepark · 魏森湖公园：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/32035252",
+      "title": "Weißenseepark · 魏森湖公园：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://lhm.muenchen.swm.de/infos/umgestaltung-giesinger-gruenspitz.html",
+      "title": "慕尼黑市建设局：Giesinger Grünspitz 改造完成"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/10137230770",
+      "title": "Giesinger Grünspitz · 吉兴绿色街角：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1107913285",
+      "title": "Giesinger Grünspitz · 吉兴绿色街角：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/604683511",
+      "title": "Kulmbacher Platz · 库尔姆巴赫广场：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/47497115",
+      "title": "Kulmbacher Platz · 库尔姆巴赫广场：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://giesinger-bahnhof.de/",
+      "title": "文化中心官网：Giesinger Bahnhof"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/3386284410",
+      "title": "Kulturzentrum Giesinger Bahnhof · 吉兴车站文化中心：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/331556860",
+      "title": "Kulturzentrum Giesinger Bahnhof · 吉兴车站文化中心：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.lutherkirche-muenchen.de/",
+      "title": "Lutherkirche München 官网：教堂与整修信息"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/2508887208",
+      "title": "Lutherkirche Giesing · 吉兴路德教堂街侧：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/243492048",
+      "title": "Lutherkirche Giesing · 吉兴路德教堂街侧：OSM步行路径与通行标记"
+    }
+  ],
+  "limitations": [
+    "资料及地图核对日期为2026-11-09；坐标采用OSM标注的步行路径节点。地图级可步行核验不等于现场连续步行、无障碍或临时开放保证。",
+    "只设计公共室外到达点；教堂、文化场馆及墓园的内部通行受现场开放与活动安排约束，私人院落、施工区域和水面不作为探索目标。",
+    "路线距离以地球半径6371000米的Haversine距离逐段求和并四舍五入至米，属于直线分段估算；没有接入真实步行寻路。",
+    "Fasangarten 的 Kulmbacher Platz 与中心吉兴分隔较远，公园社区线最长一段约2.7公里直线，适宜按体力分段完成。Lutherkirche仅作街侧观察，官网公告有内部整修。"
+  ]
+}

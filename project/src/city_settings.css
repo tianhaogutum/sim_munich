@@ -1,0 +1,23 @@
+/* Panel placement, modal focus and toolbar belong to the feature host. */
+.city-settings { color: inherit; font: inherit; line-height: 1.6; }
+.city-settings * { box-sizing: border-box; }
+.city-settings [hidden] { display: none !important; }
+.city-settings-intro { margin: 0 0 1rem; }
+.city-settings fieldset { min-width: 0; margin: 0; padding: .75rem; border: 1px solid #819587; border-radius: .6rem; }
+.city-settings legend { padding: 0 .35rem; font-weight: 650; }
+.city-settings-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .4rem .75rem; padding: .8rem 0; }
+.city-settings-row + .city-settings-row { border-top: 1px solid #81958766; }
+.city-settings-row label { font-weight: 600; cursor: pointer; }
+.city-settings-row small { grid-column: 1 / -1; line-height: 1.6; }
+.city-settings-row input[type='checkbox'] { width: 1.4rem; height: 1.4rem; accent-color: #345f46; }
+.city-settings-row input[type='range'] { grid-column: 1 / -1; width: 100%; min-height: 2rem; accent-color: #345f46; }
+.city-settings-row output { grid-column: 2; grid-row: 1; font-variant-numeric: tabular-nums; }
+.city-settings select, .city-settings button { min-height: 44px; max-width: 100%; padding: .5rem .75rem; border: 1px solid #6c8274; border-radius: .4rem; color: #213b2b; background: #fffdf5; font: inherit; }
+.city-settings button { cursor: pointer; }
+.city-settings button:hover { background: #eaf1e4; }
+.city-settings :is(button, input, select):focus-visible { outline: 3px solid #a36a0a; outline-offset: 3px; }
+.city-settings-status { min-height: 3.2em; font-size: .9em; overflow-wrap: anywhere; }
+.city-settings-confirm { margin-top: .8rem; border: 1px solid #9d7844; border-radius: .4rem; padding: .8rem; }
+.city-settings-confirm p { margin-top: 0; }
+.city-settings-confirm button { margin: .25rem .4rem .25rem 0; }
+@media (forced-colors: active) { .city-settings :is(button, input, select):focus-visible { outline-color: Highlight; } }

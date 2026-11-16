@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "id": "session25",
+  "district": "Laim",
+  "places": [
+    {
+      "id": "session25-agricolaplatz",
+      "name": "Agricolaplatz · 阿格里科拉绿地",
+      "lon": 11.4939758,
+      "lat": 48.1417761,
+      "description": "在莱姆住宅街区中的公共绿地停留，观察草坪、树木与穿行步道；大学旅游学院将这里介绍为社区休憩空间。",
+      "source": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/agricolaplatz/46664459/",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "park",
+      "explorationHint": "沿紧实砂石步道寻找与住宅街之间的绿化边界，不以儿童游乐设施为抵达目标。",
+      "access": "公共绿地免费步行到达；尊重游乐区使用者，临时维护时服从现场标识。",
+      "coordinateSource": "https://www.openstreetmap.org/way/198735030",
+      "coordinateNote": "采用 OSM 公园内 highway=footway 的相邻节点中点；非草坪中心或住宅院落。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 30
+    },
+    {
+      "id": "session25-st-ulrich",
+      "name": "St. Ulrich · 圣乌尔里希教堂街侧",
+      "lon": 11.4994357,
+      "lat": 48.1403111,
+      "description": "Agnes-Bernauer-Straße 104 的教堂是莱姆旧村落景观的一部分；在北侧步道观察塔楼与较低教堂主体的关系。",
+      "source": "https://st-ulrich-laim.de/st-ulrich/home",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "historic-building",
+      "explorationHint": "从教堂外的北侧人行步道比较塔楼、屋顶与周边街道尺度。",
+      "access": "任务在户外步道完成；礼拜、室内开放与教区活动以现场安排为准，不进入墓区或后方私用空间。",
+      "coordinateSource": "https://www.openstreetmap.org/way/387234737",
+      "coordinateNote": "依据官方教堂地址和 Commons 对象位置确认地标，选用 OSM 北侧 asphalt footway 线段中点，位于建筑轮廓外。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 25
+    },
+    {
+      "id": "session25-laimer-anger",
+      "name": "Laimer Anger · 莱姆村心绿地",
+      "lon": 11.4998905,
+      "lat": 48.1393537,
+      "description": "莱姆旧村心的公共绿地也是社区活动场所，可在步道上比较开敞草地、文化场馆外观与周边街道。",
+      "source": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/laimer-anger/46224443/",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "park",
+      "explorationHint": "沿铺装步道看一看绿地如何围合成社区聚会空间；此站观察公共绿地，不进入邻近建筑。",
+      "access": "公共室外绿地免费可达；活动搭建、市场或维护可能临时改变通路。",
+      "coordinateSource": "https://www.openstreetmap.org/way/62248546",
+      "coordinateNote": "大学旅游学院公布的导航位置附近，采用 OSM highway=footway、paving_stones 线段中点；没有采用邻近 INTERIM 建筑内部点。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 25
+    },
+    {
+      "id": "session25-hogenbergplatz",
+      "name": "Hogenbergplatz · 霍根贝格社区绿地边",
+      "lon": 11.5068292,
+      "lat": 48.1371815,
+      "description": "市政府公共绿地名录中的社区节点；从 Valpichlerstraße 一侧的人行道观察绿地与周边住宅街的连接。",
+      "source": "https://stadt.muenchen.de/rathaus/stadtrecht/vorschrift/810/version1/0.html",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "square",
+      "explorationHint": "在绿地边的公共人行道停留，比较社区休闲空间与街道之间的开放界面。",
+      "access": "公共人行道免费可达；不进入住宅院落，不以附近儿童活动区为任务目标。",
+      "coordinateSource": "https://www.openstreetmap.org/way/1545431826",
+      "coordinateNote": "直接使用 OSM footway=sidewalk、foot=designated 的混凝土人行道线段中点；避开相邻机动车道。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 25
+    },
+    {
+      "id": "session25-stadtbibliothek-laim",
+      "name": "Stadtbibliothek Laim · 莱姆图书馆外",
+      "lon": 11.5032363,
+      "lat": 48.1363876,
+      "description": "Fürstenrieder Straße 53 的市立分馆与社区文化空间；在街侧观察入口，再根据开放安排决定是否入馆。",
+      "source": "https://www.muenchner-stadtbibliothek.de/stadtbibliothek-laim/",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "culture",
+      "explorationHint": "沿街侧铺装步道找到图书馆标识；户外即可完成发现，不需要进入读书花园。",
+      "access": "室外人行道免费可达。馆内按官网开放时间进入；读书花园只能经图书馆进入，任务不要求进入。附近电车施工时按现场人行引导通行。",
+      "coordinateSource": "https://www.openstreetmap.org/way/153024207",
+      "coordinateNote": "以官方地址及 OSM 图书馆 node2203029604 定位，抵达点改用其西侧 OSM 有照明铺装 footway 的线段中点，距离馆内 POI 约15米；非地下通道。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 25
+    },
+    {
+      "id": "session25-namen-jesu",
+      "name": "Namen-Jesu-Kirche · 耶稣圣名堂街侧",
+      "lon": 11.499735,
+      "lat": 48.1275435,
+      "description": "Neufriedenheim 社区的教区地标；在西北侧街边看独立钟塔与教堂主体，感受街区社区建筑的尺度。",
+      "source": "https://st-ulrich-laim.de/namen-jesu/home",
+      "accuracy": "approximate outdoor navigation point",
+      "district": "Laim",
+      "type": "community-landmark",
+      "explorationHint": "留在西北侧公共人行道，寻找塔楼与低矮主体之间的轮廓差异。",
+      "access": "在街侧免费观察即可；室内礼拜与活动按教区安排，不进入教区内院或办公区域。",
+      "coordinateSource": "https://www.openstreetmap.org/way/460790203",
+      "coordinateNote": "Commons 西北侧户外照片的相机坐标与官方地址交叉定位；最终采用邻近 OSM footway=sidewalk 线段中点，未采用建筑中心或道路过街线。",
+      "verifiedAt": "2026-11-09",
+      "arrivalRadius": 30
+    }
+  ],
+  "buildings": [],
+  "routes": [
+    {
+      "id": "session25-green-community-walk",
+      "name": "莱姆：村心、绿地与社区文化",
+      "description": "从 Agricolaplatz 出发，依次观察 St. Ulrich 教堂外、Laimer Anger、Hogenbergplatz、图书馆街侧与 Namen-Jesu-Kirche，串联社区绿地和公共文化节点。距离按各站坐标逐段直线累加估算，只提供停靠点导航，并非步行寻路或实际步行距离；过街使用现场人行设施，电车施工时遵循人行绕行标识。",
+      "stops": [
+        "session25-agricolaplatz",
+        "session25-st-ulrich",
+        "session25-laimer-anger",
+        "session25-hogenbergplatz",
+        "session25-stadtbibliothek-laim",
+        "session25-namen-jesu"
+      ],
+      "distanceMeters": 2415,
+      "distanceKind": "straight-line segments",
+      "segmentDistancesMeters": [
+        437,
+        112,
+        569,
+        281,
+        1017
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://stadt.muenchen.de/rathaus/stadtrecht/vorschrift/810/version1/0.html",
+      "title": "慕尼黑市：公共绿地名录（含 Laimer Anger、Hogenbergplatz）"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3A2f26f7b2-3503-4e30-b391-c358e36987e7/KulturGeschichtsPfad-25-Laim-Uebersichtskarte.pdf",
+      "title": "慕尼黑市：Laim 文化历史步道官方地图"
+    },
+    {
+      "url": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/agricolaplatz/46664459/",
+      "title": "慕尼黑应用科学大学旅游学院：Agricolaplatz 景点与位置"
+    },
+    {
+      "url": "https://www.outdooractive.com/de/poi/muenchen-ingolstadt/laimer-anger/46224443/",
+      "title": "慕尼黑应用科学大学旅游学院：Laimer Anger 景点与位置"
+    },
+    {
+      "url": "https://st-ulrich-laim.de/st-ulrich/home",
+      "title": "Pfarrverband Laim：St. Ulrich 官方地址与访问信息"
+    },
+    {
+      "url": "https://www.muenchner-stadtbibliothek.de/stadtbibliothek-laim/",
+      "title": "慕尼黑市立图书馆：Laim 馆地址、服务与入馆条件"
+    },
+    {
+      "url": "https://st-ulrich-laim.de/namen-jesu/home",
+      "title": "Pfarrverband Laim：Namen Jesu 官方地址与社区介绍"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Namen-Jesu-Kirche_(München-Laim)_v_NW.jpg",
+      "title": "Commons：Namen Jesu 西北侧户外摄影位置"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/baustellen-verkehrseinschraenkungen",
+      "title": "慕尼黑市：当前施工与交通限制（Agnes-Bernauer-Straße/Fürstenrieder Straße）"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/198735030",
+      "title": "OpenStreetMap：Agricolaplatz · 阿格里科拉绿地 的已核对公共步道 way 198735030"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/387234737",
+      "title": "OpenStreetMap：St. Ulrich · 圣乌尔里希教堂街侧 的已核对公共步道 way 387234737"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/62248546",
+      "title": "OpenStreetMap：Laimer Anger · 莱姆村心绿地 的已核对公共步道 way 62248546"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1545431826",
+      "title": "OpenStreetMap：Hogenbergplatz · 霍根贝格社区绿地边 的已核对公共步道 way 1545431826"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/153024207",
+      "title": "OpenStreetMap：Stadtbibliothek Laim · 莱姆图书馆外 的已核对公共步道 way 153024207"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/460790203",
+      "title": "OpenStreetMap：Namen-Jesu-Kirche · 耶稣圣名堂街侧 的已核对公共步道 way 460790203"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:St._Ulrich_(Munich)",
+      "title": "Commons：St. Ulrich (Munich) 建筑对象坐标与官方地址交叉定位"
+    }
+  ],
+  "limitations": [
+    "核实日期为 2026-11-09；公开网页可核实地点真实性、官方地址或公共绿地属性。坐标另通过 OpenStreetMap 主 API 的小范围地图几何核对，逐点选在无 private/no 通行标签的地面 footway/path，而非机构内部 POI；OSM 不是实时通行保证。",
+    "经纬度为 WGS84，保留与 OSM 线段中点相称的小数位用于游戏导航，不是地籍测绘精度或精确入口。具体 way 编号见各地点 coordinateSource；未把网页标注的建筑中心直接用于到达点。",
+    "除图书馆可按官网时间选择进入外，本包任务均在公共户外完成；教堂内院、墓区、住宅及机构办公空间不是探索目标。抵达半径25–30米用于容纳步道导航近似，不代替运行时建筑碰撞验证。",
+    "Fürstenrieder Straße 与 Agnes-Bernauer-Straße 周边正在进行电车工程；市政府页面提示部分人行过街设施会分阶段关闭，路线不是实时施工绕行指南。",
+    "未进行游戏运行或实地无障碍验证；主代理负责将数据编译到现有地图标记、列表、到达判定及路线系统后验收。路线距离只计算直线分段，不宣称实际步行里程。"
+  ]
+}
