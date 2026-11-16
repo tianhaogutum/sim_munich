@@ -5,7 +5,8 @@
 .dp-root button { font: inherit; cursor: pointer; }
 .dp-root button:focus-visible { outline: 3px solid #f4d799; outline-offset: 4px; }
 .dp-overlay { pointer-events: none !important; z-index: 31; }
-.dp-shutter-button { z-index: 46; }
+.dp-shutter-button { z-index: 46; background: #202431e8 !important; color: #f9e4b7 !important; }
+.dp-help { bottom: 3.1% !important; width: calc(100% - 32px); text-align: center; font: 12px/1.5 Nunito, "PingFang SC", sans-serif !important; color: #ddcdb3 !important; letter-spacing: .05em !important; }
 .dp-heading { position: absolute; top: 2%; left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
 .dp-heading span { display: block; font-size: 10px; letter-spacing: .38em; color: #dfc795; }
 .dp-heading b { display: block; font-weight: 400; font-size: 16px; letter-spacing: .16em; }
@@ -49,7 +50,7 @@
 .dp-postcard-dialog h2 { font-size: 21px; font-weight: 500; margin: 4px 0 0; letter-spacing: .06em; }
 .dp-close { align-self: flex-start; color: #f4e7d2; font-size: 26px !important; width: 36px; height: 36px; background: transparent; border: 1px solid #e0c9a34f; border-radius: 50%; line-height: 1; }
 .dp-postcard-preview { min-height: 160px; color: #ded1bd; }
-.dp-postcard-preview canvas { display: block; width: 100%; height: auto; border-radius: 3px; }
+.dp-postcard-preview canvas { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(96dvh - 185px); margin: 0 auto; border-radius: 3px; }
 .dp-postcard-dialog footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 16px; }
 .dp-postcard-dialog footer p { color: #c5b8b1; font-size: 12px; margin: 0; }
 .dp-save-postcard { flex-shrink: 0; border: 1px solid #e8c78a; border-radius: 22px; background: #e9ce9b; color: #3d3030; padding: 10px 22px; }
@@ -67,6 +68,7 @@
   .dp-thumb img, .dp-thumb figcaption { width: 63px; }
   .dp-thumb img { height: 40px; }
   .dp-frame span { display: none; }
+  .dp-help { font-size: 10px !important; }
   .dp-toast { top: auto; bottom: 29%; font-size: 12px; width: 88vw; }
   .dp-modal { padding: 10px; }
   .dp-postcard-dialog { padding: 16px; }

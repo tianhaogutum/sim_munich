@@ -24,6 +24,7 @@ export function createPhoto(engine, story) {
   const hint = document.getElementById('photo-hint');
   overlay?.classList.add('dp-overlay');
   button?.classList.add('dp-shutter-button');
+  hint?.classList.add('dp-help');
   if (button) { button.textContent = '◎ 拍下这一刻'; button.type = 'button'; }
   if (hint) hint.textContent = '拖动转动视角 · 滚轮拉近 / 拉远 · Space 拍照 · P / Esc 返回';
 
@@ -112,7 +113,7 @@ export function createPhoto(engine, story) {
 
   function ignored(object) {
     for (let node = object; node; node = node.parent) {
-      if (!node.visible || node.userData?.photoIgnore || node === engine.companion?.root ||
+      if (!node.visible || node.userData?.photoIgnore || node === engine.companion?.root || node === engine.player?.root ||
           /^(anime-protagonist|labrador-companion)$/.test(node.name) || /sky|petal|particle/i.test(node.name)) return true;
     }
     // The original sky and petal instances are unnamed. Do not ignore other instances (e.g. windows).
