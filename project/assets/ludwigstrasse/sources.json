@@ -1,0 +1,143 @@
+{
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "geometry_source": "../osm/ludwigstrasse.json",
+  "reference_photographs_in_repository": false,
+  "reference_photographs_viewed": [
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Theatinerkirche_Feldherrenhalle_Odeonsplatz.jpg",
+      "author": "Schlaier",
+      "license": "Public domain",
+      "usage": "Viewed for proportions/palette; not included in repository"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:MUC_Maxvorstadt_Uni_01.jpg",
+      "usage": "Viewed for street scale and lighting; not included in repository"
+    }
+  ],
+  "files": [
+    {
+      "file": "qa/north-requested.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        160,
+        0,
+        80
+      ],
+      "view": "north (+X), original camera",
+      "size_bytes": 112261,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/south-requested.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        -160,
+        0,
+        80
+      ],
+      "view": "south (-X), original camera",
+      "size_bytes": 86992,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/far-south-requested.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        -300,
+        0,
+        80
+      ],
+      "view": "south (-X), original camera; sky dome occludes real far vista",
+      "size_bytes": 80864,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/lamp.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        -249,
+        0,
+        -20
+      ],
+      "view": "close-up at surveyed lamp 13011305830",
+      "size_bytes": 209011,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/north-surveyed.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        158,
+        0,
+        148
+      ],
+      "view": "northbound surveyed road and cycle route",
+      "size_bytes": 141442,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/southern-silhouette.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        -430,
+        0,
+        -45
+      ],
+      "view": "real church/loggia seen within the existing 700 m sky",
+      "size_bytes": 142651,
+      "dimensions": [
+        1280,
+        633
+      ]
+    },
+    {
+      "file": "qa/street-overview.png",
+      "origin": "Local procedural game render using project/tools/shot.mjs",
+      "external_photo": false,
+      "player_position": [
+        -210,
+        0,
+        -5
+      ],
+      "view": "overview of southern six/seven-lane alignment",
+      "size_bytes": 114612,
+      "dimensions": [
+        1280,
+        633
+      ]
+    }
+  ],
+  "total_image_bytes": 887833,
+  "verification": {
+    "console_errors": 0,
+    "module_tests_passed": 15,
+    "repository_tests_passed": 57,
+    "composer_calls_before": 405,
+    "composer_calls_after": 418,
+    "default_view_delta": 13,
+    "unculled_delta": 33,
+    "vertices_inside_core": 0,
+    "collision_unregister_verified": true
+  }
+}

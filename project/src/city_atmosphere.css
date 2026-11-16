@@ -1,0 +1,10 @@
+.city-atmosphere-panel { color: inherit; line-height: 1.55; }
+.city-atmosphere-panel fieldset { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; padding: .7rem; border: 1px solid #9caaac; border-radius: .65rem; }
+.city-atmosphere-panel legend { padding: 0 .35rem; font-weight: 600; }
+.city-atmosphere-panel button { min-height: 44px; padding: .5rem .8rem; border: 1px solid #7d9297; border-radius: .5rem; color: #20373e; background: #f0f5f2; cursor: pointer; }
+.city-atmosphere-panel button[aria-pressed="true"] { color: #fff; background: #285e69; border-color: #285e69; }
+.city-atmosphere-panel button:focus-visible { outline: 3px solid #e69b42; outline-offset: 3px; }
+.city-atmosphere-credits { font-size: .85em; }
+.city-atmosphere-rain { pointer-events: none; }
+.city-atmosphere-rain[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .city-atmosphere-rain { display: none; } }

@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "id": "session09",
+  "district": "Neuhausen-Nymphenburg",
+  "places": [
+    {
+      "id": "session09-rotkreuzplatz",
+      "name": "红十字广场 · Rotkreuzplatz",
+      "lon": 11.533,
+      "lat": 48.1527,
+      "description": "Neuhausen 的街区中心，适合从广场步行空间观察沿街店铺与居民日常，再向北进入安静街道。坐标依据 Commons 标注的广场对象位置取整，不代表地铁出入口。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/rotkreuzplatz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-herz-jesu",
+      "name": "圣心教堂前广场 · Herz Jesu",
+      "lon": 11.5287,
+      "lat": 48.1561,
+      "description": "在教堂外观察蓝色玻璃门面与独立钟塔；教区资料说明，高大的双扇门只在特别场合开启。这里以室外观察为目的，不承诺门扇开启或进入教堂。坐标由 Commons 建筑位置近似到前方室外空间。",
+      "source": "https://www.erzbistum-muenchen.de/kunst-und-kultur/kunst/wege-der-hoffnung/dem-himmel-entgegen-orte-des-lichts/herz-jesu-muenchen-neuhausen-pfarrkirche",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-hubertusbrunnen",
+      "name": "Hubertus 喷泉与运河东端",
+      "lon": 11.5295,
+      "lat": 48.1591,
+      "description": "在喷泉西侧的运河端部停留，沿水面向宁芬堡宫方向观察笔直视线。官方街区介绍将喷泉与宫前运河联系起来；此点在岸边附近，不是下水或冰面通行点。",
+      "source": "https://www.muenchen.de/freizeit/neuhausen-nymphenburg-freizeittipps",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-nymphenburg-forecourt",
+      "name": "宁芬堡宫前庭 · Schloss Nymphenburg",
+      "lon": 11.5053,
+      "lat": 48.1585,
+      "description": "从宫前室外空间观察主楼与两侧展开的建筑群，以及通向东侧城市的运河轴线。沿用现有 city_data.mjs 的宫前近似导航点；不把宫殿内部或水池中心作为目的地。",
+      "source": "https://www.schloss-nymphenburg.de/englisch/palace/index.htm",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-amalienburg",
+      "name": "阿玛琳堡外观 · Amalienburg",
+      "lon": 11.5004,
+      "lat": 48.1561,
+      "description": "位于宁芬堡宫公园内的小型洛可可猎宫，官方资料确认设计者为 François Cuvilliés。到建筑外侧观察屋顶轮廓与立面装饰；室内镜厅另有开放和购票条件。坐标依据 Commons 建筑位置取整。",
+      "source": "https://www.schloss-nymphenburg.de/englisch/p-palaces/amalien.htm",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-botanical-schmuckhof",
+      "name": "植物园花坛庭院 · Schmuckhof",
+      "lon": 11.5006,
+      "lat": 48.1637,
+      "description": "宁芬堡植物园内的露天花坛庭院，Commons 照片记录其季节性花卉与室外布局。需经植物园开放入口到达；主入口位于 Menzinger Straße 65，不能把该坐标当作围墙入口。花卉状态随季节变化。",
+      "source": "https://commons.wikimedia.org/wiki/File:BGM_Schmuckhof.jpg",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session09-hirschgarten",
+      "name": "鹿园公园 · Hirschgarten",
+      "lon": 11.5172,
+      "lat": 48.1498,
+      "description": "草地、步道、游乐设施与野生动物围栏构成的休闲公园，适合把宫苑探索延伸到居民日常使用的绿地。动物从围栏外观察；坐标沿用现有 city_data.mjs 的公园导航锚点，不代表动物所在位置。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/koeniglicher-hirschgarten",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "宁芬堡宫主楼 · Schloss Nymphenburg",
+      "lon": 11.5036,
+      "lat": 48.1581,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Schloss_Nymphenburg_Fassade-Detail.jpg",
+      "author": "Johannes Schlund（Commons: JohannesSch. / Serafim 89）",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/ （照片页亦列 GFDL 1.2-or-later）",
+      "features": [
+        "照片页标为主楼西立面细节，适合参考窗洞、窗套与水平分层；不要误作东侧宫前全景。",
+        "建模先表达对称主楼体量与连续窗列，再结合官方宫殿介绍补充两侧翼部关系。",
+        "立面细节以该照片可见部分为限，不据单张照片推算背面、精确尺寸或颜色标定。"
+      ],
+      "source": "https://www.schloss-nymphenburg.de/englisch/palace/index.htm"
+    },
+    {
+      "name": "阿玛琳堡 · Amalienburg",
+      "lon": 11.5004,
+      "lat": 48.1561,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Amalienburg_2018.jpg",
+      "author": "Michael Wittwer",
+      "license": "CC BY-SA 4.0 International — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "外观以低矮的横向体量和中央略抬高的扁平穹顶及平台建立识别轮廓；官方建筑介绍明确描述这组关系。",
+        "洛可可装饰宜作为近景细节层处理，避免把它简化为宁芬堡主楼的缩小复制。",
+        "官方资料确认 François Cuvilliés 的设计与洛可可属性；镜厅属于内部空间，不能当作室外立面纹理。"
+      ],
+      "source": "https://www.schloss-nymphenburg.de/englisch/p-palaces/amalien.htm"
+    },
+    {
+      "name": "圣心教堂 · Herz-Jesu-Kirche",
+      "lon": 11.5287,
+      "lat": 48.1563,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Herz-Jesu-Kirche_mit_Glockenturm_(M%C3%BCnchen).jpg",
+      "author": "Guido Radig",
+      "license": "CC BY-SA 4.0 International — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "外层用规则玻璃长方体及清晰竖横分格，内层以木质体块形成可见的层次；独立钟塔与主体分开。",
+        "主要识别面是蓝色玻璃双扇大门；门面白色钉形符号对应 Alexander Beleschenko 的文字设计。",
+        "门开启是特别场合状态；常态模型应保留闭门版本，不把全开门当作永久通路。"
+      ],
+      "source": "https://www.erzbistum-muenchen.de/kunst-und-kultur/kunst/wege-der-hoffnung/dem-himmel-entgegen-orte-des-lichts/herz-jesu-muenchen-neuhausen-pfarrkirche"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session09-neuhausen-short-walk",
+      "name": "从街区广场到玻璃教堂与运河",
+      "stops": [
+        "session09-rotkreuzplatz",
+        "session09-herz-jesu",
+        "session09-hubertusbrunnen"
+      ],
+      "description": "建议的短程发现步行：从红十字广场沿 Nymphenburger Straße 向西，再经 Lachnerstraße 到圣心教堂外；随后沿 Waisenhausstraße 向北，抵达 Hubertus 喷泉和运河岸边。先看街区生活，再对比现代玻璃教堂与运河景观。约 1–1.5 公里、含停留约 30–45 分钟，为基于地点关系的估算而非实测路线；走人行道和现有过街点，末段沿水岸到喷泉西侧，不穿越水面。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/rotkreuzplatz",
+      "title": "慕尼黑城市门户：Rotkreuzplatz"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen_-_Rotkreuzplatz.jpg",
+      "title": "Commons：Rotkreuzplatz 对象位置"
+    },
+    {
+      "url": "https://www.erzbistum-muenchen.de/kunst-und-kultur/kunst/wege-der-hoffnung/dem-himmel-entgegen-orte-des-lichts/herz-jesu-muenchen-neuhausen-pfarrkirche",
+      "title": "慕尼黑与弗赖辛总教区：圣心教堂建筑与艺术"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Herz_Jesu_(M%C3%BCnchen)",
+      "title": "Commons：圣心教堂对象位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Herz-Jesu-Kirche_mit_Glockenturm_(M%C3%BCnchen).jpg",
+      "title": "Commons：Guido Radig 圣心教堂与钟塔照片"
+    },
+    {
+      "url": "https://www.muenchen.de/freizeit/neuhausen-nymphenburg-freizeittipps",
+      "title": "慕尼黑城市门户：Neuhausen-Nymphenburg 休闲地点"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Hubertusbrunnen_(M%C3%BCnchen)",
+      "title": "Commons：Hubertusbrunnen 对象位置"
+    },
+    {
+      "url": "https://www.schloss-nymphenburg.de/englisch/palace/index.htm",
+      "title": "巴伐利亚宫殿管理局：宁芬堡宫"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Schloss_Nymphenburg_Fassade-Detail.jpg",
+      "title": "Commons：Johannes Schlund 宁芬堡主楼西立面细节"
+    },
+    {
+      "url": "https://www.schloesser.bayern.de/deutsch/schloss/objekte/ny_parkb.htm",
+      "title": "巴伐利亚宫殿管理局：宁芬堡公园小宫殿"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Amalienburg_(Nymphenburg)",
+      "title": "Commons：Amalienburg 对象位置"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Amalienburg_2018.jpg",
+      "title": "Commons：Michael Wittwer 阿玛琳堡 2018 照片"
+    },
+    {
+      "url": "https://botmuc.snsb.de/anfahrt/",
+      "title": "SNSB 宁芬堡植物园：官方到达与入口信息"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:BGM_Schmuckhof.jpg",
+      "title": "Commons：Schmuckhof 室外花坛庭院与对象位置"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/koeniglicher-hirschgarten",
+      "title": "慕尼黑城市门户：Hirschgarten 公园"
+    },
+    {
+      "url": "https://www.schloss-nymphenburg.de/englisch/tourist/opening.htm",
+      "title": "巴伐利亚宫殿管理局：宁芬堡官方开放时间"
+    },
+    {
+      "url": "https://www.schloss-nymphenburg.de/englisch/p-palaces/amalien.htm",
+      "title": "巴伐利亚宫殿管理局：阿玛琳堡建筑、平顶穹顶与平台"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Nymphenburg_Palace",
+      "title": "Commons：宁芬堡宫对象位置"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/herz-jesu-kirche",
+      "title": "慕尼黑城市门户：圣心教堂玻璃外壳、木质内部与独立钟塔"
+    }
+  ],
+  "limitations": [
+    "本包于 2026-11-09 核查来源。所有经纬度均为 WGS84 近似探索锚点；不表示测绘成果、建筑入口、无障碍通路或行政边界。",
+    "红十字广场、圣心教堂、Hubertus 喷泉、阿玛琳堡及花坛庭院参考 Commons 对象坐标并取整或移至邻近室外观察空间；宫前与鹿园地点沿用 project/src/city_data.mjs 的既有近似锚点。建筑点为对象位置，不是可直接穿行的目的地。",
+    "步行路线为本包编辑建议，未作现场、铺装、施工或逐段无障碍核验；到达位置须由实际地图几何与碰撞检测处理。",
+    "宫殿公园与植物园按各自开放时间及入口管理；室外点不等于全天自由通行。宫苑小宫殿室内按官方页有季节性关闭，植物园可能需门票；出行前复核机构页面。",
+    "仅链接照片说明页，未下载或嵌入摄影文件。照片作者与许可均从相应文件页核查；后续复制或改编图片仍需履行署名及相同方式共享等条件。",
+    "建模特征为照片与机构文字支持的定性参考，不提供未经证实的高度、尺度或完整立面复原。"
+  ]
+}

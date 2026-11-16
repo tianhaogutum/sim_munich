@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "id": "session12",
+  "district": "Schwabing-Freimann",
+  "places": [
+    {
+      "id": "session12-muenchner-freiheit",
+      "name": "慕尼黑自由广场 · Münchner Freiheit",
+      "lon": 11.5863,
+      "lat": 48.161,
+      "description": "施瓦宾的街区生活与公共交通节点。以地面广场为起点，观察利奥波德大街沿线的城市空间，再向北寻找救世主教堂；坐标沿用城市基础包的近似地面锚点。",
+      "source": "https://www.muenchen.de/stadtteile/schwabing-wissenswertes-tipps-und-infos",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-erloeserkirche",
+      "name": "救世主教堂街边 · Erlöserkirche",
+      "lon": 11.5876,
+      "lat": 48.1647,
+      "description": "从 Ungererstraße 街边观察教堂：教区资料把它描述为城市通往施瓦宾轴线的收束建筑，外观结合中世纪南德乡村教堂的形式与同时代元素。此点用于外观观察，不代表进入教堂。",
+      "source": "https://www.erloeserkirche.de/kirchenraum",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-wedekindplatz",
+      "name": "韦德金德广场 · Wedekindplatz",
+      "lon": 11.589,
+      "lat": 48.1614,
+      "description": "Feilitzschstraße 上的小广场，市政介绍将这里称为施瓦宾昔日的村落广场。树下座椅、周围咖啡馆与缪斯喷泉构成适合停步辨认的街角空间。",
+      "source": "https://www.muenchen.de/freizeit/schwabing-tipps-fuer-entdecker",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-st-sylvester",
+      "name": "圣西尔维斯特教堂外 · St. Sylvester",
+      "lon": 11.592,
+      "lat": 48.1615,
+      "description": "在 Biedersteiner Straße 侧停步看老施瓦宾的旧村教堂。教区资料说明旧教堂北侧连接新巴洛克式扩建部分；沿外部步道辨认旧塔与新旧体量，不将私人院落当作通行捷径。",
+      "source": "https://www.altschwabing-katholisch.de/sankt-sylvester/pfarrkirche-sankt-sylvester",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-schwabinger-see",
+      "name": "施瓦宾湖岸 · Schwabinger See",
+      "lon": 11.5895,
+      "lat": 48.1718,
+      "description": "Berliner Straße 与 Schinkelstraße 之间的湖岸散步点。市政资料说明湖泊位于旧货运站区域，宁芬堡—比德施泰因运河流经这里；岛屿为水鸟提供栖息空间。请在岸边观察，不下水、不登岛。",
+      "source": "https://www.muenchen.de/freizeit/schwabing-tipps-fuer-entdecker",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-aumeister",
+      "name": "奥迈斯特林缘 · Aumeister",
+      "lon": 11.6201,
+      "lat": 48.1859,
+      "description": "英国花园北端、Sondermeierstraße 的林缘节点。可从餐馆与啤酒花园外围的公园道路继续探索北部草地和溪流；市政公园路线把这里列为向 Studentenstadt、Freimann 方向散步的落脚点。餐饮消费与营业情况另计。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/tour-durch-den-englischen-garten-muenchen",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session12-heilig-kreuz",
+      "name": "弗略特曼宁圣十字教堂外 · Heilig Kreuz",
+      "lon": 11.6301,
+      "lat": 48.2176,
+      "description": "Kurt-Landauer-Weg 的小教堂与墓园外部观察点，位于弗略特曼宁山脚。教堂保留了旧村落的痕迹；附近另有艺术作品《沉没的村庄》，不要把混凝土复制品误认成这座原教堂。室内开放须另查教区安排。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/heilig-kreuz-kirche-froettmaning",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "救世主教堂 · Erlöserkirche",
+      "lon": 11.5878,
+      "lat": 48.1647,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Erl%C3%B6serkirche-M%C3%BCnchen.jpg",
+      "author": "CineAmigo",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "教区确认的 Theodor Fischer 作品；建模先处理其作为街道轴线端景的整体轮廓。",
+        "外观参考南德中世纪乡村教堂，结合罗曼式与哥特式意向；避免把它处理为纯粹的哥特式尖塔教堂。",
+        "外墙开口、塔楼与主体的比例须对照照片；教区所述的新艺术风格柱头属于室内细节，不能直接移植到外立面。"
+      ],
+      "source": "https://www.erloeserkirche.de/kirchenraum"
+    },
+    {
+      "name": "圣西尔维斯特教堂 · St. Sylvester",
+      "lon": 11.5922,
+      "lat": 48.1615,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:St._Sylvester_Muenchen_Schwabing.jpg",
+      "author": "Rufus46",
+      "license": "CC BY-SA 3.0 Unported — https://creativecommons.org/licenses/by-sa/3.0/ ; alternatively GFDL 1.2 or later",
+      "features": [
+        "将其建为旧教堂、北侧连接体与新教堂组成的复合体，不能简化为单一对称大厅。",
+        "保留旧塔的方形层段；教区说明这是建筑现存最古老的部分。",
+        "旧建筑有巴洛克改造，新扩建部分为 Hermann Buchert 的新巴洛克式设计；区分新旧体量，再依照片补足轮廓。"
+      ],
+      "source": "https://www.altschwabing-katholisch.de/sankt-sylvester/pfarrkirche-sankt-sylvester"
+    },
+    {
+      "name": "弗略特曼宁圣十字教堂 · Heilig-Kreuz-Kirche",
+      "lon": 11.6303,
+      "lat": 48.2178,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Heilig-Kreuz-Kirche_Fr%C3%B6ttmaning_01.jpg",
+      "author": "H.Helmlechner",
+      "license": "CC BY-SA 4.0 International — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "按市政资料确认的晚期罗曼式小教堂处理体量，避免以现代大教堂尺度放大。",
+        "以照片校对塔、主体与屋顶的相对关系，并保留教堂旁墓园和山脚空地的环境层次。",
+        "原教堂与附近《沉没的村庄》混凝土复制品是两个对象；本条只对应原教堂，不使用复制品半埋入山坡的造型。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/heilig-kreuz-kirche-froettmaning"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session12-alt-schwabing-walk",
+      "name": "从自由广场到老施瓦宾：街角与两座教堂",
+      "stops": ["session12-muenchner-freiheit", "session12-erloeserkirche", "session12-wedekindplatz", "session12-st-sylvester"],
+      "description": "从自由广场沿 Ungererstraße 人行道向北看救世主教堂，随后返回 Feilitzschstraße 向东到韦德金德广场，再到 Biedersteiner Straße 的圣西尔维斯特教堂外。比较主干道端景、小广场和旧村教堂的空间差异。建议预留约35—50分钟含停留，这是策划估算而非实测；按现场路口过街，不穿越教堂建筑或私人院落。"
+    }
+  ],
+  "sources": [
+    {"url":"https://stadt.muenchen.de/service/info/schwabingfreimann/10314010/","title":"慕尼黑市：KulturGeschichtsPfad Schwabing-Freimann，确认第12区由施瓦宾与弗赖曼组成"},
+    {"url":"https://www.muenchen.de/stadtteile/schwabing-wissenswertes-tipps-und-infos","title":"慕尼黑城市门户：施瓦宾、自由广场与救世主教堂"},
+    {"url":"https://www.muenchen.de/freizeit/schwabing-tipps-fuer-entdecker","title":"慕尼黑城市门户：韦德金德广场、圣西尔维斯特与施瓦宾湖"},
+    {"url":"https://www.erloeserkirche.de/kirchenraum","title":"救世主教区：建筑形式与城市轴线位置"},
+    {"url":"https://www.erloeserkirche.de/baumeister-theodor-fischer","title":"救世主教区：建筑师 Theodor Fischer"},
+    {"url":"https://www.altschwabing-katholisch.de/sankt-sylvester/pfarrkirche-sankt-sylvester","title":"老施瓦宾教区：圣西尔维斯特的新旧教堂与建筑史"},
+    {"url":"https://www.muenchen.de/sehenswuerdigkeiten/tour-durch-den-englischen-garten-muenchen","title":"慕尼黑城市门户：英国花园路线与北端 Aumeister"},
+    {"url":"https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/heilig-kreuz-kirche-froettmaning","title":"慕尼黑城市门户：弗略特曼宁圣十字教堂"},
+    {"url":"https://www.muenchen.de/sehenswuerdigkeiten/11-muenchen-geheimtipps-versteckte-orte-entdecken","title":"慕尼黑城市门户：原教堂与《沉没的村庄》的区别、室内访问限制"},
+    {"url":"https://commons.wikimedia.org/wiki/Category:Erl%C3%B6serkirche_(Munich)","title":"Commons：救世主教堂对象位置，用于近似锚点"},
+    {"url":"https://www.openstreetmap.org/way/23968589","title":"OSM：Wedekindplatz 对象；坐标经 Hochschule München 的 Outdooractive 地点页交叉核对"},
+    {"url":"https://www.outdooractive.com/de/poi/muenchen-ingolstadt/wedekindplatz/46370378/","title":"慕尼黑应用科技大学旅游学院地点页：Wedekindplatz 坐标"},
+    {"url":"https://www.openstreetmap.org/way/36965597","title":"OSM：St. Sylvester 建筑对象；坐标经 karte.bayern 的 OSM 镜像条目核对"},
+    {"url":"https://karte.bayern/poi/ort/st-sylvester-80802-muenchen-way-36965597","title":"OSM 派生地点页：St. Sylvester 坐标与对象编号"},
+    {"url":"https://commons.wikimedia.org/wiki/Category:Schwabinger_See","title":"Commons：施瓦宾湖位置；岸边锚点为在该位置附近的近似偏移"},
+    {"url":"https://commons.wikimedia.org/wiki/File:Muenchen_Wirtschaft_zum_Aumeister_06.jpg","title":"Commons：Aumeister 地址与拍摄点，用作外围近似导航参考"},
+    {"url":"https://commons.wikimedia.org/wiki/File:Erl%C3%B6serkirche-M%C3%BCnchen.jpg","title":"救世主教堂照片：CineAmigo，CC BY-SA 3.0"},
+    {"url":"https://commons.wikimedia.org/wiki/File:St._Sylvester_Muenchen_Schwabing.jpg","title":"圣西尔维斯特照片：Rufus46，CC BY-SA 3.0 / GFDL"},
+    {"url":"https://commons.wikimedia.org/wiki/File:Heilig-Kreuz-Kirche_Fr%C3%B6ttmaning_01.jpg","title":"圣十字教堂照片：H.Helmlechner，CC BY-SA 4.0；含拍摄位置"}
+  ],
+  "limitations": [
+    "全部坐标为 WGS84 近似户外导航锚点，不是测量坐标、行政边界或经验证的建筑入口；建筑锚点同样不代表几何中心。",
+    "OSM 接口在本次检索中未能直接读取；韦德金德广场与圣西尔维斯特坐标通过标明 OSM 对象的派生页面或院校地点页交叉核对。",
+    "施瓦宾湖岸点在 Commons 湖泊定位附近作近似偏移；Aumeister 与圣十字教堂外点参考 Commons 拍摄坐标，尚未现场核验道路、门禁与碰撞。",
+    "照片只提供参考页和署名许可，不嵌入或下载原图；照片所示状态不保证与当前现场一致。圣西尔维斯特参考照片分辨率较低，细部仍需后续补充。",
+    "建模要点只说明来源支持的形制或需要对照的关系，不提供未经测量的高度、开间或精确尺寸。",
+    "步行线为本包策划的地面探索建议，不是官方导览或导航计算结果；时间为估算，现场施工、活动和教堂开放安排须另核实。"
+  ]
+}

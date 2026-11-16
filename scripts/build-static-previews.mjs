@@ -20,8 +20,8 @@ function replaceOnce(text, search, replacement) {
   return text.slice(0, index) + replacement + text.slice(index + search.length);
 }
 
-const page = await readFile(path.join(project, 'index.html'), 'utf8');
-let main = await readFile(path.join(project, 'src/anime_main.js'), 'utf8');
+const page = await readFile(path.join(project, 'render_v3.html'), 'utf8');
+let main = await readFile(path.join(project, 'src/anime_render_v3.js'), 'utf8');
 for (const name of ['anime_architecture_detail.js', 'anime_environment_detail.js']) {
   const source = await readFile(path.join(project, 'src', name), 'utf8');
   const url = `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
@@ -34,7 +34,7 @@ main = replaceOnce(main, "new URLSearchParams(location.search).get('render')",
 await mkdir(outDir, { recursive: true });
 for (const view of views) {
   let html = replaceOnce(page, '<html lang="zh-CN">', `<html lang="zh-CN" data-render="${view}">`);
-  html = replaceOnce(html, '<script type="module" src="./src/anime_main.js"></script>',
+  html = replaceOnce(html, '<script type="module" src="./src/anime_render_v3.js"></script>',
     `<script type="module">${main}</script>`);
   await writeFile(path.join(outDir, `${view}.html`), html);
 }

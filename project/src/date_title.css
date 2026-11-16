@@ -1,0 +1,187 @@
+/* Every menu rule is scoped to dt-*; the world continues rendering behind it. */
+body.dt-hud-hidden #hud,
+body.dt-hud-hidden #prompt { opacity: 0; }
+
+.dt-root {
+  --dt-gold: #f5d878;
+  --dt-cream: #f0e8c8;
+  --dt-muted: #bfb5ac;
+  position: fixed; inset: 0; z-index: 100;
+  color: var(--dt-cream); font: 14px/1.6 'Nunito', 'Klee One', sans-serif;
+  opacity: 0; transition: opacity .4s ease; isolation: isolate;
+  overscroll-behavior: contain;
+}
+.dt-root[hidden] { display: none; }
+.dt-root *, .dt-root *::before, .dt-root *::after { box-sizing: border-box; }
+.dt-visible { opacity: 1; }
+.dt-vignette, .dt-petals, .dt-iris { position: absolute; inset: 0; pointer-events: none; }
+.dt-vignette {
+  background: linear-gradient(90deg, rgba(8,6,20,.93), rgba(8,6,20,.64) 38%, rgba(8,6,20,.08) 75%),
+    linear-gradient(0deg, rgba(8,6,20,.7), transparent 26%, transparent 78%, rgba(8,6,20,.25));
+}
+.dt-root:not([data-screen="title"]) .dt-vignette {
+  background: radial-gradient(ellipse at center, rgba(8,6,20,.3), rgba(8,6,20,.62));
+  backdrop-filter: blur(3px);
+}
+.dt-petals { overflow: hidden; }
+.dt-petal {
+  position: absolute; top: -20px; left: var(--dt-x); width: var(--dt-size); height: calc(var(--dt-size) * .62);
+  border-radius: 80% 10% 70% 20%; background: linear-gradient(130deg, #f9d9dc, #d68d9a);
+  opacity: 0; animation: dt-petal-fall var(--dt-duration) var(--dt-delay) infinite linear;
+}
+@keyframes dt-petal-fall {
+  0% { opacity: 0; transform: translate3d(0,-15px,0) rotate(0deg); }
+  12% { opacity: .62; } 85% { opacity: .42; }
+  100% { opacity: 0; transform: translate3d(var(--dt-drift),105vh,0) rotate(400deg); }
+}
+.dt-surface {
+  position: relative; height: 100%; width: 100%; display: grid; place-items: center;
+  padding: 28px 24px; overflow-y: auto; overscroll-behavior: contain;
+  opacity: 1; transform: translateY(0); transition: opacity .2s ease, transform .2s ease;
+}
+.dt-swapping { opacity: 0; transform: translateY(7px); pointer-events: none; }
+.dt-title { width: min(470px, 44vw); justify-self: start; margin-left: clamp(24px, 6.4vw, 126px); padding: 20px 0 35px; }
+.dt-eyebrow { font-size: 10px; letter-spacing: .21em; font-weight: 600; color: var(--dt-gold); margin: 0 0 24px; }
+.dt-star { font-size: 17px; margin-right: 8px; vertical-align: middle; }
+.dt-chapter { display: flex; align-items: center; gap: 12px; color: var(--dt-muted); font-size: 10px; letter-spacing: .16em; margin: 0 0 12px; }
+.dt-chapter span { display: inline-block; height: 1px; width: 35px; background: rgba(220,185,90,.4); }
+.dt-logo { font-family: 'Klee One', serif; font-weight: 400; line-height: 1.3; margin: 0; white-space: nowrap; letter-spacing: -.045em; font-size: clamp(44px, 4.6vw, 78px); text-shadow: 0 3px 25px rgba(0,0,0,.3); }
+.dt-logo em { color: var(--dt-gold); font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.14em; }
+.dt-subtitle { color: #dfcfa3; letter-spacing: .35em; font: 20px/1.8 'Klee One', serif; margin: 8px 0 27px; }
+.dt-subtitle span { padding: 0 9px; }
+.dt-intro { font: 15px/1.95 'Klee One', serif; color: #c5bfc0; margin: 0 0 30px; }
+.dt-menu { display: grid; gap: 10px; }
+.dt-title .dt-menu { max-width: 330px; }
+.dt-button {
+  appearance: none; display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; min-height: 48px; padding: 11px 18px; border: 1px solid rgba(220,185,90,.3);
+  border-radius: 14px; background: rgba(8,6,20,.72); color: var(--dt-cream);
+  font: inherit; cursor: pointer; backdrop-filter: blur(12px);
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.dt-button:hover { background: rgba(53,43,40,.9); border-color: rgba(245,216,120,.65); transform: translateY(-1px); }
+.dt-primary { justify-content: space-between; padding-inline: 23px; color: #241b18; background: #f5d878; border-color: #f5d878; font-weight: 700; box-shadow: 0 4px 24px rgba(245,216,120,.08); }
+.dt-primary:hover { background: #ffe699; border-color: #ffe699; }
+.dt-primary > span { font-size: 22px; font-weight: 400; }
+.dt-menu-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dt-button-note { color: #afa5a3; font-size: 11px; margin-left: auto; }
+.dt-continue:not(.dt-primary) { justify-content: flex-start; padding-inline: 23px; }
+.dt-subtle { background: transparent; border-color: transparent; color: var(--dt-muted); }
+.dt-keyhint { color: #b5a99c; font-size: 10px; letter-spacing: .05em; margin: 18px 0 0; }
+.dt-keyhint > span { margin: 0 9px; }
+.dt-root kbd { display: inline-block; min-width: 21px; padding: 1px 5px; border: 1px solid rgba(220,185,90,.22); border-radius: 5px; font: 10px/1.65 'Nunito', sans-serif; text-align: center; color: #d9ccb0; }
+.dt-scene-note { position: absolute; right: 6%; bottom: 16%; text-align: right; display: grid; justify-items: end; pointer-events: none; text-shadow: 0 2px 12px #080614; }
+.dt-scene-note > span { font-size: 9px; letter-spacing: .17em; color: #eadcc1; }
+.dt-scene-note i { width: 48px; height: 1px; background: rgba(245,216,120,.5); margin: 15px 0; }
+.dt-scene-note strong { font: italic 28px/1.3 'Cormorant Garamond', serif; font-weight: 400; }
+.dt-scene-note small { font: 11px/1.8 'Klee One', serif; letter-spacing: .1em; margin-top: 5px; }
+.dt-footer { position: absolute; bottom: 22px; left: 6.4%; right: 6%; display: flex; justify-content: space-between; color: #bdb2a0; font-size: 9px; letter-spacing: .13em; pointer-events: none; }
+.dt-card { width: min(100%, 510px); padding: 32px 36px 24px; border: 1px solid rgba(220,185,90,.3); border-radius: 20px; background: rgba(8,6,20,.9); backdrop-filter: blur(18px); box-shadow: 0 20px 90px rgba(0,0,0,.35); margin: auto; }
+.dt-card .dt-eyebrow { margin-bottom: 10px; font-size: 9px; }
+.dt-heading { font: 30px/1.4 'Klee One', serif; font-weight: 400; color: var(--dt-cream); margin: 0 0 10px; }
+.dt-description { color: var(--dt-muted); font-size: 12px; margin: 0 0 24px; }
+.dt-card .dt-keyhint { text-align: center; }
+.dt-progress { padding: 15px 0 24px; margin: 0 0 20px; border-top: 1px solid rgba(220,185,90,.16); border-bottom: 1px solid rgba(220,185,90,.16); }
+.dt-section-label { font-size: 10px; color: var(--dt-muted); margin: 0 0 6px; letter-spacing: .12em; }
+.dt-objective { color: var(--dt-gold); font: 14px/1.7 'Klee One', serif; margin: 0 0 18px; }
+.dt-dots { list-style: none; padding: 0; margin: 0; display: flex; }
+.dt-dots li { position: relative; display: grid; justify-items: center; flex: 1; gap: 8px; color: #a39c9f; }
+.dt-dots li::before { content: ''; position: absolute; top: 12px; left: -50%; width: 100%; height: 1px; background: rgba(220,185,90,.2); z-index: -1; }
+.dt-dots li:first-child::before { display: none; }
+.dt-dots li > span { border: 1px solid rgba(220,185,90,.25); border-radius: 50%; width: 25px; height: 25px; text-align: center; background: #171322; font-size: 10px; line-height: 23px; }
+.dt-dots small { font-size: 9px; white-space: nowrap; }
+.dt-dots .dt-current, .dt-dots .dt-complete { color: var(--dt-gold); }
+.dt-dots .dt-current > span { background: var(--dt-gold); color: #241b18; border-color: var(--dt-gold); box-shadow: 0 0 15px #f5d87822; }
+.dt-dots .dt-complete > span { border-color: #a99052; }
+.dt-back { width: auto; min-width: 108px; margin-top: 22px; }
+.dt-settings { margin-top: 5px; }
+.dt-setting { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 15px 0; border-top: 1px solid rgba(220,185,90,.14); }
+.dt-setting h3, .dt-setting label { font-size: 13px; font-weight: 600; margin: 0; color: var(--dt-cream); }
+.dt-setting p { font-size: 10px; color: var(--dt-muted); margin: 3px 0 0; }
+.dt-segments { display: flex; gap: 3px; padding: 3px; border-radius: 12px; border: 1px solid rgba(220,185,90,.22); background: #ffffff03; }
+.dt-segment { min-width: 45px; min-height: 44px; padding: 8px; border: 0; border-radius: 9px; background: transparent; color: #bfb5ac; font: inherit; font-size: 12px; cursor: pointer; }
+.dt-segment[aria-pressed="true"] { color: var(--dt-gold); background: #f5d8781a; }
+.dt-toggle { display: flex; align-items: center; gap: 9px; min-height: 44px; background: transparent; border: 1px solid rgba(220,185,90,.25); color: var(--dt-cream); padding: 8px 12px; border-radius: 12px; cursor: pointer; }
+.dt-toggle span { width: 24px; height: 14px; border-radius: 20px; background: #f5d87833; position: relative; }
+.dt-toggle span::after { content: ''; position: absolute; top: 3px; left: 13px; width: 8px; height: 8px; background: var(--dt-gold); border-radius: 50%; transition: left .2s; }
+.dt-toggle[aria-pressed="true"] span::after { left: 3px; background: #bfb5ac; }
+.dt-toggle b { font: 11px 'Nunito', sans-serif; min-width: 48px; }
+.dt-range-wrap { width: 150px; display: flex; align-items: center; gap: 9px; }
+.dt-range { accent-color: var(--dt-gold); width: 104px; min-width: 0; height: 44px; cursor: pointer; background: transparent; }
+.dt-range-wrap output { font-size: 11px; color: var(--dt-gold); min-width: 37px; text-align: right; }
+.dt-controls { display: grid; grid-template-columns: 1fr 1fr; margin: 0; column-gap: 24px; }
+.dt-controls > div { min-height: 60px; padding: 10px 0; border-top: 1px solid rgba(220,185,90,.14); }
+.dt-controls dt, .dt-controls dd { margin: 0; }
+.dt-controls kbd { color: var(--dt-gold); font-size: 11px; }
+.dt-controls dd { color: #c5bfc0; font-size: 11px; margin-top: 5px; }
+.dt-touch-note { font-size: 11px; color: var(--dt-muted); background: #ffffff04; border-radius: 10px; padding: 12px; margin: 14px 0 0; }
+.dt-touch-note span { color: var(--dt-gold); margin-right: 4px; }
+.dt-credits { max-height: min(42vh, 350px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #a28a5366 transparent; text-align: center; padding: 0 10px 12px; font-size: 12px; color: var(--dt-muted); }
+.dt-credits p { margin: 4px 0; }
+.dt-credit-heart { color: #e7b9bd; font-size: 40px; line-height: 1.3; }
+.dt-credits .dt-credit-name { font: 24px 'Klee One', serif; color: var(--dt-gold); margin: 7px 0; }
+.dt-credit-rule { width: 42px; height: 1px; background: rgba(220,185,90,.3); margin: 25px auto; }
+.dt-credits h3 { color: var(--dt-cream); font-size: 12px; font-weight: 400; margin: 24px 0 8px; }
+.dt-credits .dt-credit-ending { font-family: 'Klee One', serif; color: var(--dt-cream); }
+.dt-credits .dt-credit-signature { font: italic 23px 'Cormorant Garamond', serif; color: var(--dt-gold); margin-top: 14px; }
+.dt-confirm-copy { margin: 25px 0 30px; font: 15px/2 'Klee One', serif; color: #d4c8b6; }
+.dt-confirm-restart { color: #e7b9bd; }
+.dt-iris { z-index: 3; opacity: 0; background: radial-gradient(ellipse at 55% 40%, #201b28, #080614 75%); transition: opacity .38s ease; }
+.dt-departing .dt-iris { opacity: 1; }
+.dt-button:focus-visible, .dt-segment:focus-visible, .dt-toggle:focus-visible, .dt-range:focus-visible, .dt-credits:focus-visible { outline: 2px solid var(--dt-gold); outline-offset: 4px; }
+
+@media (min-width: 1600px) { .dt-title { width: 540px; } }
+@media (max-width: 700px) {
+  .dt-vignette { background: linear-gradient(90deg, rgba(8,6,20,.84), rgba(8,6,20,.42)), linear-gradient(0deg, rgba(8,6,20,.8), transparent 65%); }
+  .dt-surface { padding: 24px 20px; }
+  .dt-title { width: min(100%, 400px); margin: 0; justify-self: center; padding: 22px 4px 48px; }
+  .dt-logo { font-size: clamp(42px, 9.4vw, 64px); }
+  .dt-title .dt-menu { max-width: none; }
+  .dt-eyebrow { font-size: 8px; letter-spacing: .13em; }
+  .dt-scene-note { display: none; }
+  .dt-footer { left: 24px; right: 24px; bottom: 16px; font-size: 8px; }
+  .dt-card { padding: 27px 24px 22px; }
+  .dt-heading { font-size: 27px; }
+  .dt-setting { gap: 10px; }
+  .dt-setting p { font-size: 9px; }
+  .dt-segment { min-width: 39px; padding-inline: 6px; }
+  .dt-range-wrap { width: 135px; }
+  .dt-range { width: 89px; }
+  .dt-dots small { font-size: 8px; }
+}
+@media (max-width: 390px) {
+  .dt-surface { padding: 20px 14px; }
+  .dt-card { padding: 24px 18px 20px; }
+  .dt-controls { column-gap: 16px; }
+  .dt-description { font-size: 11px; }
+}
+@media (max-height: 640px) and (min-width: 701px) {
+  .dt-title { padding: 0 0 24px; }
+  .dt-title .dt-eyebrow { margin-bottom: 12px; }
+  .dt-logo { font-size: 50px; }
+  .dt-subtitle { margin-bottom: 14px; }
+  .dt-intro { margin-bottom: 16px; }
+  .dt-card { padding-top: 24px; }
+}
+@media (max-height: 700px) and (min-width: 701px) {
+  .dt-surface { padding-block: 18px; }
+  .dt-card { padding: 24px 30px 20px; }
+  .dt-card .dt-description { margin-bottom: 18px; }
+  .dt-card .dt-keyhint { margin-top: 12px; }
+  .dt-progress { padding: 12px 0 18px; margin-bottom: 16px; }
+  .dt-setting { padding-block: 10px; }
+  .dt-controls > div { min-height: 52px; padding-block: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dt-petal { animation: none; }
+  .dt-root, .dt-surface, .dt-iris, .dt-button { transition-duration: .01ms; }
+}
+
+/* A short landscape window must scroll from its real top, not a centred overflow. */
+@media (max-height: 480px) {
+ .dt-surface { place-items: start center; padding: 12px; }
+ .dt-title { margin-block: 0; padding-block: 8px 48px; }
+ .dt-card { margin-block: 0; width: min(510px,100%); }
+ .dt-footer { position: fixed; bottom: 8px; font-size: 8px; }
+ .dt-setting { flex-wrap: wrap; }
+}

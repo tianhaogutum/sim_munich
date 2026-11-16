@@ -1,0 +1,194 @@
+.di-root {
+  --di-gold: #F5D878;
+  --di-edge: rgba(245, 216, 120, .38);
+  --di-glass: rgba(13, 12, 30, .78);
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  color: #f6eed7;
+  font: 13px/1.4 'Nunito', system-ui, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.di-root[hidden], .di-root [hidden] { display: none !important; }
+/* Reserve the bottom corners for the stick and action buttons. */
+body.di-touch .dm-panel { top: 230px; bottom: auto; }
+body.di-touch .dc-launcher { bottom: calc(220px + env(safe-area-inset-bottom)); }
+body.di-touch #date-audio-root { top: 10px !important; bottom: auto !important; z-index: 26 !important; }
+.di-root * { box-sizing: border-box; }
+
+.di-look {
+  position: absolute;
+  inset: 0 0 0 50%;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.di-look-hint {
+  position: absolute;
+  top: 45%;
+  right: max(16px, env(safe-area-inset-right));
+  padding: 6px 10px;
+  border: 1px solid rgba(245, 216, 120, .16);
+  border-radius: 20px;
+  background: rgba(13, 12, 30, .4);
+  color: rgba(255, 243, 209, .8);
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.di-movement {
+  position: absolute;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  width: 142px;
+  text-align: center;
+}
+
+.di-joystick {
+  position: relative;
+  width: 142px;
+  height: 142px;
+  border: 1px solid var(--di-edge);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 216, 120, .09), rgba(13, 12, 30, .6) 65%);
+  box-shadow: inset 0 0 22px rgba(0, 0, 0, .22), 0 5px 20px rgba(0, 0, 0, .14);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.di-stick-ring { position: absolute; inset: 23%; border: 1px dashed rgba(245, 216, 120, .2); border-radius: 50%; }
+.di-stick-mark { position: absolute; color: rgba(245, 216, 120, .6); font-size: 12px; line-height: 1; }
+.di-stick-up { top: 9px; left: calc(50% - 6px); }
+.di-stick-down { bottom: 9px; left: calc(50% - 6px); }
+.di-stick-left { left: 11px; top: calc(50% - 8px); font-size: 20px; }
+.di-stick-right { right: 11px; top: calc(50% - 8px); font-size: 20px; }
+
+.di-stick-knob {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  left: calc(50% - 28px);
+  top: calc(50% - 28px);
+  border: 1px solid rgba(245, 216, 120, .65);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, rgba(245, 216, 120, .25), rgba(22, 20, 39, .94));
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .4), inset 0 0 0 5px rgba(245, 216, 120, .04);
+  will-change: transform;
+}
+
+.di-engaged { border-color: var(--di-gold); }
+.di-running .di-stick-knob { background: rgba(129, 101, 44, .92); box-shadow: 0 0 16px rgba(245, 216, 120, .3); }
+.di-move-hint { display: block; margin-top: 8px; font-size: 11px; text-shadow: 0 1px 4px #000; }
+
+.di-actions {
+  position: absolute;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: calc(38px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(2, 76px);
+  gap: 10px;
+  align-items: stretch;
+}
+
+.di-button, .di-hud-toggle {
+  appearance: none;
+  min-width: 56px;
+  min-height: 56px;
+  margin: 0;
+  padding: 10px 7px;
+  border: 1px solid var(--di-edge);
+  border-radius: 18px;
+  background: var(--di-glass);
+  color: var(--di-gold);
+  font: inherit;
+  font-weight: 600;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
+  pointer-events: auto;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.di-button:active, .di-hud-toggle:active { background: rgba(111, 89, 41, .92); transform: translateY(1px); }
+.di-button:focus-visible, .di-hud-toggle:focus-visible { outline: 2px solid var(--di-gold); outline-offset: 4px; }
+.di-interact { background: rgba(57, 45, 31, .9); border-color: rgba(245, 216, 120, .7); }
+.di-back { color: #e7e0cb; }
+.di-shutter { background: rgba(245, 216, 120, .94); color: #272136; border-color: #fff0bd; }
+
+.di-context {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 172px;
+  padding: 8px 10px;
+  border: 1px solid rgba(245, 216, 120, .2);
+  border-radius: 12px;
+  background: var(--di-glass);
+  text-align: center;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.di-context:empty { display: none; }
+
+.di-hud-toggle {
+  position: absolute;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: calc(202px + env(safe-area-inset-bottom));
+  min-height: 56px;
+  padding: 8px 11px;
+  border-color: rgba(245, 216, 120, .18);
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #e2d7b8;
+  background: rgba(13, 12, 30, .58);
+}
+
+/* This switch affects only our hints. Shared HUD layout belongs to the entry. */
+.di-hints-hidden .di-hint { visibility: hidden; }
+.di-locked .di-movement { display: none; }
+.di-locked .di-hud-toggle { bottom: calc(38px + env(safe-area-inset-bottom)); }
+.di-photo-mode .di-interact { display: none; }
+
+@media (max-width: 359px) {
+  .di-movement { left: max(12px, env(safe-area-inset-left)); width: 120px; }
+  .di-joystick { width: 120px; height: 120px; }
+  .di-actions { right: max(12px, env(safe-area-inset-right)); grid-template-columns: repeat(2, 68px); gap: 8px; }
+  .di-hud-toggle { left: max(12px, env(safe-area-inset-left)); bottom: calc(182px + env(safe-area-inset-bottom)); }
+  .di-locked .di-hud-toggle { bottom: calc(38px + env(safe-area-inset-bottom)); }
+  .di-context { width: 148px; }
+}
+
+@media (max-height: 480px) and (min-width: 600px) {
+  .di-movement { bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .di-actions { bottom: calc(26px + env(safe-area-inset-bottom)); }
+  .di-hud-toggle { bottom: calc(190px + env(safe-area-inset-bottom)); }
+  .di-look-hint { top: 30%; }
+}
+
+/* Responsive utility rows keep touch targets separate from movement controls. */
+@media (max-width: 700px) {
+ body.di-touch #date-audio-root { top: auto !important; bottom: calc(220px + env(safe-area-inset-bottom)) !important; left: auto !important; right: 12px !important; }
+ body.di-touch .dm-panel { top: 300px; left: 12px; width: 150px; padding: 8px; box-sizing: border-box; }
+ body.di-touch .dm-toggle { min-height: 44px; }
+ body.di-touch .dc-launcher { bottom: calc(330px + env(safe-area-inset-bottom)); right: 12px; min-height: 44px; max-width: calc(100vw - 202px); }
+ body.di-touch .di-look-hint { display: none; }
+ body.di-touch .ds-menu { min-height: 44px; }
+ body.di-touch .di-context { max-width: calc(100vw - 190px); }
+}
+@media (max-height: 480px) and (min-width: 600px) {
+ body.di-touch #status-panel { display: none; }
+ body.di-touch #days-counter { top: 12px; }
+ body.di-touch .dm-panel { display: none; }
+ body.di-touch .dc-launcher { top: 180px; bottom: auto; right: 12px; min-height: 44px; }
+ body.di-touch #date-audio-root { top: 12px !important; right: 82px !important; left: auto !important; bottom: auto !important; }
+ body.di-touch .di-joystick { width: 120px; height: 120px; }
+ body.di-touch .di-movement { width: 120px; left: 14px; bottom: 10px; }
+ body.di-touch .di-hud-toggle { bottom: 154px; min-height: 44px; }
+ body.di-touch .di-actions { bottom: 12px; }
+ body.di-touch .di-look-hint { display: none; }
+}

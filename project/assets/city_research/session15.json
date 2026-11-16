@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "id": "session15",
+  "district": "Trudering-Riem",
+  "places": [
+    {
+      "id": "session15-kulturzentrum-trudering",
+      "name": "Kulturzentrum Trudering · 特鲁德灵文化中心",
+      "lon": 11.670628,
+      "lat": 48.1195616,
+      "district": "Trudering-Riem",
+      "type": "culture",
+      "description": "Wasserburger Landstraße 边的社区文化中心；从街侧观察入口与公共活动空间。",
+      "source": "https://www.muenchen.de/leben/diverse-orte/kulturzentrum-trudering",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "辨认文化中心入口标识，在街边比较文化场馆与邻里商店的尺度。",
+      "arrivalRadius": 30,
+      "access": "探索在公共人行道完成；室内按活动安排开放，部分活动需票。",
+      "coordinateSource": "https://www.openstreetmap.org/node/7803331809",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 7803331809，位于 path 道路 514803732，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-st-peter-paul",
+      "name": "St. Peter und Paul · 特鲁德灵圣彼得保罗堂",
+      "lon": 11.6697887,
+      "lat": 48.1267329,
+      "district": "Trudering-Riem",
+      "type": "historic-building",
+      "description": "Kirchtrudering 的教堂节点，官网将位置列于 Kirchtruderinger Straße 与 Lehrer-Götz-Weg 交会附近。",
+      "source": "https://www.st-peter-und-paul-trudering.de/unsere-kirche/unsere-kirche.htm",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "在教堂西侧铺装步道寻找旧村落街道与教堂建筑的联系。",
+      "arrivalRadius": 30,
+      "access": "只需外部步道；室内开放以堂区公告为准，不进入附属私用院落。",
+      "coordinateSource": "https://www.openstreetmap.org/node/10747771540",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 10747771540，位于 path 道路 1155710946，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-manchester-memorial",
+      "name": "Manchesterplatz · 曼联空难纪念地",
+      "lon": 11.6767396,
+      "lat": 48.1259007,
+      "district": "Trudering-Riem",
+      "type": "public-art",
+      "description": "纪念 1958 年慕尼黑空难遇难者的广场；纪念石由曼联俱乐部设立。",
+      "source": "https://stadt.muenchen.de/infos/denkmaeler-muenchen.html",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从砾石步道阅读纪念信息，辨认纪念空间与两侧街路的边界。",
+      "arrivalRadius": 30,
+      "access": "公共纪念地；保持安静，不跨越花坛或驶入邻接道路。",
+      "coordinateSource": "https://www.openstreetmap.org/node/12527884956",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 12527884956，位于 footway 道路 216979709，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-st-augustinus",
+      "name": "St. Augustinus · 圣奥古斯丁堂街侧",
+      "lon": 11.654653,
+      "lat": 48.1177304,
+      "district": "Trudering-Riem",
+      "type": "community-landmark",
+      "description": "位于 St.-Augustinus-Straße 2 的街区教堂，是花园城区里的公共识别点。",
+      "source": "https://www2.erzbistum-muenchen.de/pfarrei/st-augustinus-muenchen/kontakt",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "留在街边人行道，比较教堂主体与周边较低的街区轮廓。",
+      "arrivalRadius": 35,
+      "access": "公共街侧观察；教堂入口有台阶，室内依堂区安排开放。",
+      "coordinateSource": "https://www.openstreetmap.org/node/13808002281",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 13808002281，位于 footway 道路 1510484585，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-st-florian",
+      "name": "St. Florian · 里姆圣弗洛里安堂外",
+      "lon": 11.6915949,
+      "lat": 48.13063,
+      "district": "Trudering-Riem",
+      "type": "community-landmark",
+      "description": "位于 Platz der Menschenrechte 的教会中心；围合墙、入口与塔楼共同界定广场边缘。",
+      "source": "https://www.sankt-florian.org/unsere-kirche/unsere-kirche.htm",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "由南侧步行区观察塔楼及公共广场，不进入学校或幼儿园区域。",
+      "arrivalRadius": 35,
+      "access": "室外公共广场；教堂内部按公告开放，内院不作为必经通道。",
+      "coordinateSource": "https://www.openstreetmap.org/node/27147261",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 27147261，位于 pedestrian 道路 23985287，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-wappenhalle",
+      "name": "Wappenhalle · 旧机场徽章大厅外",
+      "lon": 11.689003,
+      "lat": 48.1370936,
+      "district": "Trudering-Riem",
+      "type": "historic-building",
+      "description": "保留下来的里姆机场建筑之一；在 Konrad-Zuse-Platz 南侧人行道看历史建筑与新办公楼的对比。",
+      "source": "https://stadt.muenchen.de/dam/jcr%3Aba53cd9f-2abc-4977-bd8d-d6561f74fc7c/KulturGeschichtsPfad-15-Trudering-Riem.pdf",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从公共街边辨认大厅立面，寻找旧机场建筑在新城区中的位置。",
+      "arrivalRadius": 30,
+      "access": "只在公共人行道观察；大厅及商务院落属活动或办公用途，未经开放不得进入。",
+      "coordinateSource": "https://www.openstreetmap.org/node/13930455870",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 13930455870，位于 footway 道路 1528692740，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-kopfbau",
+      "name": "Kopfbau Riem · 旧机场看台端楼",
+      "lon": 11.6831041,
+      "lat": 48.1297894,
+      "district": "Trudering-Riem",
+      "type": "culture",
+      "description": "旧机场看台售票建筑现在承载社会与文化活动；此点设于外围人行道。",
+      "source": "https://experimentkopfbau.de/interessenbekundung/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从 Werner-Eckert-Straße 旁步道观察端楼，不攀爬旧看台。",
+      "arrivalRadius": 30,
+      "access": "建筑按具体活动开放；只要求公共街边观察，旧看台及围挡区域不通行。",
+      "coordinateSource": "https://www.openstreetmap.org/node/265046505",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 265046505，位于 footway 道路 24413021，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session15-st-martin-riem",
+      "name": "St. Martin Riem · 里姆圣马丁堂",
+      "lon": 11.6816439,
+      "lat": 48.1398315,
+      "district": "Trudering-Riem",
+      "type": "historic-building",
+      "description": "位于 Martin-Empl-Ring 15 的旧村教堂；堂区提供教堂外部、纪念碑及旧墓园的介绍。",
+      "source": "https://www.st-martin-riem.de/unsere-kirche/unsere-kirche.htm",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿外部步道观察教堂体量，比较旧里姆村落与邻近新城区。",
+      "arrivalRadius": 30,
+      "access": "只需教堂外公共访客步道；开放、礼拜及墓园规定以现场为准。",
+      "coordinateSource": "https://www.openstreetmap.org/node/9891379920",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 9891379920，位于 footway 道路 1079005988，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    }
+  ],
+  "buildings": [],
+  "routes": [
+    {
+      "id": "session15-trudering-village",
+      "name": "旧村、记忆与文化中心",
+      "stops": [
+        "session15-st-peter-paul",
+        "session15-manchester-memorial",
+        "session15-kulturzentrum-trudering",
+        "session15-st-augustinus"
+      ],
+      "description": "从 Kirchtrudering 的教堂走向空难纪念地，再联系社区文化中心与花园街区教堂。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 2566,
+      "distanceKind": "straight-line segments"
+    },
+    {
+      "id": "session15-riem-airport-village",
+      "name": "里姆：旧村落与机场遗存",
+      "stops": [
+        "session15-st-martin-riem",
+        "session15-wappenhalle",
+        "session15-st-florian",
+        "session15-kopfbau"
+      ],
+      "description": "在旧村教堂、机场大厅、新城区教会中心与旧看台端楼之间比较城区的不同形成阶段。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 2006,
+      "distanceKind": "straight-line segments"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/leben/diverse-orte/kulturzentrum-trudering",
+      "title": "慕尼黑城市门户：Kulturzentrum Trudering"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/7803331809",
+      "title": "Kulturzentrum Trudering · 特鲁德灵文化中心：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/514803732",
+      "title": "Kulturzentrum Trudering · 特鲁德灵文化中心：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.st-peter-und-paul-trudering.de/unsere-kirche/unsere-kirche.htm",
+      "title": "堂区官网：St. Peter und Paul 位置与教堂"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/10747771540",
+      "title": "St. Peter und Paul · 特鲁德灵圣彼得保罗堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1155710946",
+      "title": "St. Peter und Paul · 特鲁德灵圣彼得保罗堂：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/denkmaeler-muenchen.html",
+      "title": "慕尼黑市政府：Manchester United Memorial"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/12527884956",
+      "title": "Manchesterplatz · 曼联空难纪念地：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/216979709",
+      "title": "Manchesterplatz · 曼联空难纪念地：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www2.erzbistum-muenchen.de/pfarrei/st-augustinus-muenchen/kontakt",
+      "title": "慕尼黑总教区：St. Augustinus 联系地址"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/13808002281",
+      "title": "St. Augustinus · 圣奥古斯丁堂街侧：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1510484585",
+      "title": "St. Augustinus · 圣奥古斯丁堂街侧：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.sankt-florian.org/unsere-kirche/unsere-kirche.htm",
+      "title": "堂区官网：St. Florian 建筑及位置"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/27147261",
+      "title": "St. Florian · 里姆圣弗洛里安堂外：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/23985287",
+      "title": "St. Florian · 里姆圣弗洛里安堂外：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3Aba53cd9f-2abc-4977-bd8d-d6561f74fc7c/KulturGeschichtsPfad-15-Trudering-Riem.pdf",
+      "title": "慕尼黑市文化局：KulturGeschichtsPfad 15 Trudering-Riem"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/13930455870",
+      "title": "Wappenhalle · 旧机场徽章大厅外：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1528692740",
+      "title": "Wappenhalle · 旧机场徽章大厅外：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://experimentkopfbau.de/interessenbekundung/",
+      "title": "市文化局与社会局合作项目：Experiment Kopfbau"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/265046505",
+      "title": "Kopfbau Riem · 旧机场看台端楼：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/24413021",
+      "title": "Kopfbau Riem · 旧机场看台端楼：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.st-martin-riem.de/unsere-kirche/unsere-kirche.htm",
+      "title": "堂区官网：St. Martin Riem 建筑及外部导览"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/9891379920",
+      "title": "St. Martin Riem · 里姆圣马丁堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1079005988",
+      "title": "St. Martin Riem · 里姆圣马丁堂：OSM步行路径与通行标记"
+    }
+  ],
+  "limitations": [
+    "资料及地图核对日期为2026-11-09；坐标采用OSM标注的步行路径节点。地图级可步行核验不等于现场连续步行、无障碍或临时开放保证。",
+    "只设计公共室外到达点；教堂、文化场馆及墓园的内部通行受现场开放与活动安排约束，私人院落、施工区域和水面不作为探索目标。",
+    "路线距离以地球半径6371000米的Haversine距离逐段求和并四舍五入至米，属于直线分段估算；没有接入真实步行寻路。"
+  ]
+}

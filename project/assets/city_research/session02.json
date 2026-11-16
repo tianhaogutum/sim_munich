@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "id": "session02",
+  "district": "Ludwigsvorstadt-Isarvorstadt",
+  "places": [
+    {
+      "id": "session02-st-paul",
+      "name": "圣保禄堂前广场 · St. Paul",
+      "lon": 11.5542,
+      "lat": 48.1374,
+      "description": "从 St.-Pauls-Platz 的公共步行区域观察教堂及其高塔；这里靠近 Theresienwiese 北侧，适合辨认节庆场地与密集街区的交界。导航点在室外，不代表登塔入口。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/st-paul-oktoberfest-aussicht",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-theresienwiese",
+      "name": "特蕾西娅草坪 · Theresienwiese",
+      "lon": 11.5501,
+      "lat": 48.131,
+      "description": "开阔的城市节庆场地，举办啤酒节等活动；虽名为草坪，场地并非大片绿地。可观察大尺度空地与周边建筑的关系，活动搭建和拆除会改变通行路线。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/aussichtspunkte/theresienwiese",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-alter-suedfriedhof",
+      "name": "老南墓园 · Alter Südfriedhof",
+      "lon": 11.5657,
+      "lat": 48.13,
+      "description": "靠近北端的室外步行锚点。树木、墓碑和安静步道构成与商业街不同的空间；园内安葬有建筑师 Gärtner、Klenze 等人物。按现场开放时间进入，尊重墓地环境。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/staedtische-friedhoefe/alter-suedfriedhof",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-gaertnerplatz",
+      "name": "园丁广场 · Gärtnerplatz",
+      "lon": 11.576,
+      "lat": 48.1313,
+      "description": "以剧院、中央喷泉和花坛为辨识点的圆形广场。沿周边人行道观察放射状街口，以及剧院台阶与广场的空间联系。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/gaertnerplatz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-fraunhoferstrasse",
+      "name": "弗劳恩霍夫街 · Fraunhoferstraße",
+      "lon": 11.5734,
+      "lat": 48.1293,
+      "description": "选在 Klenzestraße 附近的街边步行锚点。街道连接 Müllerstraße 与 Reichenbachbrücke，沿线店铺和餐饮体现街区日常生活；步行时使用人行道与正式过街点。",
+      "source": "https://www.muenchen.travel/artikel/stadt-viertel/stadtspaziergang-glockenbachviertel",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-st-maximilian",
+      "name": "圣马克西米利安堂外 · St. Maximilian",
+      "lon": 11.5754,
+      "lat": 48.1265,
+      "description": "在 Auenstraße 一侧观察这座新罗曼式教堂。双塔与较低的塔顶轮廓是河畔的重要识别特征；此点只用于室外观看。",
+      "source": "https://www.muenchen.travel/artikel/stadt-viertel/stadtspaziergang-glockenbachviertel",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-reichenbach-west",
+      "name": "赖兴巴赫桥西端 · Reichenbachbrücke",
+      "lon": 11.5768,
+      "lat": 48.1277,
+      "description": "从 Isarvorstadt 一侧的桥头观察伊萨尔河与圣马克西米利安堂双塔。桥连接 Glockenbachviertel 与 Au，也是沿河散步的方向转换点。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/reichenbachbruecke",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session02-cornelius-west",
+      "name": "科内利乌斯桥西端 · Corneliusbrücke",
+      "lon": 11.5799,
+      "lat": 48.1299,
+      "description": "在 Corneliusstraße 接桥的人行区域停留，观察河面、博物馆岛南端和桥的走向；桥继续通往 Au。锚点保留在西岸街区一侧。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/bauwerke-und-denkmaeler/corneliusbruecke",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "圣保禄堂 · St. Paul",
+      "lon": 11.5542,
+      "lat": 48.1373,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:St_Paul_Kirche_M%C3%BCnchen_1.jpg",
+      "author": "Schlaier",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "以照片中的高塔、尖顶及阶梯式竖向轮廓作为远景识别要素。",
+        "外立面开窗、扶壁与石材色调应逐项对照照片，不能从单一视角推断背面。",
+        "保留教堂与前方公共空间的关系，不把照片中的地铁入口当作教堂入口。"
+      ],
+      "source": "https://commons.wikimedia.org/wiki/File:St_Paul_Kirche_M%C3%BCnchen_1.jpg"
+    },
+    {
+      "name": "圣马克西米利安堂 · St. Maximilian",
+      "lon": 11.5754,
+      "lat": 48.1264,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:17.05.2009_M%C3%BCnchen_-_panoramio_-_Sandor_Bordas.jpg",
+      "author": "Sandor Bordas",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "优先表现新罗曼式教堂的成对塔楼。",
+        "依据官方介绍保留现有较低的临时式塔顶轮廓，不复原战前尖顶。",
+        "河对岸照片适合校对双塔与长条教堂体量的远景关系；精细门窗需补充近景资料。"
+      ],
+      "source": "https://www.muenchen.travel/artikel/stadt-viertel/stadtspaziergang-glockenbachviertel"
+    },
+    {
+      "name": "园丁广场国家剧院 · Staatstheater am Gärtnerplatz",
+      "lon": 11.5764,
+      "lat": 48.1305,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Staatstheater_G%C3%A4rtnerplatz_Munich_5.jpg",
+      "author": "Chabe01",
+      "license": "CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/",
+      "features": [
+        "保留朝向圆形广场的正立面、中央入口与前方台阶。",
+        "对照照片提取横向檐线、重复窗列和立面色块；不据照片估算精确层高。",
+        "建筑师项目页确认立面曾修缮；以修缮后照片为参考，不混用施工期围挡形态。"
+      ],
+      "source": "https://www.atelier-achatz.de/en/works/theater-gaertnerplatz/"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session02-neighbourhood-to-isar",
+      "name": "从树荫墓园到伊萨尔河",
+      "stops": [
+        "session02-alter-suedfriedhof",
+        "session02-gaertnerplatz",
+        "session02-fraunhoferstrasse",
+        "session02-st-maximilian",
+        "session02-reichenbach-west",
+        "session02-cornelius-west"
+      ],
+      "description": "建议短线：从老南墓园北侧出发，经 Pestalozzistraße、Müllerstraße 到 Gärtnerplatz；沿 Klenzestraße 转 Fraunhoferstraße，再由 Auenstraße 看圣马克西米利安堂，返回 Reichenbachbrücke 西端，沿 Erhardstraße 的西岸人行区域走至 Corneliusbrücke。留意从安静绿地、圆形广场到河岸视野的变化。路线为人工串联的发现顺序，非逐路口导航；墓园关闭时从外侧街道起步。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://stadt.muenchen.de/rathaus/daten-fakten/bezirke.html",
+      "title": "慕尼黑市：25 个市辖区"
+    },
+    {
+      "url": "https://www.muenchen.travel/artikel/stadt-viertel/stadtspaziergang-glockenbachviertel",
+      "title": "München Tourismus：从老南墓园到博物馆岛的街区散步"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/gaertnerplatz",
+      "title": "慕尼黑市门户：Gärtnerplatz"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/staedtische-friedhoefe/alter-suedfriedhof",
+      "title": "慕尼黑市门户：Alter Südfriedhof"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/st-paul-oktoberfest-aussicht",
+      "title": "慕尼黑市门户：St. Paul 与 Theresienwiese"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/aussichtspunkte/theresienwiese",
+      "title": "慕尼黑市门户：Theresienwiese"
+    },
+    {
+      "url": "https://stadt.muenchen.de/infos/wiesnquerung.html",
+      "title": "慕尼黑市：Theresienwiese 活动搭拆期间的通行信息"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/reichenbachbruecke",
+      "title": "慕尼黑市门户：Reichenbachbrücke"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/bauwerke-und-denkmaeler/corneliusbruecke",
+      "title": "慕尼黑市门户：Corneliusbrücke"
+    },
+    {
+      "url": "https://www.atelier-achatz.de/en/works/theater-gaertnerplatz/",
+      "title": "Atelier Achatz：Gärtnerplatztheater 修缮项目"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:St_Paul_Kirche_M%C3%BCnchen_1.jpg",
+      "title": "Commons：St Paul Kirche München 1，Schlaier"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:17.05.2009_M%C3%BCnchen_-_panoramio_-_Sandor_Bordas.jpg",
+      "title": "Commons：St. Maximilian 河畔照片，Sandor Bordas"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Staatstheater_G%C3%A4rtnerplatz_Munich_5.jpg",
+      "title": "Commons：Staatstheater Gärtnerplatz Munich 5，Chabe01"
+    }
+  ],
+  "limitations": [
+    "坐标为人工选取、四位小数的 WGS84 近似室外导航锚点，非测绘点、建筑质心或无障碍入口；未逐点以 OSM 节点测定。",
+    "桥梁跨越街区边缘，本包将桥头锚点放在 Isarvorstadt 西岸；不以这些点定义行政边界。",
+    "照片页面的作者和许可已核对，仅链接参考页面，未下载或嵌入原图；后续使用照片须遵守署名与相同方式共享条件。",
+    "建筑特征用于建模方向，单张照片无法证明背面、精确尺寸、材料构造或全部细部。",
+    "路线未经现场实走或自动寻路验证，不保证当前围挡、道路施工、墓园开放时间及无障碍通行；Theresienwiese 尤其受活动搭拆影响。"
+  ]
+}

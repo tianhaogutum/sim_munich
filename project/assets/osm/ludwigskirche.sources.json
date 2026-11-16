@@ -1,0 +1,80 @@
+{
+  "attribution": "© OpenStreetMap contributors, ODbL",
+  "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "retrievedAt": "2026-11-09T10:01:20.003956+00:00",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "query": "[out:json][timeout:45];(way[\"building\"](48.14630,11.58155,48.15025,11.58455);relation[\"building\"](48.14630,11.58155,48.15025,11.58455);way[\"highway\"=\"steps\"](48.14630,11.58155,48.15025,11.58455);way[\"highway\"=\"footway\"](48.14630,11.58155,48.15025,11.58455););out body geom;",
+  "rawFile": "ludwigskirche.json",
+  "usedElements": [
+    "way/25440202",
+    "way/533428482",
+    "way/533428487",
+    "relation/52412"
+  ],
+  "placement": {
+    "method": "Unshifted date_geo.toWorld for all WGS84 coordinates; no block-local transform",
+    "ownershipConflict": "Exact surveyed church/library footprints extend west of z=55 under the current shared origin; preserved exactly and documented for integrator recalibration. Protected core excluded."
+  },
+  "supplementaryQuery": "[out:json][timeout:40];(nwr[\"name\"~\"Hauptstaatsarchiv\"](48.1457,11.5790,48.1470,11.5830);way[\"building\"](48.1480,11.5804,48.1496,11.5818);way[\"highway\"=\"steps\"](48.1463,11.5796,48.1498,11.5820);way[\"highway\"=\"footway\"](48.1463,11.5796,48.1498,11.5820););out body geom;",
+  "supplementaryFailures": [
+    "overpass-api.de: HTTP 406",
+    "overpass.kumi.systems: timeout",
+    "overpass-api.de: HTTP 406"
+  ],
+  "estimates": [
+    "Southern annex and arcade pier locations are photo-measured estimates after three supplementary Overpass failures. The northern annex is omitted where it would overlap the protected core.",
+    "Library staircase dimensions are photo-measured; selected OSM steps 533428482 and 533428487 describe the rear garden, not its monumental front stair.",
+    "Library facade eaves set to 21 m from proportions; OSM height=15 retained in tags but not used for the historic facade.",
+    "Archive anchor is stored as WGS84 (48.14671668, 11.57979786), with a geographic southern clipping boundary, and follows shared toWorld. Northern church annex omitted while it overlaps CORE_BOUNDS."
+  ],
+  "referencePages": [
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/ludwigskirche",
+      "use": "Church style, architect, date and visual reference"
+    },
+    {
+      "url": "https://www.bsb-muenchen.de/ueber-uns/portraet/bibliotheksgebaeude/",
+      "use": "Library history, staircase, figures"
+    },
+    {
+      "url": "https://www.literaturportal-bayern.de/ortelexikon?id=1511&task=lpbplace.default",
+      "use": "Four seated scholar identities and 2.4 m figure size"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Mueludwigk032025zob.jpg",
+      "use": "Viewed only: facade, spires, arcades, coloured tile roof"
+    },
+    {
+      "url": "https://www.24books.de/aktuelles/bibliothek-groesste-deutschland-ausleihen-buchbestand-zentralbibliothek-zr-92691615.html",
+      "use": "Viewed only: library facade and stair proportions"
+    },
+    {
+      "url": "https://www.gda.bayern.de/de/archives/bayerisches-hauptstaatsarchiv/",
+      "use": "Archive address/context; main portal south of modeled northern fragment"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Bayerisches_Hauptstaatsarchiv_(Building)",
+      "use": "Map position 48°08′47.15″N 11°34′46.73″E; northern edge estimate and building identification"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Bayerisches_Hauptstaatsarchiv_in_M%C3%BCnchen.jpg",
+      "use": "Viewed only: limestone, side-wing arched windows, cornice"
+    }
+  ],
+  "downloadedImageAssets": [],
+  "archiveAttempts": [
+    "overpass-api.de POST: HTTP 502",
+    "overpass.kumi.systems POST: read timeout",
+    "overpass-api.de GET: read timeout"
+  ],
+  "archiveQuery": "[out:json][timeout:20];way[\"building\"](48.1462,11.5794,48.1468,11.5805);out body geom;",
+  "alignmentSurvey": {
+    "url": "https://api.openstreetmap.org/api/0.6/map?bbox=11.5780,48.1484,11.5813,48.1514",
+    "retrievedAt": "2026-11-09T10:09:55.904120+00:00",
+    "attribution": "© OpenStreetMap contributors, ODbL",
+    "file": "ludwigskirche_alignment.json",
+    "reason": "Three Overpass alignment attempts failed (502, timeout, 502); used the read-only OSM map API for requested raw coordinate evidence.",
+    "overpassQuery": "[out:json][timeout:30];(way[\"building\"](48.1498,11.5790,48.1515,11.5820);way[\"highway\"][\"name\"=\"Ludwigstraße\"](48.1485,11.5800,48.1493,11.5816););out body geom;",
+    "derivedReport": "ludwigskirche_alignment_report.json"
+  }
+}

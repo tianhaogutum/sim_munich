@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "id": "session03",
+  "district": "Maxvorstadt",
+  "places": [
+    {
+      "id": "session03-koenigsplatz",
+      "name": "国王广场 · Königsplatz",
+      "lon": 11.5654,
+      "lat": 48.1459,
+      "description": "在广场步道比较北侧雕塑馆的爱奥尼柱式、南侧古代艺术收藏馆的科林斯柱式及西侧山门的多立克柱式；草地与宽阔视线形成鲜明的古典建筑群。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/koenigsplatz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-glyptothek",
+      "name": "雕塑馆前广场 · Glyptothek",
+      "lon": 11.5657,
+      "lat": 48.1461,
+      "description": "在南立面前的广场观察爱奥尼柱廊与入口台阶；这里适合将柱廊、实体墙面和开阔前景作为同一建筑场景阅读。室内收藏不属于本户外节点。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/koenigsplatz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-lenbachhaus",
+      "name": "伦巴赫美术馆街边 · Lenbachhaus",
+      "lon": 11.5635,
+      "lat": 48.1467,
+      "description": "从 Luisenstraße 一侧观察历史艺术家别墅与现代立方体扩建的对比；馆方与市官方资料介绍了托斯卡纳风格花园，可在开放时另行进入。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/museen/lenbachhaus-muenchen",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-alte-pinakothek",
+      "name": "老绘画陈列馆南侧 · Alte Pinakothek",
+      "lon": 11.57,
+      "lat": 48.148,
+      "description": "沿建筑南侧公共步道观察修复立面：馆方说明，汉斯·德尔加斯特用裸露砖墙补足战争损毁部分，让新旧材料差异仍然可读。",
+      "source": "https://www.pinakothek.de/de/alte-pinakothek",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-karolinenplatz",
+      "name": "卡罗琳广场 · Karolinenplatz",
+      "lon": 11.5686,
+      "lat": 48.1439,
+      "description": "在外圈人行道观察中央黑色方尖碑、花坛及 Brienner Straße 的城市轴线；方尖碑纪念拿破仑俄国战役中的巴伐利亚阵亡者。留意环绕广场的电车与过街点。",
+      "source": "https://www.muenchen.de/karolinenplatz",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-alter-botanischer-garten",
+      "name": "老植物园 · Alter Botanischer Garten",
+      "lon": 11.5638,
+      "lat": 48.1423,
+      "description": "以海神喷泉附近园路为探索锚点，观察喷泉、花坛和树荫。园内还有艺术展亭，东侧保留历史入口门楼，可沿园路逐一寻找。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/alter-botanischer-garten",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-massmannpark",
+      "name": "马斯曼公园 · Maßmannpark",
+      "lon": 11.5593,
+      "lat": 48.1524,
+      "description": "位于 Heßstraße、Schleißheimer Straße 与 Maßmannstraße 之间的社区绿地；小丘、草坪和滑板及球类运动空间让这里呈现不同于博物馆广场的日常生活。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/parks-und-gaerten/massmannpark",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session03-alter-nordfriedhof",
+      "name": "老北墓园 · Alter Nördlicher Friedhof",
+      "lon": 11.5702,
+      "lat": 48.1535,
+      "description": "在林荫园路与历史墓碑间安静步行，体会旧墓园作为休憩空间的另一面；西侧还有游乐与运动场地。尊重墓地氛围，实际进入须遵守现场开放时间。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/staedtische-friedhoefe/alter-nordfriedhof",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "Glyptothek · 雕塑馆",
+      "lon": 11.5657,
+      "lat": 48.1463,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Glyptothek_Munich.jpg",
+      "author": "Chris 73 / Wikimedia Commons",
+      "license": "CC BY-SA 3.0 Unported; https://creativecommons.org/licenses/by-sa/3.0/ ; 复用时保留作者、Wikimedia Commons 与原照片页署名链接，并标明修改。",
+      "features": [
+        "以市官方确认的爱奥尼柱式入口柱廊作为识别重点。",
+        "正面照片可用于校对中央三角山花、对称侧翼与宽台阶的相对关系；不据照片推算精确尺寸。",
+        "主体墙面与入口柱廊分别建模，保留门廊的进深阴影；这是依据照片的建模建议。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/koenigsplatz"
+    },
+    {
+      "name": "Alte Pinakothek · 老绘画陈列馆",
+      "lon": 11.57,
+      "lat": 48.1482,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Alte_Pinakothek.jpg",
+      "author": "ArticCynda",
+      "license": "CC0 1.0 Universal; https://creativecommons.org/publicdomain/zero/1.0/",
+      "features": [
+        "保留长条馆舍及规则开窗的节奏，比例仅作照片参考。",
+        "裸露砖墙修补段与原立面材料需明显区分，避免将整面墙处理成统一的新建表皮。",
+        "馆方说明主要展厅采用顶光；屋顶采光体量应另据适当视角校对，本照片不能作为完整屋顶测绘。"
+      ],
+      "source": "https://www.pinakothek.de/de/alte-pinakothek"
+    },
+    {
+      "name": "Lenbachhaus · 伦巴赫美术馆",
+      "lon": 11.5636,
+      "lat": 48.1468,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen-Maxvorstadt_Lenbachhaus_003.jpg",
+      "author": "GFreihalter",
+      "license": "CC BY-SA 3.0 Unported; https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "市官方介绍将历史托斯卡纳风格别墅与现代立方体扩建明确区分，建模时保留两者体量差异。",
+        "Commons 建筑说明记载历史部分为三翼布局，中央体量带低坡帐篷顶及观景阁；不要简化为单一盒体。",
+        "前庭花园、喷泉及围墙属于建筑场景的重要层次；本照片仅作为其拍摄视角内的外观参考，其他立面需补充资料。"
+      ],
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/museen/lenbachhaus-muenchen"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session03-art-and-garden",
+      "name": "从花园到艺术区的短途发现步行",
+      "stops": [
+        "session03-alter-botanischer-garten",
+        "session03-lenbachhaus",
+        "session03-koenigsplatz",
+        "session03-glyptothek",
+        "session03-alte-pinakothek"
+      ],
+      "description": "建议从老植物园园路出发，经 Luisenstraße 向北到伦巴赫美术馆街边，再向东进入国王广场，观察雕塑馆柱廊，最后沿公共人行道前往老绘画陈列馆南侧。依次比较园林、别墅、古典柱廊和砖墙修补。此顺序为研究者设计的短途路线，并非市官方导览或经过测量的无障碍路线；道路交叉处按现场信号通行。"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/maxvorstadt-wissenswertes-tipps-und-infos",
+      "title": "Maxvorstadt：市官方街区介绍"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/sehenswerte-plaetze/koenigsplatz",
+      "title": "Königsplatz：广场与三座古典建筑"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/museen/lenbachhaus-muenchen",
+      "title": "Lenbachhaus：历史别墅与现代扩建"
+    },
+    {
+      "url": "https://www.pinakothek.de/de/alte-pinakothek",
+      "title": "Alte Pinakothek：博物馆官方建筑介绍"
+    },
+    {
+      "url": "https://www.muenchen.de/karolinenplatz",
+      "title": "Karolinenplatz：黑色方尖碑与广场"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/top-sehenswuerdigkeiten/alter-botanischer-garten",
+      "title": "Alter Botanischer Garten：海神喷泉与绿地"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/parks-und-gaerten/massmannpark",
+      "title": "Maßmannpark：绿地与运动空间"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/staedtische-friedhoefe/alter-nordfriedhof",
+      "title": "Alter Nordfriedhof：历史墓园与休憩空间"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Glyptothek_Munich.jpg",
+      "title": "Glyptothek 正面照片；Chris 73 / Wikimedia Commons"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:Alte_Pinakothek.jpg",
+      "title": "Alte Pinakothek 照片；ArticCynda"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen-Maxvorstadt_Lenbachhaus_003.jpg",
+      "title": "Lenbachhaus 照片；GFreihalter"
+    },
+    {
+      "url": "https://commons.wikimedia.org/wiki/Category:Lenbachhaus",
+      "title": "Lenbachhaus：建筑形态与地理位置资料"
+    },
+    {
+      "url": "https://stadt.muenchen.de/dam/jcr%3A71499742-bb92-432e-8a83-e166ff5d9398/KulturGeschichtsPfad-3-Maxvorstadt-Uebersichtskarte.pdf",
+      "title": "慕尼黑市 Maxvorstadt 文化历史路径概览图"
+    }
+  ],
+  "limitations": [
+    "核实日期：2026-11-09。地点身份与描述依据所列市官方、博物馆机构和 Commons 页面；未进行现场踏勘。",
+    "所有经纬度均为人工选取并取整的近似 WGS84 户外导航点，依据项目现有锚点、地点资料及街区相对位置；不是测绘坐标、法定边界、门口定位或碰撞安全保证。OSM Overpass 请求失败，未将坐标声称为已核对的 OSM 节点。",
+    "建筑经纬度仅定位参考对象；照片页中的相机位置与建筑位置不是同一概念，不应混用。",
+    "照片仅以原始 Commons 文件说明页链接提供，没有下载或嵌入图片；许可字段描述对应照片，不能当作第三方其他照片的许可。",
+    "照片拍摄年代早于核实日期，不能证明当前施工、树木遮挡或全部立面状态；建模特征为来源描述与明确标注的参考建议，不含精确尺寸。",
+    "路线仅为户外发现顺序；未核实当前施工围挡、园门、开放时间及完整无障碍条件。"
+  ]
+}

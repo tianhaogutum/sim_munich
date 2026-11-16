@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>我们的 LMU · 动漫世界</title>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&family=Klee+One&display=swap" rel="stylesheet">
 <style>
@@ -16,7 +17,7 @@ canvas{display:block;width:100%;height:100%}
   position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;
   transition:opacity .6s ease;
 }
-#hud.hidden{opacity:0}
+#hud.hidden,#hud.cine-hidden{opacity:0}
 
 /* Top-left status */
 #status-panel{
@@ -171,7 +172,7 @@ canvas{display:block;width:100%;height:100%}
   pointer-events:none;opacity:0;
   transition:opacity .4s;
 }
-#photo-overlay.active{opacity:1;pointer-events:all}
+#photo-overlay.active{opacity:1;pointer-events:none}   /* framing graphics must not swallow camera drags */
 .letterbox-top,.letterbox-bot{
   position:absolute;left:0;right:0;height:10%;
   background:#000;transition:height .4s;
@@ -208,6 +209,27 @@ canvas{display:block;width:100%;height:100%}
   pointer-events:none;
   font-style:italic;
 }
+
+/* ── Accessibility baseline (audit #4/#5) ── */
+#panel-close,#days-popup-close,#photo-btn{min-width:44px;min-height:44px}
+#panel-close,#panel-source{color:#E8DFC0}
+#photo-hint{color:#F5D878;background:rgba(12,9,28,.8);padding:4px 10px;border-radius:10px}
+#panel,#days-popup{max-height:calc(100dvh - 24px);overflow:auto}
+@media (prefers-reduced-motion: reduce){
+  #hud,#hud *,#panel,#days-popup,#photo-overlay,#photo-overlay *,#date-story-root *,#date-photo-root *{animation:none!important;transition:none!important}
+}
+
+/* ── Narrow screens / touch layout ── */
+@media (max-width:700px){
+  #status-panel{top:auto;bottom:auto;top:64px;left:12px;font-size:11px;line-height:1.5;padding:6px 10px}
+  #status-panel .title{font-size:14px}
+  #days-counter{top:12px;font-size:13px;padding:6px 16px}
+  #compass-wrap{top:10px;right:12px;width:44px;height:44px}
+  #date-story-root{top:168px!important;left:12px!important;max-width:60vw!important}
+  #sakura-info{display:none}
+  #date-audio-root{right:auto!important;left:12px!important;bottom:auto!important;top:10px!important}
+  #photo-hint{bottom:auto;top:12%}
+}
 </style>
 </head>
 <body>
@@ -219,7 +241,8 @@ canvas{display:block;width:100%;height:100%}
     <div class="title">我们的 LMU</div>
     <span><kbd>WASD</kbd> 移动 &nbsp;<kbd>Shift</kbd> 奔跑</span><br>
     <span><kbd>鼠标拖拽</kbd> 旋转 &nbsp;<kbd>滚轮</kbd> 缩放</span><br>
-    <span><kbd>E</kbd> 互动 &nbsp;<kbd>P</kbd> 拍照</span>
+    <span><kbd>E</kbd> 互动 &nbsp;<kbd>P</kbd> 拍照</span><br>
+    <span><kbd>Q</kbd><kbd>R</kbd> 转镜头 &nbsp;<kbd>+</kbd><kbd>-</kbd> 缩放 &nbsp;<kbd>Esc</kbd> 菜单</span>
   </div>
 
   <div id="days-counter">✦ 在一起第 <span id="days-num">0</span> 天 ✦</div>
@@ -241,8 +264,8 @@ canvas{display:block;width:100%;height:100%}
 </div>
 
 <!-- Info Panel -->
-<div id="panel">
-  <button id="panel-close">✕</button>
+<div id="panel" inert role="dialog" aria-labelledby="panel-title">
+  <button id="panel-close" aria-label="关闭信息面板">✕</button>
   <div id="panel-icon">⛩</div>
   <div id="panel-title"></div>
   <div id="panel-text"></div>
@@ -250,7 +273,7 @@ canvas{display:block;width:100%;height:100%}
 </div>
 
 <!-- Days Popup -->
-<div id="days-popup">
+<div id="days-popup" inert role="dialog" aria-label="在一起的日子">
   <div class="big" id="popup-num">0</div>
   <div class="sub">在一起第 <span id="popup-days"></span> 天</div>
   <button id="days-popup-close">关闭 ♡</button>

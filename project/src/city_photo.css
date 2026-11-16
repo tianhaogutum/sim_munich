@@ -1,0 +1,12 @@
+.city-photo { display:grid; gap:12px; }
+.city-photo-note,.city-photo-help { margin:0; font-size:13px; line-height:1.55; }
+.city-photo-help,.city-photo-credits { opacity:.8; }
+.city-photo-gallery { display:grid; gap:16px; min-width:0; }
+.city-photo-card { display:grid; gap:8px; padding:12px; border:1px solid #8885; border-radius:12px; min-width:0; }
+.city-photo-card img { display:block; width:100%; max-height:240px; object-fit:contain; background:#151c26; border-radius:7px; }
+.city-photo-card p { margin:0; overflow-wrap:anywhere; }
+.city-photo-card time,.city-photo-card small,.city-photo-credits { font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+.city-photo-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.city-photo button { cursor:pointer; padding:8px 10px; border:1px solid #8886; border-radius:7px; background:transparent; color:inherit; font:inherit; }
+.city-photo button:disabled { cursor:default; opacity:.45; }
+.city-photo button:focus-visible { outline:2px solid #e9b768; outline-offset:2px; }

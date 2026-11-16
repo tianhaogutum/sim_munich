@@ -1,0 +1,42 @@
+{
+  "title": "LMU core OpenStreetMap extract",
+  "retrieved_at": "2026-11-09T10:02:00Z",
+  "timestamp_note": "Retrieval time rounded to minute; preserve server osm3s timestamp independently. Server returned 2026-06-01T08:52:28Z; do not present this extract as a live November ground survey.",
+  "endpoint": "https://overpass.kumi.systems/api/interpreter",
+  "primary_attempt": {
+    "endpoint": "https://overpass-api.de/api/interpreter",
+    "result": "HTTP 429"
+  },
+  "query": "[out:json][timeout:90][bbox:48.1495,11.5780,48.1522,11.5833];(nwr[building];nwr[\"building:part\"];nwr[amenity=fountain];nwr[natural=tree];nwr[amenity=bench];nwr[highway=street_lamp];nwr[highway];nwr[railway=subway_entrance];nwr[public_transport];nwr[amenity=bicycle_parking];nwr[landuse=grass];nwr[leisure=garden];nwr[natural=grassland];nwr[barrier=hedge];nwr[place=square];nwr[memorial];nwr[historic=memorial];nwr[kerb];nwr[water];);out body geom;",
+  "query_bbox_south_west_north_east": [
+    48.1495,
+    11.578,
+    48.1522,
+    11.5833
+  ],
+  "trim_world_bounds": {
+    "minX": -140,
+    "maxX": 110,
+    "minZ": -135,
+    "maxZ": 150
+  },
+  "trim_rule": "Keep nodes in bounds and whole ways whose vertex bounding boxes intersect these bounds; keep Universität stop_area relation 1619275. No geometry simplification, no coordinate edits, no synthetic nodes. Relation member geometry is retained as returned and may extend outside the query bbox.",
+  "raw_element_count": 634,
+  "retained_element_count": 440,
+  "raw_sha256": "9945c7d5399abd35e2e82c6b709cd8065479b67c31375314355aae953014e85b",
+  "core_sha256": "bebbc89c938c9c37bae453fac5aeb1c501aacfacd73a52e13e8be33464fd121b",
+  "attribution": "© OpenStreetMap contributors",
+  "license": "Open Database License (ODbL) 1.0",
+  "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "copyright_url": "https://www.openstreetmap.org/copyright",
+  "osm_base_timestamp": "2026-06-01T08:52:28Z",
+  "coordinates": "WGS84 lat/lon exactly as supplied by Overpass. Derived game geometry is separately recorded in docs/reference/core_world.json.",
+  "limitations": [
+    "Mapped points are not survey-grade; decimal precision does not imply centimetre accuracy.",
+    "Square legal/paved boundaries and actual kerb lines were not returned as area/kerb polygons. Derived envelopes are labelled estimates.",
+    "Tree species absent in core tree tags; broadleaved only.",
+    "Supplementary entrance/area:highway queries timed out or returned 429; use returned stop_area member coordinates for the southern entrances.",
+    "A/B/C/D/E/F/M/N are building/room block names, not street address suffixes.",
+    "Below-ground railway platforms and paths must not be turned into surface obstacles."
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "id": "session11",
+  "district": "Milbertshofen-Am Hart",
+  "places": [
+    {
+      "id": "session11-bmw-welt",
+      "name": "BMW Welt · 双锥体外广场",
+      "lon": 11.5565,
+      "lat": 48.1767,
+      "description": "从建筑外的步行空间观察玻璃与钢构双锥体。BMW Welt 由 Coop Himmelb(l)au 设计，与相邻的四缸总部、BMW 博物馆及奥林匹克公园形成建筑群；此点用于外观探索，不代表室内入口。",
+      "source": "https://www.munich.travel/en/pois/sports-leisure/bmw-welt",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-bmw-tower",
+      "name": "BMW 四缸总部 · 西侧街道观察点",
+      "lon": 11.5592,
+      "lat": 48.1769,
+      "description": "在总部西侧道路的公共人行空间辨认四个圆柱形体量及重复窗带。Karl Schwanzer 设计的四缸形象是这里的重要识别点；总部属于办公建筑，探索目标是街道外观。",
+      "source": "https://www.press.bmwgroup.com/global/article/detail/T0143556EN/40-years-of-bmw-headquarters-and-museum?language=en",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-olympic-stadium",
+      "name": "奥林匹克体育场 · 东侧外部步行区",
+      "lon": 11.548,
+      "lat": 48.1742,
+      "description": "从场外步行区观察体育场下沉的看台轮廓与轻盈帐篷屋顶。市政府资料说明，透明亚克力板、钢索网及支承桅杆共同构成屋面，连接公园的主要体育建筑；不将场内参观作为发现条件。",
+      "source": "https://olympiapark.muenchen.de/olympiapark/zeltdach.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-olympic-lake",
+      "name": "Olympiasee · 北岸散步观察点",
+      "lon": 11.5505,
+      "lat": 48.1729,
+      "description": "沿北岸步道观察弯曲湖岸、桥梁与倒映的帐篷屋顶。湖泊由宁芬堡—比德施泰因运河蓄水形成，也承担雨水调蓄作用；这是岸上观察点，不是水面目的地。",
+      "source": "https://olympiapark.muenchen.de/olympiapark/parkanlage.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-olympic-hill",
+      "name": "Olympiaberg · 山顶展望步道",
+      "lon": 11.5515,
+      "lat": 48.1699,
+      "description": "沿公园步道登上奥林匹克山，回望湖面与体育建筑。山体主要由二战后的建筑瓦砾形成，后来融入起伏的公园景观；上坡路段与平坦湖岸提供不同观察角度。",
+      "source": "https://olympiapark.muenchen.de/olympiapark/parkanlage.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-petuelpark",
+      "name": "Petuelpark · 隧道顶上的艺术绿带",
+      "lon": 11.5793,
+      "lat": 48.1777,
+      "description": "在 Petueltunnel 上方散步，寻找绿带中的艺术作品和花园。市政府将这座公园描述为连接 Milbertshofen 与 Schwabing 的绿色空间；喷泉广场、游乐区与沿运河花园让它成为观察社区生活的停留点。位置在行政区交界附近。",
+      "source": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-harthofanger",
+      "name": "Harthofanger · 社区绿地",
+      "lon": 11.5694,
+      "lat": 48.2047,
+      "description": "走进 Harthof 住宅区的日常绿地，观察草地、树群与游乐空间。市政府绿地目录列有 Rathenaustraße 108 的 Harthofanger，以及 Weyprechtstraße 北侧部分；这个停留点补充奥林匹克地标之外的社区尺度。",
+      "source": "https://stadt.muenchen.de/rathaus/stadtrecht/vorschrift/810/version1/0.html",
+      "accuracy": "approximate outdoor navigation point"
+    },
+    {
+      "id": "session11-panzerwiese",
+      "name": "Panzerwiese · Panzermauer 附近荒原观察点",
+      "lon": 11.5692,
+      "lat": 48.2195,
+      "description": "在旧防坦克墙附近的既有通行路径观察开阔的石灰质贫瘠草地，与南面的密集城区形成鲜明对照。Panzerwiese 与北面的 Hartelholz 共同组成自然保护区，保存慕尼黑北部荒原生态；遵循现场标识，不穿越草地寻找直线捷径。",
+      "source": "https://stadt.muenchen.de/infos/panzerwiese-hartelholz.html?lang=en",
+      "accuracy": "approximate outdoor navigation point"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "BMW 四缸总部 · BMW Vierzylinder",
+      "lon": 11.5601,
+      "lat": 48.1769,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:BMW_tower_seen_from_Olympic_tower_on_a_sunny_November_afternoon.jpg",
+      "author": "Markus Matern",
+      "license": "CC BY-SA 3.0 — https://creativecommons.org/licenses/by-sa/3.0/",
+      "features": [
+        "以四个相连的圆柱形办公体量建立主要轮廓，避免简化为方形塔楼。",
+        "参考照片中的水平窗带、银灰色立面分格与顶端 BMW 标志，保持重复节奏。",
+        "Karl Schwanzer 的方案采用悬挂结构；模型重点表现柱状体量与中央核心的关系，不由照片猜测结构尺寸。",
+        "照片从奥林匹克塔拍摄，适合核对高处体量；其相机坐标不是总部坐标。"
+      ],
+      "source": "https://www.press.bmwgroup.com/global/article/detail/T0143556EN/40-years-of-bmw-headquarters-and-museum?language=en"
+    },
+    {
+      "name": "BMW Welt",
+      "lon": 11.5564,
+      "lat": 48.177,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:BMW_Welt_Night.jpg",
+      "author": "Richard Bartz",
+      "license": "CC BY-SA 2.5 — https://creativecommons.org/licenses/by-sa/2.5/",
+      "features": [
+        "突出收腰双锥体、玻璃钢构表皮和展开的大屋顶，作为远近景都能辨认的轮廓。",
+        "依据照片区分斜向钢构分格与透明幕墙，夜景亮度只作摄影参考，不视作永久照明状态。",
+        "市旅游机构确认设计者为 Coop Himmelb(l)au；以照片核对双锥体与主馆的相接关系，不臆造节点尺寸。"
+      ],
+      "source": "https://www.munich.travel/en/pois/sports-leisure/bmw-welt"
+    },
+    {
+      "name": "奥林匹克体育场 · Olympiastadion",
+      "lon": 11.5467,
+      "lat": 48.1731,
+      "photoPage": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen_-_M%C3%BCnchner_Olympiastadion.jpg",
+      "author": "Fred Romero",
+      "license": "CC BY 2.0 — https://creativecommons.org/licenses/by/2.0/",
+      "features": [
+        "将看台碗状体量嵌入地形，屋顶沿场地一侧起伏，保留开敞场地与屋面覆盖区的区别。",
+        "帐篷屋顶由钢索网、桅杆及透明亚克力板构成；重点表现细密索网、曲面低点和高耸支点。",
+        "市政府资料将屋顶设计归于 Behnisch 团队，并说明 Frei Otto 与 Jörg Schlaich 参与实现；避免用厚实不透明壳体代替轻型结构。",
+        "照片提供场地、看台及屋面关系参考，不代表当前施工或活动布置。"
+      ],
+      "source": "https://olympiapark.muenchen.de/olympiapark/zeltdach.html"
+    }
+  ],
+  "routes": [
+    {
+      "id": "session11-olympic-discovery",
+      "name": "从双锥体到山顶 · 奥林匹克建筑短走",
+      "stops": [
+        "session11-bmw-welt",
+        "session11-olympic-stadium",
+        "session11-olympic-lake",
+        "session11-olympic-hill"
+      ],
+      "description": "从 BMW Welt 外广场出发，沿现场开放的步行连接进入奥林匹克公园，先观察体育场外部帐篷屋顶，再下到湖岸，最后沿步道登上 Olympiaberg 回望建筑与水面。按这些近似锚点估计，实际步行约 2—3 公里，连同观察可预留 45—75 分钟；这是策划建议而非官方导览或已测量轨迹。末段有上坡，施工围挡或活动封路时按现场指示绕行，不进入体育场内部。"
+    }
+  ],
+  "sources": [
+    {"url": "https://www.munich.travel/en/pois/sports-leisure/bmw-welt", "title": "慕尼黑官方旅游：BMW Welt，设计与建筑群关系"},
+    {"url": "https://www.press.bmwgroup.com/global/article/detail/T0143556EN/40-years-of-bmw-headquarters-and-museum?language=en", "title": "BMW Group：总部与博物馆四十周年，Karl Schwanzer 与四缸结构"},
+    {"url": "https://olympiapark.muenchen.de/olympiapark/zeltdach.html", "title": "慕尼黑市政府：奥林匹克帐篷屋顶结构"},
+    {"url": "https://olympiapark.muenchen.de/olympiapark/parkanlage.html", "title": "慕尼黑市政府：公园、Olympiasee 与 Olympiaberg"},
+    {"url": "https://stadt.muenchen.de/infos/muenchner-parks-gruenanlagen.html", "title": "慕尼黑市政府：公园绿地，Petuelpark"},
+    {"url": "https://stadt.muenchen.de/rathaus/stadtrecht/vorschrift/810/version1/0.html", "title": "慕尼黑市政府绿地目录：Harthofanger 与 Petuelpark（历史版本，仅作地名与位置佐证）"},
+    {"url": "https://stadt.muenchen.de/infos/panzerwiese-hartelholz.html?lang=en", "title": "慕尼黑市政府：Panzerwiese 与 Hartelholz 生态及保护区背景"},
+    {"url": "https://commons.wikimedia.org/wiki/Category:Panzermauer_(Panzerwiese_Munich)", "title": "Commons：Panzerwiese 旧防坦克墙，地物位置参考"},
+    {"url": "https://commons.wikimedia.org/wiki/Category:Harthofanger_(M%C3%BCnchen)", "title": "Commons：Harthofanger，绿地位置参考"},
+    {"url": "https://commons.wikimedia.org/wiki/Petuelpark?uselang=de", "title": "Commons：Petuelpark，公园位置参考"},
+    {"url": "https://commons.wikimedia.org/wiki/Category:Olympiasee_in_Munich", "title": "Commons：Olympiasee，湖泊位置参考；导航点向北岸偏移"},
+    {"url": "https://commons.wikimedia.org/wiki/File:Infotafel_Geod%C3%A4tischer_Referenzpunkt_auf_dem_Olympiaberg_M%C3%BCnchen_2025-04-15.jpg", "title": "Commons：Olympiaberg 山顶测量参考点告示，位置佐证"},
+    {"url": "https://commons.wikimedia.org/wiki/Category:BMW_Tower", "title": "Commons：BMW 总部建筑位置参考"},
+    {"url": "https://commons.wikimedia.org/wiki/File:BMW_tower_seen_from_Olympic_tower_on_a_sunny_November_afternoon.jpg", "title": "Commons：BMW 四缸总部照片；Markus Matern，CC BY-SA 3.0"},
+    {"url": "https://commons.wikimedia.org/wiki/File:BMW_Welt_Night.jpg", "title": "Commons：BMW Welt 夜景；Richard Bartz，CC BY-SA 2.5"},
+    {"url": "https://commons.wikimedia.org/wiki/File:M%C3%BCnchen_-_M%C3%BCnchner_Olympiastadion.jpg", "title": "Commons：奥林匹克体育场；Fred Romero，CC BY 2.0"}
+  ],
+  "limitations": [
+    "研究核对日期为 2026-11-09。坐标均为 WGS84 近似值，结合项目已有地标锚点及 Commons 地物位置整理；建筑坐标表示建筑位置，places 尽量偏向周边户外空间，未实地测量入口或逐段核验道路。",
+    "湖岸、总部西侧与体育场外部的偏移导航点不是 OSM 已核验节点。运行时仍需依据地形、道路、碰撞与现场通行条件选择安全落点。",
+    "Petuelpark 位于 Milbertshofen 与 Schwabing 交界；本包不将它的全部面积或公园步行线解释为行政边界。",
+    "自然保护区只推荐沿既有允许通行路径观察。Panzermauer 附近锚点不是允许离开路径、攀爬遗存或进入围挡区域的声明。",
+    "未核验当前场馆施工、活动封路和室内开放情况；短走路线不依赖购买门票或进入建筑，距离与时长为规划估算。",
+    "三张参考照片仅保存页面链接、作者与许可，未下载或嵌入图片；使用照片时需按各文件页履行署名、许可链接与修改说明等条件。",
+    "摄影存在透视、夜景曝光与拼接影响；模型特征是参考建议，未推断精确高度、跨度、层数或立面构件尺寸。"
+  ]
+}

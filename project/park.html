@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#14172b">
+  <title>我们的 LMU · 第二章：风经过英国公园</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&family=Klee+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/park.css">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+  <canvas id="c" aria-label="英国公园三维场景"></canvas>
+  <div id="park-loading" role="status">正在翻开下一章…</div>
+  <div id="hud">
+    <section class="pk-card pk-objectives" aria-label="散步目标">
+      <div class="pk-eyebrow">CHAPTER 02 · ENGLISCHER GARTEN</div>
+      <h1>风经过英国公园</h1>
+      <p class="pk-intro">不赶时间，和你走一段。</p>
+      <div class="pk-progress"><span id="park-count">0 / 5</span><span>收集五处风景</span></div>
+      <ol id="park-objectives"></ol>
+      <div id="park-finish" hidden><p>今天的风景，因为你完整。</p><a href="./index.html">回到 LMU →</a></div>
+    </section>
+    <div class="pk-card pk-days">在一起第 <span id="days-num">0</span> 天 ♡</div>
+    <a class="pk-card pk-back" href="./index.html">← 回到 LMU</a>
+    <div class="pk-location"><span id="park-compass">N ↑</span><span id="park-waypoint"></span></div>
+    <div id="prompt" role="status"></div>
+    <div class="pk-controls pk-card"><kbd>WASD</kbd> 散步 <span>·</span> <kbd>Shift</kbd> 奔跑 <span>·</span> 拖拽环顾 / 滚轮缩放<br><kbd>E</kbd> 看风景 <span>·</span> <kbd>P</kbd> 相机 <span>·</span> <kbd>C</kbd> 自由镜头 <span>·</span> <kbd>M</kbd> 音乐</div>
+    <button id="park-time" class="pk-card" type="button">☀ 傍晚一点</button>
+    <div class="pk-chapter">OUR LITTLE MUNICH <span>02 — A WALK, TOGETHER</span></div>
+  </div>
+  <section id="panel" class="pk-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+    <button id="panel-close" type="button" aria-label="关闭风景介绍">×</button>
+    <div id="panel-kicker" class="pk-eyebrow"></div><div id="panel-icon"></div>
+    <h2 id="panel-title"></h2><p id="panel-text"></p><p id="panel-source"></p>
+    <button id="panel-continue" type="button">继续散步 <span>↗</span></button>
+  </section>
+  <div id="park-photo" hidden>
+    <div class="pk-photo-corners"></div><div class="pk-photo-heading">把这一刻，留给我们 <small>OUR LITTLE MUNICH / 02</small></div>
+    <div class="pk-photo-actions"><button id="park-shutter" type="button">拍下此刻 <kbd>Space</kbd></button><button id="park-photo-close" type="button">收起相机 <kbd>P / Esc</kbd></button></div>
+  </div>
+  <div id="park-toast" role="status" aria-live="polite"></div>
+  <noscript>请启用 JavaScript，和我们一起去英国公园散步。</noscript>
+  <script type="module" src="./src/park_main.js"></script>
+</body>
+</html>

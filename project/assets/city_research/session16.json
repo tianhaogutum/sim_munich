@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "id": "session16",
+  "district": "Ramersdorf-Perlach",
+  "places": [
+    {
+      "id": "session16-pfanzeltplatz",
+      "name": "Pfanzeltplatz · 普凡策尔广场",
+      "lon": 11.6307097,
+      "lat": 48.1001196,
+      "district": "Ramersdorf-Perlach",
+      "type": "square",
+      "description": "Altperlach 的村落中心，Hachinger Bach 穿过广场，旧村建筑沿两侧展开。",
+      "source": "https://www.muenchen.de/stadtteile/perlach-wissenswertes-infos-und-tipps",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "沿溪边人行道辨认村落广场的线性布局，观察时留在岸上。",
+      "arrivalRadius": 35,
+      "access": "公共步道；集市或活动时按现场导流通行，不下到溪床。",
+      "coordinateSource": "https://www.openstreetmap.org/node/158259684",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 158259684，位于 footway 道路 4288236，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-st-michael-perlach",
+      "name": "St. Michael Perlach · 佩拉赫圣米夏埃尔堂",
+      "lon": 11.631071,
+      "lat": 48.1015871,
+      "district": "Ramersdorf-Perlach",
+      "type": "historic-building",
+      "description": "位于 Pfanzeltplatz 北端的历史教堂，是旧佩拉赫村落的明确地标。",
+      "source": "https://www.muenchen.de/stadtteile/perlach-wissenswertes-infos-und-tipps",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "由西侧步道观察教堂与村落广场的关系，并与圣保禄堂比较轮廓。",
+      "arrivalRadius": 30,
+      "access": "外部步道可完成探索；教堂内部按堂区公告开放，礼拜时避免干扰。",
+      "coordinateSource": "https://www.openstreetmap.org/node/1510121840",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 1510121840，位于 footway 道路 68110047，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-st-paulus",
+      "name": "St. Paulus Perlach · 佩拉赫圣保禄堂",
+      "lon": 11.6293388,
+      "lat": 48.0974228,
+      "district": "Ramersdorf-Perlach",
+      "type": "historic-building",
+      "description": "Sebastian-Bauer-Straße 一带的历史新教教堂，与旧村核心的天主教堂形成不同的街区节点。",
+      "source": "https://www.muenchen.de/stadtteile/perlach-wissenswertes-infos-und-tipps",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "在街路连接步道上辨认教堂入口方向，不把旁边水道当作通路。",
+      "arrivalRadius": 30,
+      "access": "从公共连接步道外观观察；室内按活动开放。",
+      "coordinateSource": "https://www.openstreetmap.org/node/171488208",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 171488208，位于 footway 道路 16606613，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-ostpark",
+      "name": "Ostpark · 东公园湖畔步道",
+      "lon": 11.6371543,
+      "lat": 48.1138082,
+      "district": "Ramersdorf-Perlach",
+      "type": "park",
+      "description": "东南城区的大型休闲公园，湖面、草坡和曲折路径共同形成散步空间。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/parks-und-gaerten/ostpark",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "在铺装步道上寻找水面与草坡之间的视线变化，不进入湖中。",
+      "arrivalRadius": 35,
+      "access": "公共公园；遵守现场封闭和自然保护提示，冰面不作为通行区域。",
+      "coordinateSource": "https://www.openstreetmap.org/node/1609046299",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 1609046299，位于 path 道路 147707445，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-maria-ramersdorf",
+      "name": "Maria Ramersdorf · 拉默斯多夫朝圣堂",
+      "lon": 11.6150352,
+      "lat": 48.1140767,
+      "district": "Ramersdorf-Perlach",
+      "type": "historic-building",
+      "description": "旧 Ramersdorf 村核心的朝圣教堂，如今与周边繁忙交通形成鲜明对比。",
+      "source": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/maria-ramersdorf",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从南侧铺装访客步道看教堂外观，留意旧村核心与城市道路的尺度差异。",
+      "arrivalRadius": 30,
+      "access": "只需室外访客步道；室内按教堂开放安排，邻近主干道须经正式过街设施。",
+      "coordinateSource": "https://www.openstreetmap.org/node/3605795826",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 3605795826，位于 footway 道路 126244257，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-neuer-suedfriedhof",
+      "name": "Neuer Südfriedhof · 新南墓园入口",
+      "lon": 11.6220193,
+      "lat": 48.1008325,
+      "district": "Ramersdorf-Perlach",
+      "type": "park",
+      "description": "Hochäckerstraße 的墓园入口，园内以起伏绿地与水面组织纪念空间。",
+      "source": "https://www.muenchen.de/leben/staedtische-friedhoefe/neuer-suedfriedhof",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "在主入口外辨认访客通道与指示牌；进入园内时放慢脚步并尊重悼念者。",
+      "arrivalRadius": 35,
+      "access": "入口外可观察；入园须遵守季节性开放时间和墓园规定，关闭时不翻越。",
+      "coordinateSource": "https://www.openstreetmap.org/node/4878817818",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 4878817818，位于 footway 道路 1303340266，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-kulturbunt",
+      "name": "KulturBunt Neuperlach · 新佩拉赫文化中心街侧",
+      "lon": 11.6443493,
+      "lat": 48.1071833,
+      "district": "Ramersdorf-Perlach",
+      "type": "culture",
+      "description": "Albert-Schweitzer-Straße 62 的街区文化机构，举办音乐、戏剧与社区文化活动。",
+      "source": "https://stadt.muenchen.de/service/info/kulturbunt-neuperlach/1052346/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "在商业楼前公共步道寻找机构入口标识；无需进入楼内即可完成发现。",
+      "arrivalRadius": 30,
+      "access": "室外公共步道；办公室和演出空间按公布时段或票务条件进入。",
+      "coordinateSource": "https://www.openstreetmap.org/node/3773968131",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 3773968131，位于 footway 道路 168325067，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    },
+    {
+      "id": "session16-blaue-spirale",
+      "name": "Blaue Spirale · 蓝色螺旋雕塑观景点",
+      "lon": 11.6488356,
+      "lat": 48.1115577,
+      "district": "Ramersdorf-Perlach",
+      "type": "public-art",
+      "description": "Heinrich-Wieland-Straße 与 Albert-Schweitzer-Straße 交会一带的公共雕塑。",
+      "source": "https://entdecken.muenchen.de/station/11-9/",
+      "accuracy": "approximate outdoor navigation point",
+      "explorationHint": "从南侧分隔人行路径看蓝色螺旋的轮廓；不进入道路中央绿化带。",
+      "arrivalRadius": 30,
+      "access": "只在街侧步道观察；使用正式过街设施，禁止为靠近雕塑穿越车道。",
+      "coordinateSource": "https://www.openstreetmap.org/node/1231604743",
+      "coordinateNote": "采用已核对的 OpenStreetMap 节点 1231604743，位于 path 道路 514803705，不是建筑或水面中心；该路径未标注禁止步行或私人通行。仅完成地图级落点核验，临时封闭须现场确认。",
+      "verifiedAt": "2026-11-09"
+    }
+  ],
+  "buildings": [],
+  "routes": [
+    {
+      "id": "session16-perlach-village",
+      "name": "村落中心与纪念绿地",
+      "stops": [
+        "session16-maria-ramersdorf",
+        "session16-neuer-suedfriedhof",
+        "session16-st-paulus",
+        "session16-pfanzeltplatz",
+        "session16-st-michael-perlach"
+      ],
+      "description": "从 Ramersdorf 旧村核心转到新南墓园入口，再沿佩拉赫村落教堂与溪边广场观察历史社区。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 2706,
+      "distanceKind": "straight-line segments"
+    },
+    {
+      "id": "session16-neuperlach-culture-green",
+      "name": "新佩拉赫的文化、雕塑与公园",
+      "stops": [
+        "session16-st-michael-perlach",
+        "session16-kulturbunt",
+        "session16-blaue-spirale",
+        "session16-ostpark"
+      ],
+      "description": "由旧村教堂走向文化机构和街头雕塑，最后在东公园铺装步道停留。 距离是按停靠点坐标计算的直线分段之和，不是实际步行距离；只提供停靠点导航，过街和通路按现场公共步行设施选择。",
+      "distanceMeters": 2658,
+      "distanceKind": "straight-line segments"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.muenchen.de/stadtteile/perlach-wissenswertes-infos-und-tipps",
+      "title": "慕尼黑城市门户：Perlach 街区与古村落"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/158259684",
+      "title": "Pfanzeltplatz · 普凡策尔广场：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/4288236",
+      "title": "Pfanzeltplatz · 普凡策尔广场：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/1510121840",
+      "title": "St. Michael Perlach · 佩拉赫圣米夏埃尔堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/68110047",
+      "title": "St. Michael Perlach · 佩拉赫圣米夏埃尔堂：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/171488208",
+      "title": "St. Paulus Perlach · 佩拉赫圣保禄堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/16606613",
+      "title": "St. Paulus Perlach · 佩拉赫圣保禄堂：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/parks-und-gaerten/ostpark",
+      "title": "慕尼黑城市门户：Ostpark"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/1609046299",
+      "title": "Ostpark · 东公园湖畔步道：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/147707445",
+      "title": "Ostpark · 东公园湖畔步道：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.muenchen.de/sehenswuerdigkeiten/kirchen-und-kloester/maria-ramersdorf",
+      "title": "慕尼黑城市门户：Maria Ramersdorf"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/3605795826",
+      "title": "Maria Ramersdorf · 拉默斯多夫朝圣堂：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/126244257",
+      "title": "Maria Ramersdorf · 拉默斯多夫朝圣堂：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://www.muenchen.de/leben/staedtische-friedhoefe/neuer-suedfriedhof",
+      "title": "慕尼黑城市门户：Neuer Südfriedhof"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/4878817818",
+      "title": "Neuer Südfriedhof · 新南墓园入口：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/1303340266",
+      "title": "Neuer Südfriedhof · 新南墓园入口：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://stadt.muenchen.de/service/info/kulturbunt-neuperlach/1052346/",
+      "title": "慕尼黑市政府：KulturBunt Neuperlach"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/3773968131",
+      "title": "KulturBunt Neuperlach · 新佩拉赫文化中心街侧：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/168325067",
+      "title": "KulturBunt Neuperlach · 新佩拉赫文化中心街侧：OSM步行路径与通行标记"
+    },
+    {
+      "url": "https://entdecken.muenchen.de/station/11-9/",
+      "title": "慕尼黑市探索平台：Kunst in Neuperlach"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/1231604743",
+      "title": "Blaue Spirale · 蓝色螺旋雕塑观景点：OSM公共步道导航节点"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/514803705",
+      "title": "Blaue Spirale · 蓝色螺旋雕塑观景点：OSM步行路径与通行标记"
+    }
+  ],
+  "limitations": [
+    "资料及地图核对日期为2026-11-09；坐标采用OSM标注的步行路径节点。地图级可步行核验不等于现场连续步行、无障碍或临时开放保证。",
+    "只设计公共室外到达点；教堂、文化场馆及墓园的内部通行受现场开放与活动安排约束，私人院落、施工区域和水面不作为探索目标。",
+    "路线距离以地球半径6371000米的Haversine距离逐段求和并四舍五入至米，属于直线分段估算；没有接入真实步行寻路。"
+  ]
+}

@@ -1,0 +1,15 @@
+/* Include alongside city_controls.mjs; no entrypoint or global layout changes. */
+.city-controls{--cc-size:132px;position:absolute;inset:0;pointer-events:none;z-index:4;display:none}
+.city-controls-zone{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom,0px));width:var(--cc-size);height:var(--cc-size);border:1px solid #e8d6ad70;border-radius:50%;background:#142c3299;box-shadow:inset 0 0 0 18px #ffffff05;pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overscroll-behavior:contain;backdrop-filter:blur(8px)}
+.city-controls-move{left:calc(16px + env(safe-area-inset-left,0px))}
+.city-controls-look{right:calc(16px + env(safe-area-inset-right,0px))}
+.city-controls-knob{position:absolute;width:40px;height:40px;left:calc(50% - 20px);top:calc(50% - 20px);border-radius:50%;background:#d8c59e99;border:1px solid #ffe6ae;pointer-events:none}
+.city-controls-label{position:absolute;bottom:9px;left:0;right:0;text-align:center;font:11px sans-serif;color:#fff0ce;pointer-events:none}
+.city-controls-zone.is-active{border-color:#ffe6ae;background:#1c3f46b8}
+.city-controls-actions{position:absolute;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(var(--cc-size) + 34px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;pointer-events:none}
+#city-ui .city-controls-actions button,.city-controls-actions button{pointer-events:auto;touch-action:none;user-select:none;-webkit-user-select:none;min-width:54px;min-height:48px;padding:8px 12px;border:1px solid #e8d6ad99;border-radius:16px;background:#18353de8;color:#fff0ce;font:14px sans-serif;box-shadow:0 3px 12px #0003}
+.city-controls-actions button:focus-visible{outline:2px solid #ffe6ae;outline-offset:3px}
+.city-controls-actions button[aria-pressed=true]{background:#dac28b!important;color:#213233!important}
+.city-controls.is-blocked{visibility:hidden;pointer-events:none}
+@media (max-width:760px),(any-pointer:coarse){.city-controls{display:block}}
+@media (max-width:360px),(max-height:480px){.city-controls{--cc-size:108px}.city-controls-actions{gap:6px}.city-controls-zone{bottom:calc(12px + env(safe-area-inset-bottom,0px))}.city-controls-actions{bottom:calc(var(--cc-size) + 20px + env(safe-area-inset-bottom,0px))}}

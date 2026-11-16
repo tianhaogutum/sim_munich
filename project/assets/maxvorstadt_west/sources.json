@@ -1,0 +1,57 @@
+{
+  "reference_photos_downloaded": [],
+  "geometry_attribution": "© OpenStreetMap contributors, ODbL",
+  "source_manifest": "../osm/maxvorstadt_west.sources.json",
+  "verification_images": [
+    {
+      "file": "verification/amalien.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 147118
+    },
+    {
+      "file": "verification/requested_amalien.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 110226
+    },
+    {
+      "file": "verification/requested_schelling.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 63286
+    },
+    {
+      "file": "verification/requested_wide.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 80367
+    },
+    {
+      "file": "verification/schelling.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 139057
+    },
+    {
+      "file": "verification/tuerken.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 161861
+    },
+    {
+      "file": "verification/wide.png",
+      "origin": "Local headless Chromium screenshot of this project",
+      "width": 1280,
+      "height": 633,
+      "bytes": 183401
+    }
+  ],
+  "note": "Verification images are generated game screenshots, not downloaded source photography; runtime signs are generated on a canvas."
+}
