@@ -1,0 +1,29 @@
+.city-runtime-guard {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 70px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(560px, calc(100vw - 28px));
+  padding: 7px 12px;
+  border: 1px solid #acb9ae;
+  border-radius: 12px;
+  background: #f4f5edee;
+  color: #263f33;
+  box-shadow: 0 2px 12px #17281c18;
+  font: 12px/1.5 system-ui, sans-serif;
+  text-align: center;
+  pointer-events: none;
+}
+.city-runtime-guard[data-state="error"],
+.city-runtime-guard[data-state="slow"],
+.city-runtime-guard[data-state="offline"] { border-color: #ac7934; background: #fff4deF5; color: #603d15; }
+.city-runtime-guard__detail { display: block; max-height: 4.5em; overflow: auto; overflow-wrap: anywhere; pointer-events: auto; }
+.city-runtime-guard button, .city-runtime-guard a { pointer-events: auto; margin: 5px 5px 0; }
+.city-runtime-guard button { min-height: 36px; border: 1px solid currentColor; border-radius: 7px; padding: 4px 9px; color: inherit; background: transparent; font: inherit; }
+.city-runtime-guard button:disabled { opacity: .6; cursor: default; }
+.city-runtime-guard a { display: inline-block; color: inherit; text-underline-offset: 3px; }
+.city-runtime-guard :focus-visible { outline: 3px solid #2e7155; outline-offset: 3px; }
+.city-runtime-guard [hidden] { display: none !important; }

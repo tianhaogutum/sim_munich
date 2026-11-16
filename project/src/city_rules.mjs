@@ -1,5 +1,6 @@
 import { ALL_CITY_PLACES as CITY_PLACES, ALL_CITY_TRAILS as CITY_TRAILS } from './city_research_data.mjs';
 import { CITY_BOUNDS,CITY_SECTORS } from './city_data.mjs';
+import { placeArrivalRadius } from './city_navigation_rules.mjs';
 export const CITY_SAVE_KEY='lmu-munich-city-v1';
 export const CITY_SAVE_VERSION=1;
 const finite=Number.isFinite;
@@ -20,10 +21,12 @@ export function normalizeCityProgress(raw){
  if(CITY_TRAILS.some(t=>t.id===raw.activeTrail))out.activeTrail=raw.activeTrail;
  return out;
 }
-export function discoverCityPlaces(progress,position,{radius=65,now=Date.now()}={}){
+export function discoverCityPlaces(progress,position,{radius,now=Date.now()}={}){
  const next=normalizeCityProgress(progress);if(!insideCity(position?.lon,position?.lat))return next;
- const distance=finite(radius)?Math.max(1,Math.min(radius,200)):65;
- for(const p of CITY_PLACES)if(!Object.hasOwn(next.found,p.id)&&cityDistance(position,p)<=distance)next.found[p.id]=finite(now)&&now>=0?now:Date.now();
+ for(const p of CITY_PLACES){
+  const distance=finite(radius)?Math.max(1,Math.min(radius,200)):placeArrivalRadius(p,65);
+  if(!Object.hasOwn(next.found,p.id)&&cityDistance(position,p)<=distance)next.found[p.id]=finite(now)&&now>=0?now:Date.now();
+ }
  return next;
 }
 export function recordCityMovement(progress,previous,next,{maxStep=80}={}){
