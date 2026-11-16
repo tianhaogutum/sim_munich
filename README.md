@@ -63,3 +63,30 @@ The remaining seven could not be created through the built-in APIs in this run:
 `parent_not_active`. Computer Use was stopped at the user's request.
 See [the verified session record](docs/CITY_SESSIONS_CREATED.json).
 The [100-task plan](docs/city_threads_100.json) is a prepared plan, not 100 launched agents.
+
+Three.js is loaded from the jsDelivr CDN.
+
+## Static renders
+
+The v3 rendering pass of the original plaza scene is kept as its own page,
+`project/render_v3.html`, because the game page now uses the mapped OSM core.
+The game shares its sky, colour grade, bloom and FXAA.
+
+Open `http://localhost:8100/render_v3.html?render=facade` (or `plaza`, `garden`)
+for a composed still image. These modes hide the HUD, use a fixed scene time
+and deterministic placement, and render only on initialization and resize.
+They do not start the game loop or accept movement input.
+
+To build three portable HTML previews without starting a server:
+
+```bash
+node scripts/build-static-previews.mjs /tmp/sim-munich-renders
+```
+
+Open `facade.html`, `plaza.html` or `garden.html` from that folder. Local scene
+modules are embedded; an internet connection is still required for Three.js.
+Static views use higher resolution shadows and supersampling with a four-million
+pixel limit. The plaza and garden views show closer details of the scene.
+
+In normal play, the animation loop stops when the page is hidden and resumes
+when it becomes visible. Closing the page stops rendering.

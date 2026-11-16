@@ -7,6 +7,8 @@ import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass }      from 'three/addons/postprocessing/ShaderPass.js';
+import { FXAAShader }      from 'three/addons/shaders/FXAAShader.js';
 // ── "Munich date" chapter modules (contract: project/DATE_CONTRACT.md) ──
 import { ROUTE, POIS, FOUNTAINS, SPAWN, BOUNDS, INTERACT_RADIUS } from './date_route.mjs';
 import { createStory }   from './date_story.mjs';
@@ -37,8 +39,14 @@ document.getElementById('popup-days').textContent = DAYS_TOGETHER;
 
 // ── RENDERER ────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('c');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+// Postprocessing uses its own antialiasing. Bound render-target memory on
+// Retina/4K screens while retaining detail on ordinary laptop displays.
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:false });
+function renderPixelRatio() {
+  return Math.min(window.devicePixelRatio || 1, 1.75,
+    Math.sqrt(3_000_000 / Math.max(1, innerWidth * innerHeight)));
+}
+renderer.setPixelRatio(renderPixelRatio());
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
@@ -47,16 +55,47 @@ renderer.toneMapping        = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = .92;
 
 const scene  = new THREE.Scene();
+// Shared by the key light and the painted sun disc in the sky dome.
+const sunDirection = new THREE.Vector3(-60, 80, 60).normalize();
 const camera = new THREE.PerspectiveCamera(52, innerWidth/innerHeight, 0.35, 2200);
 
 // ── POST-PROCESSING ──────────────────────────────────────────────────────────
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const bloom = new UnrealBloomPass(
-  new THREE.Vector2(innerWidth, innerHeight), 0.5, 0.7, 0.80
+  new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.45, 1.15
 );
 composer.addPass(bloom);
+// Grade in linear space; OutputPass alone handles tone mapping and sRGB.
+const grade = new ShaderPass({
+  uniforms: { tDiffuse: { value: null } },
+  vertexShader: `varying vec2 vUv;
+    void main() { vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+  fragmentShader: `uniform sampler2D tDiffuse; varying vec2 vUv;
+    void main() {
+      vec4 texel = texture2D(tDiffuse, vUv);
+      vec3 color = texel.rgb;
+      float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+      float shade = 1.0 - smoothstep(0.08, 0.8, luma);
+      color *= mix(vec3(1.025, 1.0, 0.975), vec3(0.96, 0.985, 1.04), shade);
+      color = mix(vec3(luma), color, 1.045);
+      vec2 edge = vUv * (1.0 - vUv);
+      float vignette = 1.0 - 0.075 * (1.0 - pow(16.0 * edge.x * edge.y, 0.35));
+      gl_FragColor = vec4(max(color * vignette, vec3(0.0)), texel.a);
+    }`,
+});
+composer.addPass(grade);
 composer.addPass(new OutputPass());
+// FXAA acts on the final display colors, including outlines and bloom edges.
+const antialias = new ShaderPass(FXAAShader);
+composer.addPass(antialias);
+function updateAntialiasResolution() {
+  const ratio = renderer.getPixelRatio();
+  antialias.uniforms.resolution.value.set(
+    1 / Math.max(1, innerWidth * ratio), 1 / Math.max(1, innerHeight * ratio));
+}
+updateAntialiasResolution();
 
 // ═════════ REGION: SCENE (owner: scene/rendering agent) — runs until "END REGION: SCENE" ═════════
 // ── TOON GRADIENT MAPS ───────────────────────────────────────────────────────
@@ -79,23 +118,23 @@ const T  = (c, g=G4) => new THREE.MeshToonMaterial({ color:c, gradientMap:g });
 const TB = (c, g=G4) => new THREE.MeshToonMaterial({ color:c, gradientMap:g, side:THREE.DoubleSide });
 
 const mat = {
-  facade:   T(0xF2E6C0),
-  facade2:  T(0xE6D4A4),
-  column:   T(0xFCF4E4),
-  roof:     T(0x352816),
-  parapet:  T(0xDACCA0),
-  winGlass: new THREE.MeshToonMaterial({ color:0x7ABEE0, gradientMap:G4,
-              transparent:true, opacity:.78, emissive:0x1A3850, emissiveIntensity:.35 }),
+  facade:   T(0xe7dfce),
+  facade2:  T(0xd9ccb4),
+  column:   T(0xf3ecdd),
+  roof:     T(0x5c5b56),
+  parapet:  T(0xcbbfa7),
+  winGlass: new THREE.MeshStandardMaterial({ color:0x3d7187, roughness:.28, metalness:.22,
+              emissive:0x172d3b, emissiveIntensity:.22 }),
   winFrame: T(0xC4AC6A),
   door:     T(0x2A1808),
-  steps:    T(0xBAAE8C),
-  plaza:    T(0xC6BA9A),
+  steps:    T(0xb5aa92),
+  plaza:    T(0xbcb39e),
   road:     T(0x3E4246),
   roadMk:   T(0xC0BAA8),
   sidewalk: T(0xA8A494),
-  fountain: T(0x8888A8),
-  water:    new THREE.MeshToonMaterial({ color:0x48B8E4, gradientMap:G3,
-              transparent:true, opacity:.70, emissive:0x082838, emissiveIntensity:.5 }),
+  fountain: T(0x8a9293),
+  water:    new THREE.MeshToonMaterial({ color:0x5ca7af, gradientMap:G3,
+              transparent:true, opacity:.86, emissive:0x102b31, emissiveIntensity:.25 }),
   trunk:    T(0x7A5420, G3),
   foliageA: T(0x48C438, G3),
   foliageB: T(0x38A828, G3),
@@ -153,34 +192,63 @@ function archGeo(w, h, segs=10) {
 }
 
 // ── SKY DOME ─────────────────────────────────────────────────────────────────
-// Custom anime gradient sky: deep azure at zenith → warm peach at horizon
+// A single background draw: layered painted clouds, a warm sun disc and
+// atmospheric horizon. No transparent cloud sorting or large texture downloads.
 const skySphere = new THREE.Mesh(
   new THREE.SphereGeometry(1800, 32, 16),
   new THREE.ShaderMaterial({
     side: THREE.BackSide,
+    depthWrite: false,
     uniforms: {
-      topCol:  { value: new THREE.Color(0x1A3280) },
-      midCol:  { value: new THREE.Color(0x4A90E8) },
-      horCol:  { value: new THREE.Color(0xFFD8A8) },
-      fogCol:  { value: new THREE.Color(0xC0D8F0) },
+      topCol: { value: new THREE.Color(0x397dbb) },
+      midCol: { value: new THREE.Color(0x87b5d3) },
+      horCol: { value: new THREE.Color(0xf3dfca) },
+      fogCol: { value: new THREE.Color(0xc6d9df) },
+      sunDir: { value: sunDirection },
+      time: { value: 0 },
     },
-    vertexShader: `varying float vY; varying vec3 vPos;
-      void main(){ vY=normalize(position).y; vPos=position;
-        gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+    vertexShader: `varying vec3 vDirection;
+      void main() { vDirection = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: `
-      uniform vec3 topCol,midCol,horCol,fogCol;
-      varying float vY;
-      void main(){
-        float t  = smoothstep(0.0,  0.7, vY);
-        float h  = smoothstep(-0.1, 0.25, vY);
-        float f  = smoothstep(0.0,  0.12, vY);
-        vec3 col = mix(horCol, midCol, h);
-        col      = mix(col, topCol, t*t);
-        col      = mix(fogCol, col, f);
-        gl_FragColor = vec4(col, 1.0);
+      uniform vec3 topCol, midCol, horCol, fogCol, sunDir;
+      uniform float time;
+      varying vec3 vDirection;
+      float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float noise(vec2 p) {
+        vec2 i = floor(p), f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x),
+                   mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+      }
+      void main() {
+        vec3 direction = normalize(vDirection);
+        float height = direction.y;
+        vec3 color = mix(horCol, midCol, smoothstep(0.0, 0.28, height));
+        color = mix(color, topCol, smoothstep(0.2, 0.95, height));
+        color = mix(fogCol, color, smoothstep(-0.04, 0.12, height));
+        float sunFacing = max(dot(direction, sunDir), 0.0);
+        color += vec3(1.0, 0.69, 0.36) * pow(sunFacing, 24.0) * 0.22;
+        // Broad, gently drifting shapes with distinct cream and blue-grey bands.
+        if (height > 0.025) {
+          vec2 p = direction.xz / (height + 0.28) * 3.6;
+          p += vec2(time * 0.006, time * 0.002);
+          float cloud = noise(p) * 0.62 + noise(p * 2.1) * 0.26
+                      + noise(p * 4.3) * 0.12;
+          float coverage = smoothstep(0.55, 0.64, cloud)
+                         * smoothstep(0.025, 0.18, height);
+          vec3 cloudColor = mix(vec3(0.51, 0.63, 0.73), vec3(0.95, 0.91, 0.82),
+                               smoothstep(0.58, 0.72, cloud));
+          color = mix(color, cloudColor, coverage * 0.92);
+        }
+        float disc = smoothstep(0.99955, 0.9998, sunFacing);
+        color = mix(color, vec3(3.2, 2.5, 1.6), disc);
+        gl_FragColor = vec4(color, 1.0);
       }`,
   })
 );
+skySphere.renderOrder = -100;
+skySphere.frustumCulled = false;
 scene.add(skySphere);
 
 // Real mapped core: angled U-shaped frontage, nine masonry arcade bays, mapped trees and roads.
@@ -188,15 +256,21 @@ const coreScene = createCoreScene({ THREE, scene, toon: (color,steps=4) => T(col
 const dummy = new THREE.Object3D();
 
 // ── SAKURA PARTICLE SYSTEM ───────────────────────────────────────────────────
-const PETAL_COUNT = 680;
+const PETAL_COUNT = 420;
+const DARK_PETAL_COUNT = Math.floor(PETAL_COUNT * .3);
 const petalShape = new THREE.Shape();
 petalShape.ellipse(0, 0, .28, .16, 0, Math.PI*2, false, 0);
 const petalGeoBase = new THREE.ShapeGeometry(petalShape, 6);
-const sakuraInst = new THREE.InstancedMesh(petalGeoBase, mat.sakura, PETAL_COUNT);
-const sakuraDInst = new THREE.InstancedMesh(petalGeoBase, mat.sakuraD, Math.floor(PETAL_COUNT*.3));
+const sakuraInst = new THREE.InstancedMesh(petalGeoBase, mat.sakura, PETAL_COUNT - DARK_PETAL_COUNT);
+const sakuraDInst = new THREE.InstancedMesh(petalGeoBase, mat.sakuraD, DARK_PETAL_COUNT);
 sakuraInst.castShadow = false;
 sakuraDInst.castShadow = false;
 scene.add(sakuraInst, sakuraDInst);
+// Animated matrices leave the initial bounds; these small batches stay visible.
+for (const mesh of [sakuraInst, sakuraDInst]) {
+  mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  mesh.frustumCulled = false;
+}
 
 const petals = Array.from({ length: PETAL_COUNT }, (_, i) => ({
   x: (Math.random()-.5)*220,
@@ -263,7 +337,7 @@ scene.add(plaqueMesh);
 // ── LIGHTING ─────────────────────────────────────────────────────────────────
 // Anime-style: warm directional + cool sky fill + ambient
 const sun = new THREE.DirectionalLight(0xFFF4E0, 2.1);
-sun.position.set(-60, 80, 60);
+sun.position.copy(sunDirection).multiplyScalar(116.6);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 sun.shadow.camera.left   = -130;
@@ -514,25 +588,31 @@ addEventListener('keydown', e => {
 addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(renderPixelRatio());
   renderer.setSize(innerWidth, innerHeight);
+  composer.setPixelRatio(renderer.getPixelRatio());
   composer.setSize(innerWidth, innerHeight);
+  updateAntialiasResolution();
 });
 
 // ── ANIMATION LOOP ────────────────────────────────────────────────────────────
-const clock = new THREE.Clock();
+const clock = new THREE.Clock(false);
+let rafId = null, pageActive = true;
+let elapsed = 0;
 const compassNeedle = document.getElementById('compass-needle');
 
-function loop() {
-  requestAnimationFrame(loop);
-  const dt  = Math.min(clock.getDelta(), .05);
-  const et  = clock.elapsedTime;
+function updateAtmosphere(et, dt) {
+
+  skySphere.material.uniforms.time.value = et;
 
   // ── Sakura animation ──
+  const petalStep = dt * 60;
+  dummy.scale.setScalar(1);
   petals.forEach((p, i) => {
-    p.x += p.vx + Math.sin(et*.4 + p.phase) * .018;
-    p.y += p.vy;
-    p.z += p.vz + Math.cos(et*.3 + p.phase) * .012;
-    p.rx += p.vrx; p.ry += p.vry; p.rz += p.vrz;
+    p.x += (p.vx + Math.sin(et*.4 + p.phase) * .018) * petalStep;
+    p.y += p.vy * petalStep;
+    p.z += (p.vz + Math.cos(et*.3 + p.phase) * .012) * petalStep;
+    p.rx += p.vrx * petalStep; p.ry += p.vry * petalStep; p.rz += p.vrz * petalStep;
     if (p.y < -.5) {
       p.y = 22 + Math.random()*12;
       p.x = (Math.random()-.5)*220;
@@ -541,8 +621,8 @@ function loop() {
     dummy.position.set(p.x, p.y, p.z);
     dummy.rotation.set(p.rx, p.ry, p.rz);
     dummy.updateMatrix();
-    if (p.dark) sakuraDInst.setMatrixAt(i % Math.floor(PETAL_COUNT*.3), dummy.matrix);
-    else        sakuraInst.setMatrixAt(i, dummy.matrix);
+    if (p.dark) sakuraDInst.setMatrixAt(i, dummy.matrix);
+    else        sakuraInst.setMatrixAt(i - DARK_PETAL_COUNT, dummy.matrix);
   });
   sakuraInst.instanceMatrix.needsUpdate  = true;
   sakuraDInst.instanceMatrix.needsUpdate = true;
@@ -556,6 +636,16 @@ function loop() {
 
   // ── Plaque glow ──
   plaqueMesh.material.emissiveIntensity = .2 + Math.sin(et*1.8)*.15;
+
+}
+
+function loop() {
+  rafId = null;
+  if (document.hidden || !pageActive) return;
+  const dt = Math.min(clock.getDelta(), .05);
+  elapsed += dt;
+  const et = elapsed;
+  updateAtmosphere(et, dt);
 
   // ── Player movement ──
   input.update(dt);                                   // touch / gamepad → synthetic keys
@@ -650,7 +740,33 @@ function loop() {
   world.update(dt, et);
 
   // ── Render ──
-  composer.render();
+  updateAntialiasResolution();                        // the quality setting may change the pixel ratio
+  composer.render(dt);
+  rafId = requestAnimationFrame(loop);
 }
 
-loop();
+// Static ?render= stills live in render_v3.html (anime_render_v3.js), not in the game.
+function clearInput() {
+  for (const key of Object.keys(keys)) delete keys[key];
+  drag = false;
+  touches = {};
+}
+function stopLoop() {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+  rafId = null;
+  clock.stop();
+  clearInput();
+}
+function startLoop() {
+  if (document.hidden || !pageActive || rafId !== null) return;
+  clock.start();
+  rafId = requestAnimationFrame(loop);
+}
+addEventListener('blur', clearInput);
+addEventListener('pagehide', () => { pageActive = false; stopLoop(); });
+addEventListener('pageshow', () => { pageActive = true; startLoop(); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopLoop();
+  else startLoop();
+});
+startLoop();
