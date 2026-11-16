@@ -1,7 +1,7 @@
 {
   "version": 1,
   "status": "not_started_t3_parent_not_active",
-  "sharedCheckout": "/Users/tianhaogu/.t3/worktrees/sim_munich/t3-32420415",
+  "sharedCheckout": "<shared T3 worktree>",
   "threads": [
     {
       "id": "d01-landmarks",
